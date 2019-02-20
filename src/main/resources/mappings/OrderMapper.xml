@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.merrill.dao.mapper.OrderMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache" >
+        <property name="timeToIdleSeconds" value="3600"/>
+        <property name="timeToLiveSeconds" value="3600"/>
+        <!-- 同ehcache参数maxElementsInMemory -->
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <!-- 同ehcache参数maxElementsOnDisk -->
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <resultMap id="Order" type="com.merrill.dao.entity.Order">
+        <id column="id" property="id"/>
+        <result column="location" property="location"/>
+        <result column="phone" property="phone"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="description" property="description"/>
+        <result column="user_description" property="userDescription"/>
+        <result column="repairment" property="repairment"/>
+        <result column="status" property="status"/>
+        <association property="user" javaType="com.merrill.dao.entity.User">
+            <id column="u_id" property="id"/>
+            <result column="u_open_id" property="openID"/>
+            <result column="u_name" property="name"/>
+            <result column="u_phone" property="phone"/>
+        </association>
+        <association property="operator" javaType="com.merrill.dao.entity.Operator">
+            <id column="op_id" property="id"/>
+            <result column="op_open_id" property="openID"/>
+            <result column="op_name" property="name"/>
+            <result column="op_phone" property="phone"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="OrderFinished" type="Order">
+        <id column="id" property="id"/>
+        <result column="location" property="location"/>
+        <result column="phone" property="phone"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="description" property="description"/>
+        <result column="user_description" property="userDescription"/>
+        <result column="repairment" property="repairment"/>
+        <result column="status" property="status"/>
+        <association property="user" javaType="User">
+            <id column="u_id" property="id"/>
+            <result column="u_open_id" property="openID"/>
+            <result column="u_name" property="name"/>
+            <result column="u_phone" property="phone"/>
+        </association>
+        <association property="operator" javaType="Operator">
+            <id column="op_id" property="id"/>
+            <result column="op_open_id" property="openID"/>
+            <result column="op_name" property="name"/>
+            <result column="op_phone" property="phone"/>
+        </association>
+    </resultMap>
+
+    <sql id="orderSelectBase">
+        SELECT o.id,
+               o.location,
+               o.phone,
+               o.begin_time,
+               o.description,
+               o.user_description,
+               o.repairment,
+               o.status,
+               u.id       AS u_id,
+               u.open_id  AS u_open_id,
+               u.name     AS u_name,
+               u.phone    AS u_phone,
+               op.id      AS op_id,
+               op.open_id AS op_open_id,
+               op.name    AS op_name,
+               op.phone   AS op_phone
+        FROM `order` o
+                 LEFT JOIN user u ON o.user_id = u.id
+                 LEFT JOIN operator op on o.operator_id = op.id
+    </sql>
+
+    <sql id="orderFinishedSelectBase">
+        SELECT o.id,
+               o.location,
+               o.phone,
+               o.begin_time,
+               o.end_time,
+               o.description,
+               o.user_description,
+               o.repairment,
+               o.status,
+               u.id       AS u_id,
+               u.open_id  AS u_open_id,
+               u.name     AS u_name,
+               u.phone    AS u_phone,
+               op.id      AS op_id,
+               op.open_id AS op_open_id,
+               op.name    AS op_name,
+               op.phone   AS op_phone
+        FROM `order_finish` o
+                 LEFT JOIN user u ON o.user_id = u.id
+                 LEFT JOIN operator op on o.operator_id = op.id
+    </sql>
+
+    <insert id="saveOrder">
+        INSERT INTO `order` (user_id, repairment, phone, location, user_description)
+        VALUES (#{id}, #{repairment}, #{phone}, #{location}, #{userDescription})
+    </insert>
+    <insert id="saveFinishedOrder">
+        INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, user_description, description, repairment, status)
+        VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{userDescription}, #{description}, #{repairment}, #{status})
+    </insert>
+    <update id="takeOrder">
+        UPDATE `order` SET operator_id = #{operatorID}, status = #{status} WHERE id = #{orderID}
+    </update>
+    <delete id="deleteOrderByID">
+        DELETE FROM `order` WHERE id = #{id}
+    </delete>
+    <select id="getOrderByUserID" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        WHERE u.id = #{id} AND o.status = 0 OR o.status = 1
+    </select>
+    <select id="getOrderByID" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        WHERE o.id = #{id}
+    </select>
+    <select id="getOrderList" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        GROUP BY o.status
+        ORDER BY o.status DESC
+    </select>
+    <select id="getOrderFinishedList" resultMap="OrderFinished">
+        <include refid="orderFinishedSelectBase"/>
+        <where>
+            <if test="content != null">
+                o.location LIKE concat('%', #{keyWord}, '%') OR
+                o.description LIKE concat('%', #{keyWord}, '%') OR
+                o.user_description LIKE concat('%', #{keyWord}, '%') OR
+                u.name LIKE ('%', #{keyWord}, '%') OR
+                o.name LIKE ('%', #{keyWord}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

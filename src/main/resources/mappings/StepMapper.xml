@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.merrill.dao.mapper.StepMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <resultMap id="Step" type="Step">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+        <association property="link" javaType="Link">
+            <id column="l_id" property="id"/>
+            <result column="l_name" property="name"/>
+            <result column="l_content" property="content"/>
+        </association>
+        <collection property="options" ofType="Option">
+            <id column="o_id" property="id"/>
+            <result column="o_name" property="name"/>
+            <result column="o_content" property="content"/>
+            <result column="o_location" property="location"/>
+            <result column="o_nextStepId" property="nextStepId"/>
+        </collection>
+    </resultMap>
+
+    <sql id="selectBase">
+        SELECT s.id,
+               s.name,
+               s.content,
+               o.id           AS o_id,
+               o.name         AS o_name,
+               o.content      AS o_content,
+               o.location     AS o_location,
+               o.next_step_id AS o_nextStepId,
+               l.id           AS l_id,
+               l.name         AS l_name,
+               l.content      AS l_content
+        FROM step s
+                 LEFT JOIN `option` o ON s.id = o.step_id
+                 LEFT JOIN link l on s.link_id = l.id
+    </sql>
+
+    <select id="getStepIDByOptionID" resultType="long">
+        SELECT next_step_id
+        FROM `option`
+        WHERE id = #{id}
+    </select>
+    <select id="getStepByID" resultMap="Step">
+        <include refid="selectBase"/>
+        WHERE s.id = #{id} ORDER BY o_location ASC
+    </select>
+    <select id="getStepMinID" resultType="long">
+        SELECT MIN(id)
+        FROM step
+    </select>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- 允许JVM参数覆盖 -->
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <!-- 忽略没有找到的资源文件 -->
+        <property name="ignoreResourceNotFound" value="true" />
+        <!-- 配置资源文件 -->
+        <property name="locations" value="classpath:db.properties"/>
+    </bean>
+
+    <!-- DI注解解析 -->
+    <context:annotation-config/>
+    <!-- IoC注解解析 -->
+    <context:component-scan base-package="com.merrill"/>
+    <!-- AOP注解解析器 -->
+    <aop:aspectj-autoproxy/>
+    <!-- 默认为jdk方式配置，以下方式为配置cglib的方法 -->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+    
+</beans>
