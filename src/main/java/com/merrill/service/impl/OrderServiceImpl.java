@@ -3,6 +3,8 @@ package com.merrill.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.merrill.query.OrderQueryObject;
+import com.merrill.utils.DateUtil;
+import com.merrill.web.vo.OrderRate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,8 @@ import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.dao.mapper.UserMapper;
 import com.merrill.service.IOrderService;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,5 +103,31 @@ public class OrderServiceImpl implements IOrderService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderRate> getOrderRateListByDateList(List<Date> dates) {
+        List<OrderRate> list = new ArrayList<>();
+        for (Date date : dates) {
+            OrderRate orderRate = new OrderRate();
+            int finishedNumber = orderMapper.getOrderFinishedNumberByDate(DateUtil.date2String(date));
+            int unfinishedNumber = orderMapper.getOrderNumberByDate(DateUtil.date2String(date));
+            int total = finishedNumber + unfinishedNumber;
+            orderRate.setFinishedNumber(finishedNumber);
+            orderRate.setUnfinishedNumber(unfinishedNumber);
+            if (total == 0){
+                orderRate.setRate(0);
+            } else {
+                orderRate.setRate(finishedNumber / total);
+            }
+            list.add(orderRate);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Order> getOrderByNumber(int number) {
+        return orderMapper.getOrderByNumber(number);
     }
 }

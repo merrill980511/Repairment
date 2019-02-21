@@ -39,4 +39,11 @@ public interface OrderMapper {
     int takeOrder(@Param("operatorID") Long operatorID, @Param("orderID") Long orderID,
                   @Param("status") int status);
 
+    Integer getOrderNumberByStatus(int status);
+
+    Integer getOrderNumberByDate(String date);
+
+    Integer getOrderFinishedNumberByDate(String date);
+
+    List<Order> getOrderByNumber(int number);
 }

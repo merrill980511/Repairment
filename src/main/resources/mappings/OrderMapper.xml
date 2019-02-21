@@ -142,5 +142,18 @@
             </if>
         </where>
     </select>
+    <select id="getOrderNumberByStatus" resultType="int">
+        SELECT COUNT(*) FROM `order` WHERE status = #{status}
+    </select>
+    <select id="getOrderNumberByDate" resultType="int">
+        select COUNT(*) from `order` where to_days(begin_time) = to_days(#{date});
+    </select>
+    <select id="getOrderFinishedNumberByDate" resultType="int">
+        select COUNT(*) from `order_finish` where to_days(begin_time) = to_days(#{date});
+    </select>
+    <select id="getOrderByNumber" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        ORDER BY begin_time ASC LIMIT #{number}
+    </select>
 
 </mapper>

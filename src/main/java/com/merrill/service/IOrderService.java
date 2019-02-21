@@ -3,6 +3,10 @@ package com.merrill.service;
 import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Order;
 import com.merrill.query.OrderQueryObject;
+import com.merrill.web.vo.OrderRate;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,4 +28,7 @@ public interface IOrderService {
 
     boolean takeOrder(Long operatorID, Long orderID);
 
+    List<OrderRate> getOrderRateListByDateList(List<Date> dates);
+
+    List<Order> getOrderByNumber(int number);
 }

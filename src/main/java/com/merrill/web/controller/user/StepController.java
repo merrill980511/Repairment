@@ -19,7 +19,7 @@ import java.util.Map;
  * Description:
  */
 
-@Controller
+@Controller("userStepController")
 @RequestMapping("/user")
 public class StepController {
 
@@ -28,7 +28,7 @@ public class StepController {
 
     @RequestMapping("/repairmentApply")
     public String repairmentApply(){
-        return "repairmentApply";
+        return "/user/views/repairmentApply";
     }
 
     @RequestMapping("/nextStep")

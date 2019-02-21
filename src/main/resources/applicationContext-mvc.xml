@@ -18,13 +18,13 @@
     </bean>
 
     <!--注册拦截器-->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>&lt;!&ndash;拦截/**下的所有方法&ndash;&gt;-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/information/login"/>&lt;!&ndash;可以选择不拦截登录和添加以及其他的方法，根据情况自己定&ndash;&gt;&ndash;&gt;-->
-            <!--<bean class=""/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/><!--拦截/**下的所有方法-->
+            <!--<mvc:exclude-mapping path="/admin/login"/>-->
+            <bean class="com.merrill.web.interceptor.AdminTokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <mvc:view-controller path="/user/" view-name="user/views/repairmentApply"/>
     <mvc:view-controller path="/operator/" view-name="operator/views/orderListView"/>
