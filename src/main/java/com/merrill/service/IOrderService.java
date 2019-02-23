@@ -28,7 +28,11 @@ public interface IOrderService {
 
     boolean takeOrder(Long operatorID, Long orderID);
 
-    List<OrderRate> getOrderRateListByDateList(List<Date> dates);
+    List<OrderRate> getOrderRateListByDateList(List<String> dates);
 
     List<Order> getOrderByNumber(int number);
+
+    Order getOrderByID(Long id);
+
+    boolean updateOrder(Long id, String location, String description, String userDescription, String repairment);
 }

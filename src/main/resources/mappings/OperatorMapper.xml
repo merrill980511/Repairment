@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.merrill.dao.mapper.OperatorMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <insert id="add">
+        INSERT INTO operator(id, password, name, phone) VALUES (#{id}, #{password}, #{name}, #{phone})
+    </insert>
+    <update id="update">
+        UPDATE operator SET name = #{name}, phone = #{phone}
+        <if test="password != null">
+            , password = #{password}
+        </if>
+        WHERE id = #{id}
+    </update>
+    <delete id="delete">
+        DELETE FROM operator WHERE id = #{id}
+    </delete>
+    <select id="getOperator" resultType="Operator">
+        SELECT * FROM operator WHERE id = #{id}
+    </select>
+    <select id="getOperatorList" resultType="Operator">
+        SELECT * FROM operator
+        <where>
+            <if test="keyword != null">
+                name LIKE concat('%', #{keyWord}, '%') OR
+                phone LIKE concat('%', #{keyWord}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

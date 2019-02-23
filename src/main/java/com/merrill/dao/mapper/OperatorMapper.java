@@ -1,6 +1,11 @@
 package com.merrill.dao.mapper;
 
+import com.merrill.dao.entity.Operator;
+import com.merrill.query.OperatorQueryObject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,4 +16,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OperatorMapper {
+    int delete(Long id);
+
+    int add(@Param("id") Long id, @Param("name") String name,
+            @Param("password") String password, @Param("phone") String phone);
+
+    int update(@Param("id") Long id, @Param("name") String name,
+               @Param("password") String password, @Param("phone") String phone);
+
+    List<Operator> getOperatorList(OperatorQueryObject qo);
+
+    Operator getOperator(Long id);
 }

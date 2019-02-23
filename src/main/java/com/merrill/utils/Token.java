@@ -70,9 +70,4 @@ public class Token {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-        String s = sign(123l, "123");
-        System.out.println(verify(s));
-    }
 }

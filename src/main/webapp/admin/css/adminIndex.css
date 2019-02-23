@@ -1,0 +1,54 @@
+.overview .header{
+    font-size:36px;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px 10px;
+}
+.overview .body{
+    background: #FFF;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+}
+.overview .panel{
+    width: 16%;
+    text-align: center;
+    display: inline-block;
+    margin-right:4%;
+    padding: 10px 0;
+    border-radius: 10px;
+}
+.overview .panel:last-child{
+    margin-right: 0;
+}
+.overview .panel:hover{
+    background-color: #337ab7;
+}
+.overview .panel:hover span{
+    color: #ffffff;
+}
+.overview .panel span{
+    display: block;
+    color: #999;
+    font-weight: normal;
+    font-family: "Oxygen", sans-serif;
+}
+.overview .num{
+    font-size: 28px;
+    margin: 0;
+}
+.overview .name{
+    font-size: 14px;
+}
+.left-col{
+    width: 70%;
+    float: left;
+    display: inline-block;
+}
+.right-col{
+    width: calc(30% - 10px);
+    margin-left: 10px;
+    float: left;
+    display: inline-block;
+}
+.table{
+    border-radius: 5px;
+}

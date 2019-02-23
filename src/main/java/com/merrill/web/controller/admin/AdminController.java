@@ -3,6 +3,7 @@ package com.merrill.web.controller.admin;
 import com.merrill.dao.entity.Admin;
 import com.merrill.service.IAdminService;
 import com.merrill.utils.Token;
+import com.merrill.web.vo.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,17 @@ import java.util.Map;
 @Controller("adminInfoController")
 @RequestMapping("/admin")
 public class AdminController {
+
     @Autowired
     private IAdminService adminService;
+    @Autowired
+    private Status status;
+
+    @RequestMapping("/login")
+    public Object login(){
+        System.out.println("123");
+        return "/admin/views/login";
+    }
 
     @RequestMapping("/loginCommit")
     @ResponseBody
@@ -35,20 +45,33 @@ public class AdminController {
         if (admin != null){
             String token = Token.sign(admin.getId(), password);
             if (token != null){
-                map.put("token", token);
-                map.put("location", "/admin/index");
+                returnMap.put("token", token);
+                returnMap.put("location", "/repair/admin/index");
             }
         }
         return returnMap;
     }
 
-    @RequestMapping("/login")
-    public Object login(){
+    @RequestMapping("/editPassword")
+    public Object editPassword(){
         return "/";
+    }
+
+    @RequestMapping("/editPasswordCommit")
+    @ResponseBody
+    public Object editPasswordCommit(@RequestBody Map<String, String> map){
+        String id = map.get("id");
+        String password = map.get("password");
+        if (adminService.editPassword(Long.valueOf(id), password)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("修改密码失败，请稍后重试");
+        }
+        return status;
     }
 
     @RequestMapping("/index")
     public Object index(){
-        return "/";
+        return "/admin/views/adminIndex";
     }
 }

@@ -10,6 +10,6 @@ import lombok.Data;
  * Description:
  */
 @Data
-public class OrderQueryObject extends QueryObject {
+public class OperatorQueryObject extends QueryObject {
     private String keyword;
 }

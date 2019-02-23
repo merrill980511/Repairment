@@ -28,6 +28,12 @@ public class OrderController {
     @Autowired
     private Status status;
 
+
+    @RequestMapping("/orderListView")
+    public String orderListView(){
+        return "/operator/views/orderListView";
+    }
+
     @RequestMapping("/getOrderList")
     @ResponseBody
     public Object getOrderList(@RequestBody OrderQueryObject qo) {

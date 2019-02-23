@@ -1,0 +1,126 @@
+body,html{
+    width: 100%;
+    font-family: -apple-system-font,Helvetica Neue,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+*{
+    padding: 0px;
+    margin: 0px;
+}
+body *{
+    overflow: hidden;
+}
+.table,.infoPanel{
+    margin: 0 auto;
+    width: 100%;
+}
+.infoPanel{
+    display: none;
+}
+.tr,.info{
+    position: relative;
+    font-size: 16px;
+    line-height: 44px;
+    padding: 5px 15px 5px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.td,.th{
+    max-height: 88px;
+    float: left;
+    text-align: left;
+    display: inline-block;
+    text-align: center;
+}
+.th{
+    font-weight: bold;
+}
+div.location{
+    width: 120px;
+}
+div.userDescription{
+    width: calc((100% - 125px - 120px - 20px)/2);
+    padding: 0px 5px;
+}
+div.repairment{
+    width: calc((100% - 125px - 120px - 20px)/2);
+    padding: 0px 5px;
+}
+div.action{
+    width: 125px;
+}
+.info>label{
+    width: 95px;
+    float: left;
+}
+.info>label:not(.title){
+    width: calc(100% - 95px);
+}
+.errorMessage{
+    width: calc(100% - 185px - 95px - 30px);
+    padding:3px;
+    margin-top: 10px;
+    margin-left: 110px;
+    color: #ff5b5b;
+    font-size: 14px;
+    line-height: 18px;
+    height: 22px;
+    overflow: hidden;
+    display: none;
+}
+label.red{
+    color: #ff5b5b;
+}
+.takeOrderAction{
+    width: 125px;
+    margin: 5px 0px;
+    background-color: #009fe8;
+    height: 34px;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+#page_devide{
+    width: calc(100% - 30px - 2px);
+    padding: 10px 15px;
+    border-bottom: solid 1px #e0e0e0;
+    background: rgba(240,240,240,1);
+}
+#pages{
+    background-color: #ffffff;
+    border: solid 1px #e0e0e0;
+}
+.pageButton{
+    display: inline-block;
+    line-height: 40px;
+    min-width: 8%;
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+.prev,.next{
+    min-width: 18%;
+}
+.pageActive{
+    background: #009fe8;
+    color: #ffffff;
+}
+#pages>input:not(.pageActive){
+    background: #ffffff;
+    color: #5e5e5e;
+}
+#pages>input:not(.pageActive):hover,#pages>input:not(.pageActive):active{
+    background: #cccccc;
+    color: #252525;
+}
+.disabled{
+    pointer-events: none;
+    opacity: 0.5;
+}
+.prev{
+    float: left;
+}
+.next,.last{
+    float: right;
+}

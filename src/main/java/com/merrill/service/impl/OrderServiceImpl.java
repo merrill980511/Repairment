@@ -77,7 +77,7 @@ public class OrderServiceImpl implements IOrderService {
     @Transactional(readOnly = true)
     public PageInfo getOrderList(OrderQueryObject qo) {
         PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
-        List<?> list = orderMapper.getOrderList(qo);
+        List<Order> list = orderMapper.getOrderList(qo);
         PageInfo pageInfo = new PageInfo(list);
         if (pageInfo.getPages() <= 0) {
             pageInfo.setPages(1);
@@ -89,7 +89,7 @@ public class OrderServiceImpl implements IOrderService {
     @Transactional(readOnly = true)
     public PageInfo getOrderFinishedList(OrderQueryObject qo) {
         PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
-        List<?> list = orderMapper.getOrderFinishedList(qo);
+        List<Order> list = orderMapper.getOrderFinishedList(qo);
         PageInfo pageInfo = new PageInfo(list);
         if (pageInfo.getPages() <= 0) {
             pageInfo.setPages(1);
@@ -107,12 +107,12 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderRate> getOrderRateListByDateList(List<Date> dates) {
+    public List<OrderRate> getOrderRateListByDateList(List<String> dates) {
         List<OrderRate> list = new ArrayList<>();
-        for (Date date : dates) {
+        for (String date : dates) {
             OrderRate orderRate = new OrderRate();
-            int finishedNumber = orderMapper.getOrderFinishedNumberByDate(DateUtil.date2String(date));
-            int unfinishedNumber = orderMapper.getOrderNumberByDate(DateUtil.date2String(date));
+            int finishedNumber = orderMapper.getOrderFinishedNumberByDate(DateUtil.string2String(date));
+            int unfinishedNumber = orderMapper.getOrderNumberByDate(DateUtil.string2String(date));
             int total = finishedNumber + unfinishedNumber;
             orderRate.setFinishedNumber(finishedNumber);
             orderRate.setUnfinishedNumber(unfinishedNumber);
@@ -129,5 +129,23 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<Order> getOrderByNumber(int number) {
         return orderMapper.getOrderByNumber(number);
+    }
+
+    @Override
+    public Order getOrderByID(Long id) {
+        Order order = orderMapper.getOrderByID(id);
+        if (order == null){
+            order = orderMapper.getOrderFinishedByID(id);
+        }
+        return order;
+    }
+
+    @Override
+    public boolean updateOrder(Long id, String location, String description, String userDescription, String repairment) {
+        if (orderMapper.updateOrder(id, location, description, userDescription, repairment) > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -114,6 +114,10 @@
     <update id="takeOrder">
         UPDATE `order` SET operator_id = #{operatorID}, status = #{status} WHERE id = #{orderID}
     </update>
+    <update id="updateOrder">
+        UPDATE `order` SET description = #{description}, user_description = #{userDescription},
+                           location = #{location}, repairment = #{repairment} WHERE id = #{id}
+    </update>
     <delete id="deleteOrderByID">
         DELETE FROM `order` WHERE id = #{id}
     </delete>
@@ -133,7 +137,7 @@
     <select id="getOrderFinishedList" resultMap="OrderFinished">
         <include refid="orderFinishedSelectBase"/>
         <where>
-            <if test="content != null">
+            <if test="keyword != null">
                 o.location LIKE concat('%', #{keyWord}, '%') OR
                 o.description LIKE concat('%', #{keyWord}, '%') OR
                 o.user_description LIKE concat('%', #{keyWord}, '%') OR
@@ -154,6 +158,10 @@
     <select id="getOrderByNumber" resultMap="Order">
         <include refid="orderSelectBase"/>
         ORDER BY begin_time ASC LIMIT #{number}
+    </select>
+    <select id="getOrderFinishedByID" resultMap="OrderFinished">
+        <include refid="orderFinishedSelectBase"/>
+        WHERE o.id = #{id}
     </select>
 
 </mapper>

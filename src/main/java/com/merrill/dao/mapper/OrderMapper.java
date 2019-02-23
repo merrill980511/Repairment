@@ -25,6 +25,8 @@ public interface OrderMapper {
 
     Order getOrderByID(Long id);
 
+    Order getOrderFinishedByID(Long id);
+
     int deleteOrderByID(Long id);
 
     int saveFinishedOrder(@Param("id") Long id, @Param("userID") Long userID, @Param("operatorID") Long operatorID,
@@ -32,9 +34,9 @@ public interface OrderMapper {
                           @Param("userDescription") String userDescription, @Param("description") String description,
                           @Param("repairment") String repairment, @Param("status") int status);
 
-    List<?> getOrderList(OrderQueryObject qo);
+    List<Order> getOrderList(OrderQueryObject qo);
 
-    List<?> getOrderFinishedList(OrderQueryObject qo);
+    List<Order> getOrderFinishedList(OrderQueryObject qo);
 
     int takeOrder(@Param("operatorID") Long operatorID, @Param("orderID") Long orderID,
                   @Param("status") int status);
@@ -46,4 +48,7 @@ public interface OrderMapper {
     Integer getOrderFinishedNumberByDate(String date);
 
     List<Order> getOrderByNumber(int number);
+
+    int updateOrder(@Param("id") Long id, @Param("location") String location, @Param("description") String description,
+                    @Param("userDescription") String userDescription, @Param("repairment") String repairment);
 }

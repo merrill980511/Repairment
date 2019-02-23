@@ -24,4 +24,13 @@ public class AdminServiceImpl implements IAdminService {
     public Admin login(Long id, String password) {
         return adminMapper.login(id, password);
     }
+
+    @Override
+    public boolean editPassword(Long id, String password) {
+        if (adminMapper.editPassword(id, password) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

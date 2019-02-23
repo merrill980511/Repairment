@@ -11,4 +11,6 @@ import com.merrill.dao.entity.Admin;
  */
 public interface IAdminService {
     Admin login(Long id, String password);
+
+    boolean editPassword(Long id, String password);
 }
