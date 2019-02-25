@@ -30,7 +30,8 @@ public interface OrderMapper {
     int deleteOrderByID(Long id);
 
     int saveFinishedOrder(@Param("id") Long id, @Param("userID") Long userID, @Param("operatorID") Long operatorID,
-                          @Param("location") String location, @Param("phone") String phone, @Param("beginDate") Date beginTime,
+                          @Param("location") String location, @Param("phone") String phone,
+                          @Param("beginDate") Date beginTime, @Param("handleDate") Date handleTime,
                           @Param("userDescription") String userDescription, @Param("description") String description,
                           @Param("repairment") String repairment, @Param("status") int status);
 
@@ -39,7 +40,7 @@ public interface OrderMapper {
     List<Order> getOrderFinishedList(OrderQueryObject qo);
 
     int takeOrder(@Param("operatorID") Long operatorID, @Param("orderID") Long orderID,
-                  @Param("status") int status);
+                  @Param("status") int status, @Param("date") Date date);
 
     Integer getOrderNumberByStatus(int status);
 

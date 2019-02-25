@@ -58,15 +58,15 @@ public class OrderServiceImpl implements IOrderService {
         if (order.getOperator() == null){
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     null, order.getLocation(), order.getPhone(),
-                    order.getBeginTime(), order.getUserDescription(), order.getDescription(),
-                    order.getRepairment(), 2) <= 0){
+                    order.getBeginTime(), order.getHandleTime(), order.getUserDescription(),
+                    order.getDescription(), order.getRepairment(), 2) <= 0){
                 return false;
             }
         } else {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     order.getOperator().getId(), order.getLocation(), order.getPhone(),
-                    order.getBeginTime(), order.getUserDescription(), order.getDescription(),
-                    order.getRepairment(), 2) <= 0){
+                    order.getBeginTime(), order.getHandleTime(),order.getUserDescription(),
+                    order.getDescription(), order.getRepairment(), 2) <= 0){
                 return false;
             }
         }
@@ -99,7 +99,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public boolean takeOrder(Long operatorID, Long orderID) {
-        if (orderMapper.takeOrder(operatorID, orderID, 1) > 0) {
+        if (orderMapper.takeOrder(operatorID, orderID, 1, new Date()) > 0) {
             return true;
         }
         return false;

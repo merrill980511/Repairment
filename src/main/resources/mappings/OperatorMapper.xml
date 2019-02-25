@@ -27,5 +27,8 @@
             </if>
         </where>
     </select>
+    <select id="getAllOperatorList" resultType="Operator">
+        SELECT * FROM operator
+    </select>
 
 </mapper>

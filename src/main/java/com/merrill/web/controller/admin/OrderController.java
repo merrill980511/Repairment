@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +30,14 @@ public class OrderController {
 
     @RequestMapping("/getOrderFinishRate")
     @ResponseBody
-    public Object getOrderFinishRate(@RequestBody Map<String, List> map){
+    public Object getOrderFinishRate(@RequestBody Map<String, List> map) {
         List<String> dates = map.get("dateList");
         return orderService.getOrderRateListByDateList(dates);
     }
 
     @RequestMapping("/getOrderSortByDate")
     @ResponseBody
-    public Object getOrderSortByDate(@RequestBody Map<String, String> map){
+    public Object getOrderSortByDate(@RequestBody Map<String, String> map) {
         String num = map.get("number");
         int number = Integer.valueOf(num);
         return orderService.getOrderByNumber(number);
@@ -58,21 +57,21 @@ public class OrderController {
 
     @RequestMapping("/getOrder")
     @ResponseBody
-    public Object getOrder(@RequestBody Map<String, String> map){
+    public Object getOrder(@RequestBody Map<String, String> map) {
         String id = map.get("id");
         return orderService.getOrderByID(Long.valueOf(id));
     }
 
     @RequestMapping("/updateOrder")
     @ResponseBody
-    public Object updateOrder(@RequestBody Map<String, String> map){
+    public Object updateOrder(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
         String location = map.get("location");
         String description = map.get("description");
         String userDescription = map.get("userDescription");
         String repairment = map.get("repairment");
         if (orderService.updateOrder(id, location, description,
-                userDescription, repairment)){
+                userDescription, repairment)) {
             status.setMessage("true");
         } else {
             status.setMessage("更新失败，请稍后重试");
@@ -82,9 +81,9 @@ public class OrderController {
 
     @RequestMapping("/finishOrder")
     @ResponseBody
-    public Object finishOrder(@RequestBody Map<String, String> map){
+    public Object finishOrder(@RequestBody Map<String, String> map) {
         String orderID = map.get("orderID");
-        if (orderService.finishOrder(Long.valueOf(orderID))){
+        if (orderService.finishOrder(Long.valueOf(orderID))) {
             status.setMessage("true");
         } else {
             status.setMessage("完结失败，请稍后再提交");

@@ -73,4 +73,10 @@ public class OperatorController {
     public Object getOperatorList(@RequestBody OperatorQueryObject qo) {
         return operatorService.getOperatorList(qo);
     }
+
+    @RequestMapping("/getAllOperatorList")
+    @ResponseBody
+    public Object getAllOperatorList() {
+        return operatorService.getAllOperatorList();
+    }
 }

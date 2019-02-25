@@ -1,7 +1,11 @@
 package com.merrill.dao.mapper;
 
-import org.springframework.stereotype.Repository;
 import com.merrill.dao.entity.User;
+import com.merrill.query.UserQueryObject;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,4 +17,14 @@ import com.merrill.dao.entity.User;
 @Repository
 public interface UserMapper {
     User getUserByID(Long id);
+
+    int addUser(@Param("id") Long id, @Param("phone") String phone,
+                @Param("name") String name);
+
+    int updateUser(@Param("id") Long id, @Param("phone") String phone,
+                   @Param("name") String name);
+
+    int deleteUser(Long id);
+
+    List<User> getUserList(UserQueryObject qo);
 }

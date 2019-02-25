@@ -27,4 +27,6 @@ public interface OperatorMapper {
     List<Operator> getOperatorList(OperatorQueryObject qo);
 
     Operator getOperator(Long id);
+
+    List<Operator> getAllOperatorList();
 }

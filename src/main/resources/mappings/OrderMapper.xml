@@ -16,6 +16,7 @@
         <result column="location" property="location"/>
         <result column="phone" property="phone"/>
         <result column="begin_time" property="beginTime"/>
+        <result column="handle_time" property="handleTime"/>
         <result column="description" property="description"/>
         <result column="user_description" property="userDescription"/>
         <result column="repairment" property="repairment"/>
@@ -39,6 +40,7 @@
         <result column="location" property="location"/>
         <result column="phone" property="phone"/>
         <result column="begin_time" property="beginTime"/>
+        <result column="handle_time" property="handleTime"/>
         <result column="end_time" property="endTime"/>
         <result column="description" property="description"/>
         <result column="user_description" property="userDescription"/>
@@ -63,6 +65,7 @@
                o.location,
                o.phone,
                o.begin_time,
+               o.handle_time,
                o.description,
                o.user_description,
                o.repairment,
@@ -85,6 +88,7 @@
                o.location,
                o.phone,
                o.begin_time,
+               o.handle_time,
                o.end_time,
                o.description,
                o.user_description,
@@ -108,11 +112,11 @@
         VALUES (#{id}, #{repairment}, #{phone}, #{location}, #{userDescription})
     </insert>
     <insert id="saveFinishedOrder">
-        INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, user_description, description, repairment, status)
-        VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{userDescription}, #{description}, #{repairment}, #{status})
+        INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, handle_time, user_description, description, repairment, status)
+        VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{handleDate}, #{userDescription}, #{description}, #{repairment}, #{status})
     </insert>
     <update id="takeOrder">
-        UPDATE `order` SET operator_id = #{operatorID}, status = #{status} WHERE id = #{orderID}
+        UPDATE `order` SET operator_id = #{operatorID}, status = #{status}, handle_time = #{date} WHERE id = #{orderID}
     </update>
     <update id="updateOrder">
         UPDATE `order` SET description = #{description}, user_description = #{userDescription},

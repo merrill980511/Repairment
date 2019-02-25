@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Operator;
 import com.merrill.query.OperatorQueryObject;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: 梅峰鑫
@@ -22,4 +24,5 @@ public interface IOperatorService {
 
     PageInfo getOperatorList(OperatorQueryObject qo);
 
+    List<Operator> getAllOperatorList();
 }

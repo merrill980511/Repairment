@@ -73,5 +73,10 @@ public class OperatorServiceImpl implements IOperatorService {
         return pageInfo;
     }
 
+    @Override
+    public List<Operator> getAllOperatorList() {
+        return operatorMapper.getAllOperatorList();
+    }
+
 
 }

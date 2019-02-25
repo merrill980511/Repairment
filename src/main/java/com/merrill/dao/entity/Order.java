@@ -51,6 +51,12 @@ public class Order implements Serializable {
     private Date beginTime;
 
     /**
+     * 订单处理时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date handleTime;
+
+    /**
      * 订单完结时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")

@@ -2,9 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.merrill.dao.mapper.UserMapper">
     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
-
+    <insert id="addUser">
+        INSERT INTO user (id, name, phone) VALUES (#{id}, #{name}, #{phone})
+    </insert>
+    <update id="updateUser">
+        UPDATE user SET name = #{name}, phone = #{phone} WHERE id = #{id}
+    </update>
+    <delete id="deleteUser">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
     <select id="getUserByID" resultType="User">
         SELECT * FROM user WHERE id = #{id}
     </select>
-
+    <select id="getUserList" resultType="User">
+        SELECT * FROM user
+        <where>
+            <if test="keyword != null">
+                name LIKE concat('%', #{keyWord}, '%') OR
+                phone LIKE concat('%', #{keyWord}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>
