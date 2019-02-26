@@ -11,9 +11,24 @@ function getOrderStatus(status) {
            return "无";
    }
 };
+//通用时间格式化
+function dateLoad(date) {
+    var result = new Date(date).Format("yyyy-MM-dd hh:mm:ss");
+    if(result == 'NaN-aN-aN aN:aN:aN'){
+        result =  "";
+    }
+    return result;
+}
 //时间格式化
 function chartDateLoad(date) {
     return new Date(date).Format("yyyy-MM-dd");
+}
+//数据处理
+function dataLoad(data){
+    if(data == null || data == "undefined" || typeof(data) == "undefined"){
+        return "";
+    }
+    return data;
 }
 //时间格式化通用函数
 Date.prototype.Format = function (fmt) {

@@ -74,4 +74,9 @@ public class AdminController {
     public Object index(){
         return "/admin/views/adminIndex";
     }
+
+    @RequestMapping("/table")
+    public Object table(){
+        return "/admin/views/adminTable";
+    }
 }

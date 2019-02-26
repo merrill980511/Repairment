@@ -1,3 +1,5 @@
+input[type=datetime-local]::-webkit-inner-spin-button { visibility: hidden; }
+input[type=datetime-local]::-webkit-clear-button { visibility: hidden; }
 body{
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
@@ -263,6 +265,13 @@ li.divider{
     opacity: 0.5;
     color:#5e5e5e;
 }
+.page_devide{
+    display: inline-block;
+}
+.addItem{
+    color:#337ab7;
+    float: left;
+}
 .select>.options{
     margin-top:10px;
 }
@@ -364,6 +373,7 @@ i.action{
 .lid .body{
     padding: 5px 10px;
     height: calc(100% - 51px - 60px);
+    overflow-y:auto;
 }
 .lid .header{
     padding: 5px 20px;
@@ -387,14 +397,31 @@ i.action{
     width: 100%;
     padding: 5px 10px;
 }
-.lid .body .info>span,.lid .body .info>input{
+.lid .body .info>span:not(.binding),.lid .body .info>input,.lid .body .info>textarea,.lid .body .info>select{
     width: 100%;
+}
+.lid .body .info>span.binding,.lid .body .info>span:not(.binding),.lid .body .info>input,.lid .body .info>select{
     line-height: 30px;
 }
-.lid .body .info>input{
+.lid .body .info>input,.lid .body .info>textarea,.lid .body .info>select{
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 3px 8px;
+    resize: none;
+}
+.lid .body .info>select{
+    height: 37.6px;
+}
+.lid .body .info>textarea{
+    font-family: Arial;
+}
+.lid .form>div{
+    width: 460px;
+}
+.lid .footer{
+    position:fixed;
+    bottom: 0;
+    right: 0;
 }
 .lid .footer{
     text-align: left;
@@ -418,4 +445,38 @@ i.action{
 .cancelAction{
     background-color: rgb(221, 221, 221);
     float: right;
+}
+.info .switch{
+    float: right;
+}
+.switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #dadada;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    transition: all .2s ease;
+}
+.switch:checked {
+    background-color: #337ab7;
+}
+.switch:checked::after {
+    left: 50%;
+}
+.switch::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: all .2s ease;
+}
+.tip.options{
+    width: 100%;
 }

@@ -1,17 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: 程鹏
-  Date: 2019/2/19
-  Time: 11:11
+  Date: 2019/2/26
+  Time: 12:53
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>信息办管理后台</title>
+    <title>选项管理</title>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_c1qebix8ucb.css" media="all">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/admin.css">
-    <link type="text/css" rel="stylesheet" href="/repair/admin/css/adminTable.css">
+    <link type="text/css" rel="stylesheet" href="/repair/admin/css/adminIndex.css">
+    <link type="text/css" rel="stylesheet" href="/repair/admin/css/joint.css">
     <style type="text/css">
         .iconfont{
             font-size: inherit;
@@ -61,39 +62,13 @@
 </div>
 <div class="center-index">
     <div class="content">
-        <div class="panel-default">
+        <div class="panel-default step-management">
             <div class="header">
-                <i class="iconfont icon-table"></i>数据库表格
-                <div class="select">
-                    <button class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:;" aria-expanded="false">
-                        未处理问题<i class="iconfont icon-xiajiantou"></i>
-                    </button>
-                    <input type="text" class="hidden panel-item" value="order"/>
-                    <div class="hidden options">
-                        <ul>
-                            <li><a class="javascript:;" panel-item="order"><i class="iconfont icon icon-order"></i>未处理问题</a></li>
-                            <li><a class="javascript:;" panel-item="order-finished"><i class="iconfont icon icon-order"></i>已处理问题</a></li>
-                            <li><a class="javascript:;" panel-item="operator"><i class="iconfont icon icon-team"></i>运维人员</a></li>
-                            <li><a class="javascript:;" panel-item="user"><i class="iconfont icon icon-team"></i>用户</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <i class="iconfont icon-solution"></i>用户选项管理
             </div>
             <div class="body">
-                <table class="table">
-                    <input type="hidden" id="pageSize" value="5">
-                    <input type="hidden" id="currentPage" value="1">
-                    <thead>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <div class="footer">
-                <a href="javascript:;" class="addItem order" title="添加">&ensp;+&ensp;添加</a>
-                <div class="page_devide">
-                    <div id="pages"></div>
-                </div>
+                <div class="ProcessDiv"></div>
+                <div id="paper"></div>
             </div>
         </div>
     </div>
@@ -105,13 +80,14 @@
     </div>
 </div>
 <script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/repair/admin/js/lodash.js"></script>
+<script type="text/javascript" src="/repair/admin/js/backbone.js"></script>
+<script type="text/javascript" src="/repair/admin/js/joint.js"></script>
+<script type="text/javascript" src="/repair/admin/js/adminStep.js"></script>
 <script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="/repair/admin/js/jqPaginator.js"></script>
-<script type="text/javascript" src="/repair/admin/js/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
 <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
-<script type="text/javascript" src="/repair/admin/js/adminTable.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.js"></script>
-<script type="text/javascript" src="/repair/admin/js/entity.js"></script>
 </body>
 </html>
 

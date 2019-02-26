@@ -6,18 +6,19 @@ $(function () {
     getOverview();
     getOrderLinearChart(7);
     getOrderBarChart(7);
+    getOrderSortByNum(10);
     //getOrderPieChart();
 });
 //创建线性表
 function getOrderLinearChart(num){
     $.ajax({
-        "url": "/repair/admin/commit/order/orderFinishedRate",
+        "url": "/repair/admin/getOrderFinishRate",
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": JSON.stringify(getDateList(num)),
+        "data": JSON.stringify(getDateListJson(num)),
         "dataType": "json",
         "success": function (data) {
             setOrderLinearChart(data,getDateList(num));
@@ -30,13 +31,13 @@ function getOrderLinearChart(num){
 //创建柱状图
 function getOrderBarChart(num){
     $.ajax({
-        "url": "/repair/admin/commit/order/orderFinishedRate",
+        "url": "/repair/admin/getOrderFinishRate",
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": JSON.stringify(getDateList(num)),
+        "data": JSON.stringify(getDateListJson(num)),
         "dataType": "json",
         "success": function (data) {
             setOrderBarChart(data,getDateList(num));
@@ -130,9 +131,10 @@ function getOrderPieChart() {
         },
     });
 };
+//获取概览内容
 function getOverview() {
     $.ajax({
-        "url": "/repair/admin/commit/data/overview",
+        "url": "/repair/admin/overview",
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
@@ -149,21 +151,59 @@ function getOverview() {
             alert("服务器繁忙，请稍后再试");
         },
     });
-}
+};
+//置入概览内容
 function setOverview(list) {
     var overviewPanel = $(".overview .panel");
     overviewPanel.each(function (index,element) {
        $(this).find(".num").text(list[index]);
     });
 };
-//获取编辑模块对象
+//获取应急问题列表
+function getOrderSortByNum(num) {
+    $.ajax({
+        "url": "/repair/admin/getOrderSortByDate",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+            "token":getToken(),
+        },
+        "data": "{\"number\":\""+num+"\"}",
+        "dataType": "json",
+        "success": function (data) {
+            orderTableInit();
+            for(var i  = 0;i<num;i++){
+                    if(data[i] != null){
+                        $(".orderTable .table tr:eq("+i+")").html('<td><label class="location left">'+data[i].location+'</label><label class="time right">'+dateLoad(data[i].beginTime)+'</label></td>');
+                    }
+            }
+            $(".orderTable .footer .btn").html(data.length+'个未处理问题<i class="iconfont icon-right"></i>');
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//获取dateList JSON对象
+function getDateListJson(num) {
+    var dateListJson = new Object();
+    dateListJson.dateList = getDateList(num);
+    return dateListJson;
+}
+//获取dateList对象
 function getDateList(num) {
     var dateList = [];
     var now = new Date();
     for(var i=-num;i<0;i++){
         var date = new Date();
-        date.setDate(now.getDate() + i);
+        date.setDate(now.getDate() + i + 1);
         dateList.push(date.Format("yyyy-MM-dd"));
     }
     return dateList;
+};
+function orderTableInit() {
+    $(".orderTable .table tr").each(function () {
+       $(this).html('<td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td>');
+    });
+    $(".orderTable .footer .btn").html('0个未处理问题<i class="iconfont icon-right"></i>');
 }

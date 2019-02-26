@@ -33,7 +33,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean addUser(User user) {
-        if (userMapper.addUser(user.getId(), user.getPhone(), user.getName()) > 0) {
+        if (userMapper.addUser(user.getPhone(), user.getName()) > 0) {
             return true;
         } else {
             return false;

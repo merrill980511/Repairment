@@ -39,6 +39,7 @@ public class Token {
     public static String sign(Long id, String password){
         try{
             //过期时间
+
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             //私钥以及加密算法
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
@@ -51,6 +52,7 @@ public class Token {
                     .withHeader(header)
                     .withClaim("id", id)
                     .withClaim("password", password)
+                    .withIssuedAt(new Date(System.currentTimeMillis()))
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e){
@@ -60,6 +62,9 @@ public class Token {
 
 
     public static boolean verify(String token){
+        if (token == null){
+            return false;
+        }
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
@@ -70,4 +75,8 @@ public class Token {
             return false;
         }
     }
+
+//    public static boolean clean(){
+//
+//    }
 }

@@ -48,8 +48,8 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:;">
-                    <i class="iconfont icon-chart"></i>图表
+                <a href="step">
+                    <i class="iconfont icon-solution"></i>用户选项
                 </a>
             </li>
             <li>
@@ -124,16 +124,16 @@
                     <div class="body">
                         <table class="table">
                             <tbody>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
-                                <tr><td><label class="location left">经管楼A116</label><label class="time right">2017-10-01 10:53</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
                             </tbody>
                         </table>
                     </div>

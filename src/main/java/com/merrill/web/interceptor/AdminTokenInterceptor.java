@@ -5,6 +5,7 @@ import com.merrill.utils.Token;
 import com.merrill.web.vo.Status;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +21,16 @@ public class AdminTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("UTF-8");
         String token = request.getHeader("token");
+        if (token == null){
+            Cookie[] cookies = request.getCookies();
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("token")){
+                    token = cookie.getValue();
+                }
+            }
+        }
         if (token != null){
+            System.out.println(token);
             if (Token.verify(token)) {
                 return true;
             }

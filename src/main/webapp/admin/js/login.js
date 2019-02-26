@@ -54,7 +54,7 @@ $(function(){
             "success":function(data){
                 if(data.location != null && data.location != ""){
                     setToken(data.token);
-                    location.href = data.location;0
+                    location.href = data.location;
                     return true;
                 }
             },

@@ -29,6 +29,7 @@ $(function(){
        if(newPanelItem != oldPanelItem){
            $(this).parents(".header").find(".panel-item").val(newPanelItem);
            $(".panel-default .header .panel-item").change();
+           $(".footer .addItem").removeClass().addClass("addItem").addClass(newPanelItem);
        }
    });
    //关闭按钮
@@ -72,6 +73,7 @@ function indexHeightInit() {
 function lidInit() {
     dialogInit();
     formInit();
+    $(".lid").hide();
 }
 //对话框初始化
 function dialogInit() {
@@ -89,6 +91,7 @@ function dialogInit() {
         '        </div>';
     $(".lid .dialog").attr("item-id","-2");
     $(".lid .dialog").html(dialogHtml);
+    $(".lid .dialog").hide();
 };
 //对话框显示
 function showDialog(id,title,message,confirm,cancel,confirmClass) {
@@ -123,6 +126,7 @@ function formInit() {
         '        </div>';
     $(".lid .form").attr("item-id","-2");
     $(".lid .form").html(formHtml);
+    $(".lid .form").hide();
 }
 //表单显示
 function showForm(id,title,list,confirm,cancel,confirmClass){
@@ -138,7 +142,6 @@ function showForm(id,title,list,confirm,cancel,confirmClass){
         '<input type="hidden" class="id" value="'+id+'"/>\n'+
         '        </div>\n' +
         '        <div class="body">\n' +
-        listHtml+
         '        </div>\n' +
         '        <div class="footer">\n' +
         '            <button class="'+confirmClass+'">'+confirm+'</button>\n' +
@@ -148,4 +151,12 @@ function showForm(id,title,list,confirm,cancel,confirmClass){
     $(".lid .form").html(formHtml);
     $(".lid").show();
     $(".lid .form").show();
+}
+function addOptionsInTipByItem(item){
+    $(".tip.options ul").append('<li><a class="javascript:;">item</a></li>\n');
+}
+function addOptionsInTipByList(list) {
+    for(var i in list){
+        addOptionsInTipByItem(list[i]);
+    }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.merrill.dao.mapper.UserMapper">
     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <insert id="addUser">
-        INSERT INTO user (id, name, phone) VALUES (#{id}, #{name}, #{phone})
+        INSERT INTO user (name, phone) VALUES (#{name}, #{phone})
     </insert>
     <update id="updateUser">
         UPDATE user SET name = #{name}, phone = #{phone} WHERE id = #{id}
