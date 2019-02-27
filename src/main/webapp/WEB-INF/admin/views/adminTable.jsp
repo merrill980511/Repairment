@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>信息办管理后台</title>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_c1qebix8ucb.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_t7qar5cy6b.css" media="all">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/admin.css">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/adminTable.css">
     <style type="text/css">
@@ -80,6 +80,7 @@
                 </div>
             </div>
             <div class="body">
+                <div class="table-check"><div class="check"><input type="text" class="keyword" placeholder="请输入关键词"/><a href="javascript:;" class="searchAction" title="搜索"><i class="iconfont icon-search"></i></a></div></div>
                 <table class="table">
                     <input type="hidden" id="pageSize" value="5">
                     <input type="hidden" id="currentPage" value="1">

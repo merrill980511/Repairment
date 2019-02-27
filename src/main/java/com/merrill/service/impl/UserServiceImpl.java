@@ -3,6 +3,7 @@ package com.merrill.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.User;
+import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.dao.mapper.UserMapper;
 import com.merrill.query.UserQueryObject;
 import com.merrill.service.IUserService;
@@ -24,6 +25,8 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,7 +36,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean addUser(User user) {
-        if (userMapper.addUser(user.getPhone(), user.getName()) > 0) {
+        if (userMapper.addUser(user.getId(), user.getPhone(), user.getName()) > 0) {
             return true;
         } else {
             return false;
@@ -67,5 +70,16 @@ public class UserServiceImpl implements IUserService {
             pageInfo.setPages(1);
         }
         return pageInfo;
+    }
+
+    @Override
+    public boolean deleteUserAndOrder(Long id) {
+        if (orderMapper.deleteOrderByUserID(id) > 0 &&
+                orderMapper.deleteOrderFinishedByUserID(id) > 0){
+            if (userMapper.deleteUser(id) > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

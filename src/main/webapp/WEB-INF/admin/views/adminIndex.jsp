@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>信息办管理后台</title>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_c1qebix8ucb.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_t7qar5cy6b.css" media="all">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/admin.css">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/adminIndex.css">
     <style type="text/css">

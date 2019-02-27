@@ -21,4 +21,6 @@ public interface IUserService {
     boolean deleteUser(Long id);
 
     PageInfo getUserList(UserQueryObject qo);
+
+    boolean deleteUserAndOrder(Long id);
 }

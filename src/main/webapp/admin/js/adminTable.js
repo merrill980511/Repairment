@@ -9,7 +9,11 @@ var selectItem = [];
 $(function () {
     getPages(totalPages,visiblePages,currentPage);
     $(".panel-default .header .panel-item").on("change",function () {
+        $(".keyword").val("");
         getPages(totalPages,visiblePages,currentPage);
+    });
+    $(".searchAction").on("click",function () {
+        getList($("#pageSize").val(),$("#currentPage").val());
     });
     //确认添加订单
     $(".panel-default").on("click",".addItem.order",function () {
@@ -125,25 +129,26 @@ $(function () {
 //获取表格数据
 function getList(pageSize,currentPage) {
     var panelItem = $(".panel-default .header").find(".panel-item").val();
+    var keyWord = $(".keyword").val();
     switch (panelItem) {
         case "order":
-            getOrderList(pageSize,currentPage);
+            getOrderList(pageSize,currentPage,keyWord);
             break;
         case "order-finished":
-            getOrderFinishedList(pageSize,currentPage);
+            getOrderFinishedList(pageSize,currentPage,keyWord);
             break;
         case "operator":
-            getOperatorList(pageSize,currentPage);
+            getOperatorList(pageSize,currentPage,keyWord);
             break;
         case "user":
-            getUserList(pageSize,currentPage);
+            getUserList(pageSize,currentPage,keyWord);
             break;
         default:
             break;
     };
 }
 //获取订单数据
-function getOrderList(pageSize,currentPage){
+function getOrderList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/admin/getOrderList",
         "method": "post",
@@ -151,7 +156,7 @@ function getOrderList(pageSize,currentPage){
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\"}',
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data != null ){
@@ -169,7 +174,7 @@ function getOrderList(pageSize,currentPage){
     });
 };
 //获取完成订单数据
-function getOrderFinishedList(pageSize,currentPage){
+function getOrderFinishedList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/admin/getOrderFinishedList",
         "method": "post",
@@ -177,7 +182,7 @@ function getOrderFinishedList(pageSize,currentPage){
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\"}',
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data != null ){
@@ -195,7 +200,7 @@ function getOrderFinishedList(pageSize,currentPage){
     });
 };
 //获取运维人员数据
-function getOperatorList(pageSize,currentPage){
+function getOperatorList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/admin/getOperatorList",
         "method": "post",
@@ -203,7 +208,7 @@ function getOperatorList(pageSize,currentPage){
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\"}',
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data != null ){
@@ -221,7 +226,7 @@ function getOperatorList(pageSize,currentPage){
     });
 };
 //获取用户数据
-function getUserList(pageSize,currentPage){
+function getUserList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/admin/getUserList",
         "method": "post",
@@ -229,7 +234,7 @@ function getUserList(pageSize,currentPage){
             "Content-Type": "application/json",
             "token":getToken(),
         },
-        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\"}',
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data != null ){

@@ -52,4 +52,12 @@ public interface OrderMapper {
 
     int updateOrder(@Param("id") Long id, @Param("location") String location, @Param("description") String description,
                     @Param("userDescription") String userDescription, @Param("repairment") String repairment);
+
+    int deleteOrderByUserID(Long id);
+
+    int deleteOrderFinishedByUserID(Long id);
+
+    int addOrder(@Param("userID") Long userID, @Param("location") String location, @Param("phone") String phone,
+                 @Param("description") String description, @Param("userDescription") String userDescription,
+                 @Param("repairment") String repairment, @Param("status") int status);
 }

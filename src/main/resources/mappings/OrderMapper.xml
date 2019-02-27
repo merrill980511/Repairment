@@ -115,6 +115,10 @@
         INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, handle_time, user_description, description, repairment, status)
         VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{handleDate}, #{userDescription}, #{description}, #{repairment}, #{status})
     </insert>
+    <insert id="addOrder">
+        INSERT INTO `order` (user_id, location, phone, user_description, description, repairment, status)
+        VALUES (#{userID}, #{location}, #{phone}, #{userDescription}, #{description}, #{repairment}, #{status})
+    </insert>
     <update id="takeOrder">
         UPDATE `order` SET operator_id = #{operatorID}, status = #{status}, handle_time = #{date} WHERE id = #{orderID}
     </update>
@@ -124,6 +128,12 @@
     </update>
     <delete id="deleteOrderByID">
         DELETE FROM `order` WHERE id = #{id}
+    </delete>
+    <delete id="deleteOrderByUserID">
+        DELETE FROM `order` WHERE user_id = #{id}
+    </delete>
+    <delete id="deleteOrderFinishedByUserID">
+        DELETE FROM `order_finish` WHERE user_id = #{id}
     </delete>
     <select id="getOrderByUserID" resultMap="Order">
         <include refid="orderSelectBase"/>
@@ -135,20 +145,29 @@
     </select>
     <select id="getOrderList" resultMap="Order">
         <include refid="orderSelectBase"/>
-        GROUP BY o.status
-        ORDER BY o.status DESC
+        <where>
+            <if test="keyWord != '' and keyWord != null">
+                o.location LIKE concat('%', #{keyWord}, '%') OR
+                o.description LIKE concat('%', #{keyWord}, '%') OR
+                o.user_description LIKE concat('%', #{keyWord}, '%') OR
+                u.name LIKE concat('%', #{keyWord}, '%') OR
+                op.name LIKE concat('%', #{keyWord}, '%')
+            </if>
+        </where>
+        ORDER BY o.status ASC
     </select>
     <select id="getOrderFinishedList" resultMap="OrderFinished">
         <include refid="orderFinishedSelectBase"/>
         <where>
-            <if test="keyword != null">
+            <if test="keyWord != '' and keyWord != null">
                 o.location LIKE concat('%', #{keyWord}, '%') OR
                 o.description LIKE concat('%', #{keyWord}, '%') OR
                 o.user_description LIKE concat('%', #{keyWord}, '%') OR
-                u.name LIKE ('%', #{keyWord}, '%') OR
-                o.name LIKE ('%', #{keyWord}, '%')
+                u.name LIKE concat('%', #{keyWord}, '%') OR
+                op.name LIKE concat('%', #{keyWord}, '%')
             </if>
         </where>
+        ORDER BY begin_time DESC
     </select>
     <select id="getOrderNumberByStatus" resultType="int">
         SELECT COUNT(*) FROM `order` WHERE status = #{status}

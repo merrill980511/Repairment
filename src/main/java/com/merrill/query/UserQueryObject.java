@@ -11,5 +11,5 @@ import lombok.Data;
  */
 @Data
 public class UserQueryObject extends QueryObject{
-    private String keyword;
+    private String keyWord;
 }

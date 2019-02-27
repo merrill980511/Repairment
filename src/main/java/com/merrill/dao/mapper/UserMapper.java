@@ -18,7 +18,8 @@ import java.util.List;
 public interface UserMapper {
     User getUserByID(Long id);
 
-    int addUser(@Param("phone") String phone, @Param("name") String name);
+    int addUser(@Param("id") Long id, @Param("phone") String phone,
+                @Param("name") String name);
 
     int updateUser(@Param("id") Long id, @Param("phone") String phone,
                    @Param("name") String name);

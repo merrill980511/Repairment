@@ -1,5 +1,6 @@
 package com.merrill.web.controller.admin;
 
+import com.merrill.dao.entity.Order;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.service.IOrderService;
 import com.merrill.web.vo.Status;
@@ -60,6 +61,25 @@ public class OrderController {
     public Object getOrder(@RequestBody Map<String, String> map) {
         String id = map.get("id");
         return orderService.getOrderByID(Long.valueOf(id));
+    }
+
+    @RequestMapping("/addOrder")
+    @ResponseBody
+    public Object addOrder(@RequestBody Map<String, String> map) {
+        Long userID = Long.valueOf(map.get("userID"));
+//        return orderService.getOrderByID(Long.valueOf(id));
+        String location = map.get("location");
+        String userDescription = map.get("userDescription");
+        String description = map.get("phone");
+        String phone = map.get("description");
+        String repairment = map.get("map");
+        if (orderService.addOrder(userID, location, phone,
+                userDescription, description, repairment)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("添加失败，请稍后重试");
+        }
+        return "";
     }
 
     @RequestMapping("/updateOrder")

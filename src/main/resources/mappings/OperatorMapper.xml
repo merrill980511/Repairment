@@ -7,7 +7,7 @@
     </insert>
     <update id="update">
         UPDATE operator SET name = #{name}, phone = #{phone}
-        <if test="password != null">
+        <if test="password != '' and password != null">
             , password = #{password}
         </if>
         WHERE id = #{id}
@@ -21,7 +21,8 @@
     <select id="getOperatorList" resultType="Operator">
         SELECT * FROM operator
         <where>
-            <if test="keyword != null">
+            <if test="keyWord != '' and keyWord != null">
+                id LIKE concat('%', #{keyWord}, '%') OR
                 name LIKE concat('%', #{keyWord}, '%') OR
                 phone LIKE concat('%', #{keyWord}, '%')
             </if>

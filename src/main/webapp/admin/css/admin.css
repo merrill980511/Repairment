@@ -480,3 +480,25 @@ i.action{
 .tip.options{
     width: 100%;
 }
+.table-check{
+    padding: 5px 0px;
+    text-align: right;
+    margin-bottom: 10px;
+}
+.check{
+    border: 1px #dddddd solid;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 0px 10px 0px 2px;
+}
+.keyword{
+    border-radius: 5px;
+    padding: 3px 8px;
+    line-height: 30px;
+    margin-right: 2px;
+    border: none;
+}
+.keyword+a{
+    !important;
+    color: #5e5e5e;
+}

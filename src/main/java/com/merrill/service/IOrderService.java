@@ -35,4 +35,6 @@ public interface IOrderService {
     Order getOrderByID(Long id);
 
     boolean updateOrder(Long id, String location, String description, String userDescription, String repairment);
+
+    boolean addOrder(Long userID, String location, String phone, String userDescription, String description, String repairment);
 }

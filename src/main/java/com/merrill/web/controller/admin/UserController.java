@@ -62,6 +62,18 @@ public class UserController {
         return status;
     }
 
+    @RequestMapping("deleteUserAndOrder")
+    @ResponseBody
+    public Object deleteUserAndOrder(@RequestBody Map<String, String> map) {
+        Long id = Long.valueOf(map.get("id"));
+        if (userService.deleteUserAndOrder(id)) {
+            status.setMessage("true");
+        } else {
+            status.setMessage("删除失败，请稍后重试");
+        }
+        return status;
+    }
+
     @RequestMapping("/getUser")
     @ResponseBody
     public Object getUser(@RequestBody Map<String, String> map) {

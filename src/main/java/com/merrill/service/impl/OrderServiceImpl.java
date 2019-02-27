@@ -141,8 +141,19 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean updateOrder(Long id, String location, String description, String userDescription, String repairment) {
+    public boolean updateOrder(Long id, String location, String description, String userDescription,
+                               String repairment) {
         if (orderMapper.updateOrder(id, location, description, userDescription, repairment) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addOrder(Long userID, String location, String phone, String userDescription,
+                            String description, String repairment) {
+        if (orderMapper.addOrder(userID, location, phone, description, userDescription, repairment, 0) > 0){
             return true;
         } else {
             return false;
