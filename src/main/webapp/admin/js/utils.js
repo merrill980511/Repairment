@@ -14,7 +14,7 @@ function getOrderStatus(status) {
 //通用时间格式化
 function dateLoad(date) {
     var result = new Date(date).Format("yyyy-MM-dd hh:mm:ss");
-    if(result == 'NaN-aN-aN aN:aN:aN'){
+    if(result == 'NaN-aN-aN aN:aN:aN' || date == null){
         result =  "";
     }
     return result;
@@ -100,9 +100,15 @@ function GetDateStr(AddDayCount) {
 function ChangeDateStr(date){
     return date.replace("T", " ");
 };
+function setCookie(name,value) {
+    return $.cookie(name,value,{ expires: 1, path: '/' });
+}
+function getCookie(name) {
+    return $.cookie(name);
+}
 function setToken(value){
-    $.cookie('token',value,{ expires: 1, path: '/' });
+    return setCookie("token",value);
 }
 function getToken() {
-    return $.cookie('token');
+    return getCookie("token");
 }

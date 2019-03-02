@@ -3,7 +3,9 @@ $(function () {
     pageInit();
     //界面初始化
     function pageInit() {
-        if(!infoPanelInit()){
+        if(infoPanelInit()){
+
+        }else{
             formInit();
         }
         var user = getUserInfo(userID);
@@ -11,6 +13,10 @@ $(function () {
     }
     //表单初始化
     function formInit(){
+        var date = new Date();
+        var beginYear = date.getFullYear();
+        date.setDate(date.getDate()+7);
+        var endYear = date.getFullYear();
         $(".form").html('<div class="step">\n' +
             '            <label class="name">报修地点</label>\n' +
             '            <div class="select-view">\n' +
@@ -22,7 +28,15 @@ $(function () {
             '            <div class="select-view">\n' +
             '                <input class="select phone" placeholder="请输入手机号码" maxlength="20"/>\n' +
             '            </div>\n' +
-            '        </div>');
+            '        </div>\n'+
+            '        <div class="step">\n' +
+            '            <label class="name">预约时间</label>\n' +
+            '            <div class="select-view">\n' +
+            '                <input id="reservationTime" class="select reservationTime input" data-options="{\'type\':\'YYYY-MM-DD hh:mm\',\'beginYear\':'+beginYear+',\'endYear\':'+endYear+',\'limitTime\':\'today\'}" type="text" placeholder="请选择预约时间" maxlength="20"/>\n' +
+            '            </div>\n' +
+            '        </div>'
+        );
+        $.date("#reservationTime");
         $(".infoPanel").hide();
         $(".form").show();
         return getNextStep(-1);
@@ -33,7 +47,10 @@ $(function () {
             '        <div class="info"><label class="title">申&ensp;请&ensp;人：</label><label class="user"></label></div>\n' +
             '        <div class="info"><label class="title">地&emsp;&emsp;点：</label><label class="location"></label></div>\n' +
             '        <div class="info"><label class="title">电&emsp;&emsp;话：</label><label class="phone"></label></div>\n' +
-            '        <div class="info"><label class="title">预约时间：</label><label class="beginTime"></label></div>\n' +
+            '        <div class="info"><label class="title">提交时间：</label><label class="beginTime"></label></div>\n' +
+            '        <div class="info"><label class="title">预约时间：</label><label class="reservationTime"></label></div>\n' +
+            '        <div class="info"><label class="title">处理时间：</label><label class="handleTime"></label></div>\n' +
+            '        <div class="info"><label class="title">完成时间：</label><label class="endTime"></label></div>\n' +
             '        <div class="info"><label class="title">状&emsp;&emsp;态：</label><label class="status"></label></div>\n' +
             '        <div class="info"><label class="title">处&ensp;理&ensp;人：</label><label class="operator"></label></div>\n' +
             '        <div class="info"><label class="title">备&emsp;&emsp;注：</label><label class="userDescription"></label></div>\n' +
@@ -122,6 +139,9 @@ $(function () {
             $(".info>.location").text(order.location);
             $(".info>.phone").text(order.phone);
             $(".info>.beginTime").text(dateLoad(order.beginTime));
+            $(".info>.reservationTime").text(dateLoad(order.reservationTime));
+            $(".info>.handleTime").text(dateLoad(order.handleTime));
+            $(".info>.endTime").text(dateLoad(order.endTime));
             $(".info>.status").text(getOrderStatus(order.status));
             $(".info>.operator").text(order.operator == null ? "" : order.operator.name);
             $(".info>.repairment").text(order.repairment);
@@ -165,11 +185,16 @@ $(function () {
     //结果提交
     function submitOrder() {
         var phone = $("input.phone").val();
+        var reservationTime = $("input.reservationTime").val();
         var location = $("input.location").val();
         var userDescription = $("textarea.userDescription").val();
         var submitOrder = false;
         if(!isNotNull(phone)){
             $(".errorMessage>label").text("手机号不能为空！");
+            $(".errorMessage").show();
+            return false;
+        }else if(!isNotNull(reservationTime)) {
+            $(".errorMessage>label").text("预约时间不能为空！");
             $(".errorMessage").show();
             return false;
         }else if(!isNotNull(location)){
@@ -189,7 +214,7 @@ $(function () {
                 "headers": {
                     "Content-Type": "application/json",
                 },
-                "data": '{\"userID\":\"'+userID+'\",\"phone\":\"'+phone+'\",\"location\":\"'+location+'\",\"userDescription\":\"'+userDescription+'\",\"repairment\":\"'+getResult()+'\"}',
+                "data": '{\"userID\":\"'+userID+'\",\"phone\":\"'+phone+'\",\"reservationTime\":\"'+reservationTime+'\",\"location\":\"'+location+'\",\"userDescription\":\"'+userDescription+'\",\"repairment\":\"'+getResult()+'\"}',
                 "dataType": "json",
                 "success": function (data) {
                     if(data.message == 'true'){

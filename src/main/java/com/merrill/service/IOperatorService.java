@@ -25,4 +25,5 @@ public interface IOperatorService {
     PageInfo getOperatorList(OperatorQueryObject qo);
 
     List<Operator> getAllOperatorList();
+
 }

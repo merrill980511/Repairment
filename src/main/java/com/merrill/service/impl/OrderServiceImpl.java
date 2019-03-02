@@ -34,9 +34,9 @@ public class OrderServiceImpl implements IOrderService {
     private UserMapper userMapper;
 
     @Override
-    public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription) {
+    public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription, String reservationTime) {
         User user = userMapper.getUserByID(id);
-        if(orderMapper.saveOrder(id, user.getPhone(), location, repairment, userDescription) > 0){
+        if(orderMapper.saveOrder(id, user.getPhone(), location, repairment, userDescription, reservationTime) > 0){
             return true;
         } else {
             return false;
@@ -98,11 +98,14 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public boolean takeOrder(Long operatorID, Long orderID) {
-        if (orderMapper.takeOrder(operatorID, orderID, 1, new Date()) > 0) {
-            return true;
+    public String takeOrder(Long operatorID, Long orderID) {
+        if (orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1).size() > 0){
+            return "承接订单失败，请先处理完当前订单";
         }
-        return false;
+        if (orderMapper.takeOrder(operatorID, orderID, 1, new Date()) > 0) {
+            return "true";
+        }
+        return "承接订单失败，请稍后重试";
     }
 
     @Override
@@ -158,5 +161,16 @@ public class OrderServiceImpl implements IOrderService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Order getOrderInHandle(Long operatorID) {
+        List<Order> list = orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1);
+        if (list.size() > 0){
+            return list.get(0);
+        } else {
+            return null;
+        }
+
     }
 }

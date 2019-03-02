@@ -31,9 +31,9 @@
                 </a>
                 <div class="hidden options">
                     <ul>
-                        <li><a class="javascript:;"><i class="iconfont icon icon-setting"></i>修改个人信息</a></li>
+                        <li><a class="editAdmin" href="javascript:;"><i class="iconfont icon icon-setting"></i>修改个人信息</a></li>
                         <li class="divider"></li>
-                        <li><a class="javascript:;"><i class="iconfont icon icon-logout"></i>退出登录</a></li>
+                        <li><a class="logout" href="javascript:;"><i class="iconfont icon icon-logout"></i>退出登录</a></li>
                     </ul>
                 </div>
             </li>
@@ -71,16 +71,16 @@
                     <input type="text" class="hidden panel-item" value="order"/>
                     <div class="hidden options">
                         <ul>
-                            <li><a class="javascript:;" panel-item="order"><i class="iconfont icon icon-order"></i>未处理问题</a></li>
-                            <li><a class="javascript:;" panel-item="order-finished"><i class="iconfont icon icon-order"></i>已处理问题</a></li>
-                            <li><a class="javascript:;" panel-item="operator"><i class="iconfont icon icon-team"></i>运维人员</a></li>
-                            <li><a class="javascript:;" panel-item="user"><i class="iconfont icon icon-team"></i>用户</a></li>
+                            <li><a href="javascript:;" panel-item="order"><i class="iconfont icon icon-order"></i>未处理问题</a></li>
+                            <li><a href="javascript:;" panel-item="order-finished"><i class="iconfont icon icon-order"></i>已处理问题</a></li>
+                            <li><a href="javascript:;" panel-item="operator"><i class="iconfont icon icon-team"></i>运维人员&emsp;</a></li>
+                            <li><a href="javascript:;" panel-item="user"><i class="iconfont icon icon-team"></i>用户&emsp;&emsp;&emsp;</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="body">
-                <div class="table-check"><div class="check"><input type="text" class="keyword" placeholder="请输入关键词"/><a href="javascript:;" class="searchAction" title="搜索"><i class="iconfont icon-search"></i></a></div></div>
+                <div class="table-check"><div class="check"><input type="text" class="keyWord" placeholder="请输入关键词" autocomplete="new-check"/><a href="javascript:;" class="searchAction" title="搜索"><i class="iconfont icon-search"></i></a></div></div>
                 <table class="table">
                     <input type="hidden" id="pageSize" value="5">
                     <input type="hidden" id="currentPage" value="1">
@@ -110,6 +110,7 @@
 <script type="text/javascript" src="/repair/admin/js/jqPaginator.js"></script>
 <script type="text/javascript" src="/repair/admin/js/pageFunction.js"></script>
 <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
+<script type="text/javascript" src="/repair/admin/js/formCheck.js"></script>
 <script type="text/javascript" src="/repair/admin/js/adminTable.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.js"></script>
 <script type="text/javascript" src="/repair/admin/js/entity.js"></script>

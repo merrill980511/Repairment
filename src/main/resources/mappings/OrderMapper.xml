@@ -16,6 +16,7 @@
         <result column="location" property="location"/>
         <result column="phone" property="phone"/>
         <result column="begin_time" property="beginTime"/>
+        <result column="reservation_time" property="reservationTime"/>
         <result column="handle_time" property="handleTime"/>
         <result column="description" property="description"/>
         <result column="user_description" property="userDescription"/>
@@ -40,6 +41,7 @@
         <result column="location" property="location"/>
         <result column="phone" property="phone"/>
         <result column="begin_time" property="beginTime"/>
+        <result column="reservation_time" property="reservationTime"/>
         <result column="handle_time" property="handleTime"/>
         <result column="end_time" property="endTime"/>
         <result column="description" property="description"/>
@@ -65,6 +67,7 @@
                o.location,
                o.phone,
                o.begin_time,
+               o.reservation_time,
                o.handle_time,
                o.description,
                o.user_description,
@@ -88,6 +91,7 @@
                o.location,
                o.phone,
                o.begin_time,
+               o.reservation_time,
                o.handle_time,
                o.end_time,
                o.description,
@@ -108,8 +112,8 @@
     </sql>
 
     <insert id="saveOrder">
-        INSERT INTO `order` (user_id, repairment, phone, location, user_description)
-        VALUES (#{id}, #{repairment}, #{phone}, #{location}, #{userDescription})
+        INSERT INTO `order` (user_id, repairment, phone, location, user_description, reservation_time)
+        VALUES (#{id}, #{repairment}, #{phone}, #{location}, #{userDescription}, #{reservationTime})
     </insert>
     <insert id="saveFinishedOrder">
         INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, handle_time, user_description, description, repairment, status)
@@ -185,6 +189,10 @@
     <select id="getOrderFinishedByID" resultMap="OrderFinished">
         <include refid="orderFinishedSelectBase"/>
         WHERE o.id = #{id}
+    </select>
+    <select id="getOrderByOperatorIDAndStatus" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        WHERE op.id = #{id} AND o.status = #{status}
     </select>
 
 </mapper>

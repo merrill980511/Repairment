@@ -50,6 +50,13 @@ public class Order implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date beginTime;
 
+
+    /**
+     * 订单预约时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date reservationTime;
+
     /**
      * 订单处理时间
      */

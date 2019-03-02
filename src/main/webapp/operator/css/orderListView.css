@@ -11,12 +11,32 @@ body,html{
 body *{
     overflow: hidden;
 }
-.table,.infoPanel{
-    margin: 0 auto;
-    width: 100%;
+.bottom-index,.bottom-index *{
+    overflow: visible;
+}
+.table{
+    position: fixed;
+    top: 127px;
+    left: 0;
+    right: 0;
+    height: calc(100% - 127px - 61px);
+    overflow-y: auto;
 }
 .infoPanel{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 61px);
+    overflow-y: auto;
     display: none;
+}
+.homePanel{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 61px);
 }
 .tr,.info{
     position: relative;
@@ -53,8 +73,19 @@ div.action{
     width: 95px;
     float: left;
 }
-.info>label:not(.title){
+.info>label:not(.title),.info>button{
     width: calc(100% - 95px);
+}
+.info>button{
+    color: #FFFFFF;
+    height: 44px;
+    border: none;
+}
+.info>button.finishOrderAction{
+    background-color: #ff5b5b;
+}
+.info>button.quitDisplayOrderAction{
+    background-color: #337ab7;
 }
 .errorMessage{
     width: calc(100% - 185px - 95px - 30px);
@@ -71,7 +102,7 @@ div.action{
 label.red{
     color: #ff5b5b;
 }
-.takeOrderAction{
+.takeOrderAction,.displayOrderAction{
     width: 125px;
     margin: 5px 0px;
     height: 34px;
@@ -82,15 +113,21 @@ label.red{
     background-color: #009fe8;
     color: #ffffff;
 }
+.displayOrderAction:enabled{
+    background-color: #ff9900;
+    color: #ffffff;
+}
 #page_devide{
-    width: calc(100% - 30px - 2px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 10px 15px;
     border-bottom: solid 1px #e0e0e0;
     background: rgba(240,240,240,1);
 }
 #pages{
     background-color: #ffffff;
-    border: solid 1px #e0e0e0;
 }
 .pageButton{
     display: inline-block;
@@ -125,4 +162,136 @@ label.red{
 }
 .next,.last{
     float: right;
+}
+.homePanel>div{
+    position: relative;
+}
+.homePanel>.header{
+    padding: 10px 15px;
+    border-bottom: solid 1px #e0e0e0;
+    background: #009fe8;
+}
+.homePanel>.header{
+    font-size: 22px;
+    line-height: 50px;
+    height: 50px;
+}
+.homePanel>.header .name{
+    color: #FFFFFF;
+}
+.homePanel>.header .status{
+    float: right;
+}
+span.free{
+    color:#545454;
+}
+span.normal{
+    color: #0fff5d;
+}
+span.busy{
+    color: #ff5b5b;
+}
+.homePanel>.content{
+    padding: 10px 15px;
+    background-color: #e7e7e7;
+    height: calc(100% - 71px);
+}
+.homePanel>.content button{
+    width: 50%;
+    margin: 15% 25%;
+    color: #FFFFFF;
+    height: 44px;
+    border: none;
+    cursor: pointer;
+}
+button.checkInAction{
+    background-color: #009fe8;
+}
+button.checkOutAction{
+    background-color: #ff5b5b;
+}
+.bottom-index{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top:solid 1px #e0e0e0;
+    box-shadow: -1px 0px 3px 0px rgba(147,147,147,.5);
+}
+.bottom-index>div{
+    width: 25%;
+    position: relative;
+}
+.bottom-index div{
+    float: left;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+}
+.bottom-index div:not(.hidden){
+    display: inline-block;
+}
+.indexSelect div{
+    width: 100%;
+}
+.bottom-index div{
+    background: #ffffff;
+    color: #5e5e5e;
+}
+.bottom-index div:not(.indexSelect):hover, .bottom-index div:not(.indexSelect):active {
+    background: #cccccc;
+    color: #252525;
+}
+#check{
+    width: 80%;
+    margin: 10px auto;
+}
+#keyWord{
+    width: 80%;
+    background-color: #ffffff;
+    border: solid 1px #e0e0e0;
+    line-height: 40px;
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+#checkAction{
+    width: 20%;
+    background: #009fe8;
+    color: #ffffff;
+    border: none;
+    height: 42px;
+    float: left;
+}
+.info:last-child{
+    margin-bottom: 120px;
+}
+tr.order:last-child{
+    margin-bottom: 120px;
+}
+.indexSelectItem{
+    position: relative;
+}
+.options{
+    position: absolute;
+    bottom: 64px;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: -1px 0px 3px 0px rgba(147,147,147,.5);
+    box-shadow: -1px 0px 3px 0px rgba(147,147,147,.5);
+}
+.options>div{
+    border-bottom: 1px solid #e0e0e0;
+}
+.options>div:last-child{
+    border: none;
+}
+.hidden{
+    display: none;
 }

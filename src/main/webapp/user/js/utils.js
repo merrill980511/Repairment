@@ -11,9 +11,13 @@ function getOrderStatus(status) {
            return "无";
    }
 };
-//时间格式化
+//通用时间格式化
 function dateLoad(date) {
-    return new Date(date).Format("yyyy-MM-dd hh:mm:ss");
+    var result = new Date(date).Format("yyyy-MM-dd hh:mm:ss");
+    if(result == 'NaN-aN-aN aN:aN:aN' || date == null){
+        result =  "";
+    }
+    return result;
 }
 //时间格式化通用函数
 Date.prototype.Format = function (fmt) {

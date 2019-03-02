@@ -46,6 +46,20 @@ $(function(){
         $(".lid .form").hide();
         $(".lid").hide();
     });
+    //管理员修改个人信息
+    $(".editAdmin").on("click",function(){
+        var id = getCookie("id");
+        showForm(id,"修改密码","确认修改","取消修改","editAction editAdminAction");
+        setAdminFormInfo();
+    });
+    //确认修改密码
+    $(".form").on("click",".editAdminAction",function () {
+        if(isSubmit()){
+            var id = $(".form").attr("item-id");
+            var password = $(".lid .form .body input.password").val();
+            updatePassword(id,password);
+        }
+    });
 });
 //左侧导航栏下拉框图标变换
 function switchSlidIcon(div){
@@ -129,14 +143,7 @@ function formInit() {
     $(".lid .form").hide();
 }
 //表单显示
-function showForm(id,title,list,confirm,cancel,confirmClass){
-    var listHtml = '';
-    for(var i in list){
-        listHtml += '<div class="info">\n' +
-            '                <span class="name">'+list[i].name+'</span>\n' +
-            '                <input class="content" type="text" value="'+list[i].content+'"/>\n' +
-            '            </div>';
-    }
+function showForm(id,title,confirm,cancel,confirmClass){
     var formHtml = '<div class="header">\n' +
         '            '+title+'<i class="iconfont icon-close closeAction  action" title="关闭"></i>\n' +
         '<input type="hidden" class="id" value="'+id+'"/>\n'+
@@ -144,13 +151,43 @@ function showForm(id,title,list,confirm,cancel,confirmClass){
         '        <div class="body">\n' +
         '        </div>\n' +
         '        <div class="footer">\n' +
-        '            <button class="'+confirmClass+'">'+confirm+'</button>\n' +
+        '            <button class="submit '+confirmClass+'">'+confirm+'</button>\n' +
         '            <button class="cancelAction">'+cancel+'</button>\n' +
         '        </div>';
     $(".lid .form").attr("item-id",id);
     $(".lid .form").html(formHtml);
     $(".lid").show();
     $(".lid .form").show();
+}
+function setAdminFormInfo(){
+    $(".lid .form .body").html(getEditAdminFormBodyHTML());
+}
+function getEditAdminFormBodyHTML() {
+    var orderFormBodyHTML = '<div class="info"><span class="name">密码</span><input type="password" class="content password" autocomplete="new-password"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+        '<div class="info"><span class="name">确认密码</span><input type="password" class="content re_password"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
+    return orderFormBodyHTML;
+}
+function updatePassword(id,password) {
+    $.ajax({
+        "url": "/repair/admin/editPasswordCommit",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+            "token":getToken(),
+        },
+        "data": "{\"id\":\""+id+"\",\"password\":\""+password+"\"}",
+        "dataType": "json",
+        "success": function (data) {
+            if(data.message = "true" ){
+                lidInit();
+            }else{
+                alert(data.message);
+            }
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
 }
 function addOptionsInTipByItem(item){
     $(".tip.options ul").append('<li><a class="javascript:;">item</a></li>\n');

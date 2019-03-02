@@ -253,7 +253,8 @@ li.divider{
     background-color: #eee;
     border-color: #ddd;
 }
-.pageActive{
+.pageActive,.pageActive:hover{
+    !important;
     z-index: 10;
     color: #fff;
     cursor: default;
@@ -373,6 +374,8 @@ i.action{
 .lid .body{
     padding: 5px 10px;
     height: calc(100% - 51px - 60px);
+}
+.lid .form .body{
     overflow-y:auto;
 }
 .lid .header{
@@ -399,8 +402,13 @@ i.action{
 }
 .lid .body .info>span:not(.binding),.lid .body .info>input,.lid .body .info>textarea,.lid .body .info>select{
     width: 100%;
+    position: relative;
+    z-index: 4000;
 }
-.lid .body .info>span.binding,.lid .body .info>span:not(.binding),.lid .body .info>input,.lid .body .info>select{
+.lid .body .info>input:enabled,.lid .body .info>textarea:enabled{
+    background: transparent;
+}
+.lid .body .info>span.binding,.lid .body .info>span:not(.binding),.lid .body .info>input,.lid .body .info .tip,.lid .body .info>select{
     line-height: 30px;
 }
 .lid .body .info>input,.lid .body .info>textarea,.lid .body .info>select{
@@ -418,7 +426,7 @@ i.action{
 .lid .form>div{
     width: 460px;
 }
-.lid .footer{
+.lid .form .footer{
     position:fixed;
     bottom: 0;
     right: 0;
@@ -491,14 +499,47 @@ i.action{
     display: inline-block;
     padding: 0px 10px 0px 2px;
 }
-.keyword{
+.keyWord{
     border-radius: 5px;
     padding: 3px 8px;
     line-height: 30px;
     margin-right: 2px;
     border: none;
 }
-.keyword+a{
+.keyWord+a{
     !important;
     color: #5e5e5e;
+}
+.errorMessage{
+    width: 100%;
+    padding:5px;
+    color: #ff5b5b;
+    font-size: 14px;
+    line-height: 18px;
+    overflow: hidden;
+    display: none;
+}
+.errorMessage>img{
+    width: 18px;
+    height: 18px;
+    position: relative;
+    margin-right: 2px;
+}
+.info{
+    position: relative;
+}
+.tip{
+    color: #aaa;
+    position: absolute;
+    top: 35px;
+    left: 26px;
+    z-index: 2000;
+    padding: 3px 0px;
+    border-radius: 5px;
+    overflow: hidden;
+    width: calc(100% - 26px - 10px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
 }

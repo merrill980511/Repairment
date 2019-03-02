@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.merrill.dao.mapper.AttendenceMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <resultMap id="Attendence" type="Attendence">
+        <id column="id" property="id"/>
+        <result column="begin_time" property="checkinTime"/>
+        <result column="reservation_time" property="checkoutTime"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <association property="operator" javaType="Operator">
+            <id column="op_id" property="id"/>
+            <result column="op_open_id" property="openID"/>
+            <result column="op_name" property="name"/>
+            <result column="op_phone" property="phone"/>
+        </association>
+    </resultMap>
+
+    <sql id="selectBase">
+        SELECT a.id,
+               a.check_in_time,
+               a.check_out_time,
+               a.description,
+               a.status,
+               op.id      AS op_id,
+               op.open_id AS op_open_id,
+               op.name    AS op_name,
+               op.phone   AS op_phone
+        FROM attendence a
+                 LEFT JOIN operator op on a.operator_id = op.id
+    </sql>
+
+    <insert id="checkin">
+        INSERT INTO attendence(user_id, status)
+    </insert>
+    <update id="checkout">
+        UPDATE attendence
+        SET check_out_time = #{date}
+        WHERE id = #{id}
+    </update>
+    <select id="getLastID" resultType="long">
+        SELECT LAST_INSERT_ID()
+    </select>
+    <select id="getAttendenceByOperatorID" resultType="Attendence">
+        <include refid="selectBase"/>
+        WHERE op.id = #{operatorID} AND (a.status = 0 OR a.status = 1)
+    </select>
+
+</mapper>

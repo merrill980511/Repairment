@@ -10,6 +10,7 @@
 <head>
     <title>运维</title>
     <link rel="stylesheet" type="text/css" href="/repair/operator/css/orderListView.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_gujzm24hyip.css" media="all">
     <script type="text/javascript" src="/repair/operator/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/repair/operator/js/utils.js"></script>
     <script type="text/javascript" src="/repair/operator/js/jqPaginator.js"></script>
@@ -21,23 +22,25 @@
 <input type="hidden" id="totalPages" value="1"/>
 <input type="hidden" id="currentPage" value="1"/>
 <input type="hidden" id="pageSize" value="5"/>
+<input type="hidden" id="table-item" value="checkIn"/>
 <div id="page_devide">
     <div id="pages"></div>
+    <div id="check"><input type="text" id="keyWord"><button id="checkAction"><i class="iconfont icon-search"></i></button></div>
 </div>
-<div class="table">
-    <div class="tr">
-        <div class="th location">地点</div><div class="th userDescription">用户备注</div><div class="th repairment">提交表单</div><div class="th action">操作</div>
+<div class="table"></div>
+<div class="infoPanel"></div>
+<div class="homePanel"></div>
+<div class="bottom-index">
+    <div class="indexButton checkIn" table-item="checkIn">打卡</div>
+    <div class="indexButton order" table-item="order">未处理</div>
+    <div class="indexButton handlingOrder" table-item="handlingOrder">处理中</div>
+    <div class="indexSelect">
+        <div class="indexSelectItem">运维<i class="iconfont icon-up"></i></div>
+        <div class="options hidden">
+            <div class="indexButton myOrder" table-item="myOrder">我的运维</div>
+            <div class="indexButton order-finished" table-item="order-finished">历史运维</div>
+        </div>
     </div>
-</div>
-<div class="infoPanel">
-    <div class="info"><label class="title">申&ensp;请&ensp;人：</label><label class="user"></label></div>
-    <div class="info"><label class="title">地&emsp;&emsp;点：</label><label class="location"></label></div>
-    <div class="info"><label class="title">电&emsp;&emsp;话：</label><label class="phone"></label></div>
-    <div class="info"><label class="title">预约时间：</label><label class="beginTime"></label></div>
-    <div class="info"><label class="title">状&emsp;&emsp;态：</label><label class="status"></label></div>
-    <div class="info"><label class="title">处&ensp;理&ensp;人：</label><label class="operator"></label></div>
-    <div class="info"><label class="title">备&emsp;&emsp;注：</label><label class="userDescription"></label></div>
-    <div class="info"><label class="title">报修信息：</label><label class="repairment"></label></div>
 </div>
 </body>
 </html>

@@ -22,10 +22,10 @@
 <div id="frame">
     <div id="logo">信息办后台管理</div>
     <div id="form">
-        <div class="info"><input type="text" placeholder="请输入登录账号" id="id" autofocus/>
+        <div class="info"><input type="text" placeholder="请输入登录账号" class="id" autofocus/>
             <div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div>
         </div>
-        <div class="info"><input type="password" placeholder="请输入密码" id="password" maxlength="16"/>
+        <div class="info"><input type="password" placeholder="请输入密码" class="password" maxlength="16" autocomplete="off" autocapitalize="off"/>
             <div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div>
         </div>
         <button id="loginAction">确认登录</button>

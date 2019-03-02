@@ -1,6 +1,6 @@
 $(function(){
-    var id = $("#id");
-    var password = $("#password");
+    var id = $(".id");
+    var password = $(".password");
     var loginAction = $("#loginAction");
     //回车
     $(document).on("keydown",function(event){
@@ -55,6 +55,7 @@ $(function(){
                 if(data.location != null && data.location != ""){
                     setToken(data.token);
                     location.href = data.location;
+                    setCookie("id",id.val());
                     return true;
                 }
             },

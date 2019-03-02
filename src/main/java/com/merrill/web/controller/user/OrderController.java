@@ -32,7 +32,7 @@ public class OrderController {
         String userID = map.get("userID");
         Long id = Long.valueOf(userID);
         if (orderService.saveOrder(id, map.get("phone"), map.get("repairment"),
-                map.get("location"), map.get("userDescription"))) {
+                map.get("location"), map.get("userDescription"), map.get("reservationTime"))) {
             status.setMessage("true");
         } else {
             status.setMessage("保存失败，请稍后再提交");

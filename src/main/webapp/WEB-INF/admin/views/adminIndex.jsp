@@ -31,9 +31,9 @@
                     </a>
                     <div class="hidden options">
                         <ul>
-                            <li><a class="javascript:;"><i class="iconfont icon icon-setting"></i>修改个人信息</a></li>
+                            <li><a class="editAdmin" href="javascript:;"><i class="iconfont icon icon-setting"></i>修改个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a class="javascript:;"><i class="iconfont icon icon-logout"></i>退出登录</a></li>
+                            <li><a class="logout" href="javascript:;"><i class="iconfont icon icon-logout"></i>退出登录</a></li>
                         </ul>
                     </div>
                 </li>
@@ -161,6 +161,7 @@
     <script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/formCheck.js"></script>
     <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
     <script type="text/javascript" src="/repair/admin/js/adminIndex.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.js"></script>

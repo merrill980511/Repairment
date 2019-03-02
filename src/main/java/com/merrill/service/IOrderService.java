@@ -5,7 +5,6 @@ import com.merrill.dao.entity.Order;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.web.vo.OrderRate;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,8 @@ import java.util.List;
  * Description:
  */
 public interface IOrderService {
-    boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription);
+    boolean saveOrder(Long id, String phone, String repairment, String location,
+                      String userDescription, String reservationTime);
 
     Order getOrderByUserID(Long id);
 
@@ -26,7 +26,7 @@ public interface IOrderService {
 
     PageInfo getOrderFinishedList(OrderQueryObject qo);
 
-    boolean takeOrder(Long operatorID, Long orderID);
+    String takeOrder(Long operatorID, Long orderID);
 
     List<OrderRate> getOrderRateListByDateList(List<String> dates);
 
@@ -37,4 +37,6 @@ public interface IOrderService {
     boolean updateOrder(Long id, String location, String description, String userDescription, String repairment);
 
     boolean addOrder(Long userID, String location, String phone, String userDescription, String description, String repairment);
+
+    Order getOrderInHandle(Long operatorID);
 }

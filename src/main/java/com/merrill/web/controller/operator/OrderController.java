@@ -51,12 +51,15 @@ public class OrderController {
     public Object takeOrder(@RequestBody Map<String, String> map){
         Long operatorID = Long.valueOf(map.get("operatorID"));
         Long orderID = Long.valueOf(map.get("orderID"));
-        if (orderService.takeOrder(operatorID, orderID)){
-            status.setMessage("true");
-        } else {
-            status.setMessage("承接订单失败，请稍后重试");
-        }
+        status.setMessage(orderService.takeOrder(operatorID, orderID));
         return status;
+    }
+
+    @RequestMapping("/getOrderInHandle")
+    @ResponseBody
+    public Object getOrderInHandle(@RequestBody Map<String, String> map){
+        Long operatorID = Long.valueOf(map.get("operatorID"));
+        return orderService.getOrderInHandle(operatorID);
     }
 
     @RequestMapping("/getOrder")
