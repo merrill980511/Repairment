@@ -103,7 +103,7 @@ $(function () {
         submitOrder();
     });
     //点击完成订单
-    $(".finishOrder").on("click",function () {
+    $(".infoPanel").on("click",".finishOrder",function () {
         var orderID = $(this).parents('.infoPanel').find('.id').val();
         finishOrder(orderID);
     });

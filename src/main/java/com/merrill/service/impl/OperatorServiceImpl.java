@@ -2,7 +2,9 @@ package com.merrill.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.merrill.dao.entity.Attendence;
 import com.merrill.dao.entity.Operator;
+import com.merrill.dao.mapper.AttendenceMapper;
 import com.merrill.dao.mapper.OperatorMapper;
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.service.IOperatorService;
@@ -26,6 +28,8 @@ public class OperatorServiceImpl implements IOperatorService {
 
     @Autowired
     private OperatorMapper operatorMapper;
+    @Autowired
+    private AttendenceMapper attendenceMapper;
 
     @Override
     public boolean add(Operator operator) {
@@ -79,6 +83,16 @@ public class OperatorServiceImpl implements IOperatorService {
     @Override
     public List<Operator> getAllOperatorList() {
         return operatorMapper.getAllOperatorList();
+    }
+
+    @Override
+    public boolean isWork(Long operatorID) {
+        Attendence attendence = attendenceMapper.getAttendenceByOperatorID(operatorID);
+        if (attendence == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

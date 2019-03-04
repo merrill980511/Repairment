@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.merrill.dao.mapper.OrderMapper">
-    <cache type="org.mybatis.caches.ehcache.EhcacheCache" >
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
         <property name="timeToIdleSeconds" value="3600"/>
         <property name="timeToLiveSeconds" value="3600"/>
-        <!-- 同ehcache参数maxElementsInMemory -->
         <property name="maxEntriesLocalHeap" value="1000"/>
-        <!-- 同ehcache参数maxElementsOnDisk -->
         <property name="maxEntriesLocalDisk" value="10000000"/>
         <property name="memoryStoreEvictionPolicy" value="LRU"/>
     </cache>
@@ -116,28 +114,44 @@
         VALUES (#{id}, #{repairment}, #{phone}, #{location}, #{userDescription}, #{reservationTime})
     </insert>
     <insert id="saveFinishedOrder">
-        INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, handle_time, user_description, description, repairment, status)
-        VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{handleDate}, #{userDescription}, #{description}, #{repairment}, #{status})
+        INSERT INTO order_finish (id, user_id, operator_id, location, phone, begin_time, handle_time, user_description,
+                                  description, repairment, status, reservation_time)
+        VALUES (#{id}, #{userID}, #{operatorID}, #{location}, #{phone}, #{beginDate}, #{handleDate}, #{userDescription},
+                #{description}, #{repairment}, #{status}, #{reservationDate})
     </insert>
     <insert id="addOrder">
         INSERT INTO `order` (user_id, location, phone, user_description, description, repairment, status)
         VALUES (#{userID}, #{location}, #{phone}, #{userDescription}, #{description}, #{repairment}, #{status})
     </insert>
     <update id="takeOrder">
-        UPDATE `order` SET operator_id = #{operatorID}, status = #{status}, handle_time = #{date} WHERE id = #{orderID}
+        UPDATE `order`
+        SET operator_id = #{operatorID},
+            status      = #{status},
+            handle_time = #{date}
+        WHERE id = #{orderID}
     </update>
     <update id="updateOrder">
-        UPDATE `order` SET description = #{description}, user_description = #{userDescription},
-                           location = #{location}, repairment = #{repairment} WHERE id = #{id}
+        UPDATE `order`
+        SET description      = #{description},
+            user_description = #{userDescription},
+            location         = #{location},
+            repairment       = #{repairment}
+        WHERE id = #{id}
     </update>
     <delete id="deleteOrderByID">
-        DELETE FROM `order` WHERE id = #{id}
+        DELETE
+        FROM `order`
+        WHERE id = #{id}
     </delete>
     <delete id="deleteOrderByUserID">
-        DELETE FROM `order` WHERE user_id = #{id}
+        DELETE
+        FROM `order`
+        WHERE user_id = #{id}
     </delete>
     <delete id="deleteOrderFinishedByUserID">
-        DELETE FROM `order_finish` WHERE user_id = #{id}
+        DELETE
+        FROM `order_finish`
+        WHERE user_id = #{id}
     </delete>
     <select id="getOrderByUserID" resultMap="Order">
         <include refid="orderSelectBase"/>
@@ -174,13 +188,19 @@
         ORDER BY begin_time DESC
     </select>
     <select id="getOrderNumberByStatus" resultType="int">
-        SELECT COUNT(*) FROM `order` WHERE status = #{status}
+        SELECT COUNT(*)
+        FROM `order`
+        WHERE status = #{status}
     </select>
     <select id="getOrderNumberByDate" resultType="int">
-        select COUNT(*) from `order` where to_days(begin_time) = to_days(#{date});
+        SELECT COUNT(*)
+        from `order`
+        where to_days(begin_time) = to_days(#{date});
     </select>
     <select id="getOrderFinishedNumberByDate" resultType="int">
-        select COUNT(*) from `order_finish` where to_days(begin_time) = to_days(#{date});
+        SELECT COUNT(*)
+        from `order_finish`
+        where to_days(begin_time) = to_days(#{date});
     </select>
     <select id="getOrderByNumber" resultMap="Order">
         <include refid="orderSelectBase"/>
@@ -193,6 +213,40 @@
     <select id="getOrderByOperatorIDAndStatus" resultMap="Order">
         <include refid="orderSelectBase"/>
         WHERE op.id = #{id} AND o.status = #{status}
+    </select>
+    <select id="getOrderListByOperatorID" resultMap="Order">
+        <include refid="orderSelectBase"/>
+        WHERE op.id = #{id}
+        <if test="keyWord != '' and keyWord != null">
+            , AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
+        ORDER BY o.status ASC
+        LIMIT #{start}, #{pageSize}
+    </select>
+    <select id="getOrderFinishedListByOperatorID" resultMap="Order">
+        <include refid="orderFinishedSelectBase"/>
+        WHERE op.id = #{id}
+        <if test="keyWord != '' and keyWord != null">
+            , AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
+        ORDER BY o.status ASC
+        LIMIT #{start}, #{pageSize}
+    </select>
+    <select id="getOrderNumberByOperatorID" resultType="int">
+        SELECT COUNT(*) FROM `order` WHERE operator_id = #{id}
+    </select>
+    <select id="getOrderFinishedNumberByOperatorID" resultType="int">
+        SELECT COUNT(*) FROM `order_finish` WHERE operator_id = #{id}
     </select>
 
 </mapper>

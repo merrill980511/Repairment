@@ -11,11 +11,6 @@
     <title>运维</title>
     <link rel="stylesheet" type="text/css" href="/repair/operator/css/orderListView.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_gujzm24hyip.css" media="all">
-    <script type="text/javascript" src="/repair/operator/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/repair/operator/js/utils.js"></script>
-    <script type="text/javascript" src="/repair/operator/js/jqPaginator.js"></script>
-    <script type="text/javascript" src="/repair/operator/js/pageFunction.js"></script>
-    <script type="text/javascript" src="/repair/operator/js/orderListView.js"></script>
 </head>
 <body>
 <input type="hidden" id="operatorID" value="1"/>
@@ -42,5 +37,10 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/repair/operator/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/repair/operator/js/utils.js"></script>
+<script type="text/javascript" src="/repair/operator/js/jqPaginator.js"></script>
+<script type="text/javascript" src="/repair/operator/js/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/operator/js/orderListView.js"></script>
 </body>
 </html>

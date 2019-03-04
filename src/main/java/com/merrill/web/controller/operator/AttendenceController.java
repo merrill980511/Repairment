@@ -31,17 +31,20 @@ public class AttendenceController {
     @Autowired
     private Status status;
 
-    @RequestMapping("/checkin")
+    @RequestMapping("/checkIn")
     @ResponseBody
     public Object checkin(@RequestBody Map<String, String> map, HttpServletRequest req) {
         RequestUtil.getClientIpAddress(req);
         Long id = Long.valueOf(map.get("operatorID"));
-        Map<String, Object> temp = new HashMap<>();
-        temp.put("attendenceID", attendenceService.checkin(id));
-        return temp;
+        if (attendenceService.checkin(id)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("打卡失败，请稍后重试");
+        }
+        return status;
     }
 
-    @RequestMapping("/checkout")
+    @RequestMapping("/checkOut")
     @ResponseBody
     public Object checkout(@RequestBody Map<String, String> map) {
         Long operatorID = Long.valueOf(map.get("operatorID"));
@@ -49,9 +52,9 @@ public class AttendenceController {
         return status;
     }
 
-    @RequestMapping("/getMyAttendence")
+    @RequestMapping("/getAttendence")
     @ResponseBody
-    public Object getMyAttendence(@RequestBody Map<String, String> map) {
+    public Object getAttendence(@RequestBody Map<String, String> map) {
         Long operatorID = Long.valueOf(map.get("operatorID"));
         return attendenceService.getAttendenceByOperatorID(operatorID);
     }

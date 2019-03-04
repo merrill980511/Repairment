@@ -2,9 +2,14 @@ package com.merrill.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.merrill.dao.entity.Attendence;
+import com.merrill.dao.entity.Operator;
+import com.merrill.dao.mapper.AttendenceMapper;
+import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.utils.DateUtil;
 import com.merrill.web.vo.OrderRate;
+import com.merrill.web.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +37,16 @@ public class OrderServiceImpl implements IOrderService {
     private OrderMapper orderMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AttendenceMapper attendenceMapper;
 
     @Override
-    public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription, String reservationTime) {
+    public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription, Date reservationTime) {
         User user = userMapper.getUserByID(id);
-        if(orderMapper.saveOrder(id, user.getPhone(), location, repairment, userDescription, reservationTime) > 0){
+        if (reservationTime == null){
+            reservationTime = new Date();
+        }
+        if(orderMapper.saveOrder(id, phone, location, repairment, userDescription, reservationTime) > 0){
             return true;
         } else {
             return false;
@@ -59,14 +69,14 @@ public class OrderServiceImpl implements IOrderService {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     null, order.getLocation(), order.getPhone(),
                     order.getBeginTime(), order.getHandleTime(), order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 2) <= 0){
+                    order.getDescription(), order.getRepairment(), 2, order.getReservationTime()) <= 0){
                 return false;
             }
         } else {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     order.getOperator().getId(), order.getLocation(), order.getPhone(),
                     order.getBeginTime(), order.getHandleTime(),order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 2) <= 0){
+                    order.getDescription(), order.getRepairment(), 2, order.getReservationTime()) <= 0){
                 return false;
             }
         }
@@ -99,8 +109,15 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public String takeOrder(Long operatorID, Long orderID) {
+        Attendence attendence = attendenceMapper.getAttendenceByOperatorID(operatorID);
+        if (attendence == null){
+            return "您未打卡签到，请先签到";
+        }
         if (orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1).size() > 0){
             return "承接订单失败，请先处理完当前订单";
+        }
+        if (attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 1) < 0){
+            return "承接订单失败，请稍后重试";
         }
         if (orderMapper.takeOrder(operatorID, orderID, 1, new Date()) > 0) {
             return "true";
@@ -130,11 +147,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> getOrderByNumber(int number) {
         return orderMapper.getOrderByNumber(number);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order getOrderByID(Long id) {
         Order order = orderMapper.getOrderByID(id);
         if (order == null){
@@ -164,6 +183,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order getOrderInHandle(Long operatorID) {
         List<Order> list = orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1);
         if (list.size() > 0){
@@ -172,5 +192,44 @@ public class OrderServiceImpl implements IOrderService {
             return null;
         }
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page getOrderListByOperatorID(OperatorQueryObject qo) {
+        int currentPage = qo.getCurrentPage();
+        int pageSize = qo.getPageSize();
+        int start = pageSize * (currentPage - 1);
+        Long id = qo.getOperatorID();
+        int orderNum = orderMapper.getOrderNumberByOperatorID(id);
+        int orderFinishedNum = orderMapper.getOrderFinishedNumberByOperatorID(id);
+        int total = orderNum + orderFinishedNum;
+        String keyWord = qo.getKeyWord();
+        List<Order> list = orderMapper.getOrderListByOperatorID(start,
+                pageSize, id, keyWord);
+        int remain = pageSize;
+        if (list.size() != 0){
+            start = 0;
+            remain = start + pageSize - orderNum;
+        } else {
+            start = start - orderNum;
+        }
+        //防止非第一次查询的缓存
+        if (list.size() < pageSize){
+            if (remain > 0){
+                list.addAll(orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord));
+            }
+        }
+        if (list.size() > pageSize){
+            remain = total - pageSize * (currentPage - 1);
+            start = pageSize * (currentPage - 1) - orderNum;
+            list = orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord);
+        }
+        Page page = new Page();
+        page.setPageNum(currentPage);
+        page.setPages(total % pageSize == 0 ? total / pageSize : total / pageSize + 1);
+        page.setList(list);
+        page.setPageSize(pageSize);
+        return page;
     }
 }

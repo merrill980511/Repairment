@@ -1006,11 +1006,12 @@
     </key>
     <column id="261" parent="249" name="id">
       <Position>1</Position>
-      <DataType>bigint(20)|0s</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="262" parent="249" name="user_id">
+    <column id="262" parent="249" name="operator_id">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>

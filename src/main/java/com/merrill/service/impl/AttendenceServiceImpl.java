@@ -25,14 +25,21 @@ public class AttendenceServiceImpl implements IAttendenceService {
     private AttendenceMapper attendenceMapper;
 
     @Override
-    public Long checkin(Long id) {
-        attendenceMapper.checkin(id);
-        return attendenceMapper.getLastID();
+    public boolean checkin(Long id) {
+        if (attendenceMapper.getAttendenceByOperatorID(id) != null){
+            return false;
+        }
+        if (attendenceMapper.checkin(id) > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public String checkout(Long id) {
-        if (attendenceMapper.checkout(id, new Date()) > 0){
+        Attendence attendence = attendenceMapper.getAttendenceByOperatorID(id);
+        if (attendenceMapper.checkout(attendence.getId(), new Date()) > 0){
             return "true";
         } else {
             return "打卡失败，请稍后重试";

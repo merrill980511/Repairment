@@ -1,6 +1,8 @@
 package com.merrill.web.controller.operator;
 
+import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
+import com.merrill.service.IOperatorService;
 import com.merrill.service.IOrderService;
 import com.merrill.web.vo.Status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class OrderController {
 
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private IOperatorService operatorService;
 
     @Autowired
     private Status status;
@@ -50,6 +55,9 @@ public class OrderController {
     @ResponseBody
     public Object takeOrder(@RequestBody Map<String, String> map){
         Long operatorID = Long.valueOf(map.get("operatorID"));
+        if (operatorService.isWork(operatorID)){
+            status.setMessage("未处于上班时间，请先打卡");
+        }
         Long orderID = Long.valueOf(map.get("orderID"));
         status.setMessage(orderService.takeOrder(operatorID, orderID));
         return status;
@@ -66,7 +74,18 @@ public class OrderController {
     @ResponseBody
     public Object getOrder(@RequestBody Map<String, String> map) {
         Long orderID = Long.valueOf(map.get("orderID"));
-//        return orderService.getOrderByID(orderID);
-        return null;
+        return orderService.getOrderByID(orderID);
     }
+
+    @RequestMapping("/getMyOrderList")
+    @ResponseBody
+    public Object getMyOrderList(@RequestBody OperatorQueryObject qo) {
+        return orderService.getOrderListByOperatorID(qo);
+    }
+
+//    @RequestMapping("/finishOrder")
+//    @ResponseBody
+//    public Object finishOrder(@RequestBody Map<String, String> map) {
+//        return orderService.getOrderListByOperatorID(qo);
+//    }
 }

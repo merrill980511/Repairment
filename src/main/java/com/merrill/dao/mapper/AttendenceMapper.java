@@ -16,11 +16,13 @@ import java.util.Date;
 
 @Repository
 public interface AttendenceMapper {
-    Attendence checkin(Long id);
+    int checkin(Long id);
 
     int checkout(@Param("id") Long id, @Param("date") Date date);
 
     Long getLastID();
 
     Attendence getAttendenceByOperatorID(Long operatorID);
+
+    int updateAttendenceStatusByID(@Param("id") Long id, @Param("status") int status);
 }

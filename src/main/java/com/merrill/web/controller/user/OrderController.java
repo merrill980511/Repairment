@@ -9,6 +9,9 @@ import com.merrill.dao.entity.Order;
 import com.merrill.service.IOrderService;
 import com.merrill.web.vo.Status;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -31,8 +34,16 @@ public class OrderController {
     public Object submitOrder(@RequestBody Map<String, String> map) {
         String userID = map.get("userID");
         Long id = Long.valueOf(userID);
+        String reservationTime = map.get("reservationTime");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            date = sdf.parse(reservationTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (orderService.saveOrder(id, map.get("phone"), map.get("repairment"),
-                map.get("location"), map.get("userDescription"), map.get("reservationTime"))) {
+                map.get("location"), map.get("userDescription"), date)) {
             status.setMessage("true");
         } else {
             status.setMessage("保存失败，请稍后再提交");

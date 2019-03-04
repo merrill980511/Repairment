@@ -32,11 +32,18 @@
     </sql>
 
     <insert id="checkin">
-        INSERT INTO attendence(user_id, status)
+        INSERT INTO attendence(operator_id)
+        VALUES (#{id})
     </insert>
     <update id="checkout">
         UPDATE attendence
-        SET check_out_time = #{date}
+        SET check_out_time = #{date},
+            status         = 2
+        WHERE id = #{id}
+    </update>
+    <update id="updateAttendenceStatusByID">
+        UPDATE attendence
+        SET status = #{status}
         WHERE id = #{id}
     </update>
     <select id="getLastID" resultType="long">

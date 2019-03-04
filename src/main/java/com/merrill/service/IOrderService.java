@@ -2,9 +2,12 @@ package com.merrill.service;
 
 import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Order;
+import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.web.vo.OrderRate;
+import com.merrill.web.vo.Page;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ import java.util.List;
  */
 public interface IOrderService {
     boolean saveOrder(Long id, String phone, String repairment, String location,
-                      String userDescription, String reservationTime);
+                      String userDescription, Date reservationTime);
 
     Order getOrderByUserID(Long id);
 
@@ -39,4 +42,6 @@ public interface IOrderService {
     boolean addOrder(Long userID, String location, String phone, String userDescription, String description, String repairment);
 
     Order getOrderInHandle(Long operatorID);
+
+    Page getOrderListByOperatorID(OperatorQueryObject qo);
 }

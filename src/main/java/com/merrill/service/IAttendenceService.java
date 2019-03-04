@@ -11,7 +11,7 @@ import com.merrill.dao.entity.Attendence;
  */
 public interface IAttendenceService {
 
-    Long checkin(Long id);
+    boolean checkin(Long id);
 
     String checkout(Long id);
 

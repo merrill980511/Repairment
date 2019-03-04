@@ -12,4 +12,6 @@ import lombok.Data;
 @Data
 public class OperatorQueryObject extends QueryObject {
     private String keyWord;
+
+    private Long operatorID;
 }

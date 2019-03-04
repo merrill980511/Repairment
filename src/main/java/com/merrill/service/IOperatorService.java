@@ -26,4 +26,5 @@ public interface IOperatorService {
 
     List<Operator> getAllOperatorList();
 
+    boolean isWork(Long operatorID);
 }

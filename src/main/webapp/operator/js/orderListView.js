@@ -3,9 +3,9 @@ var visiblePages = 6;
 var operatorID = '';
 var orderList = [];
 $(function () {
+    operatorID = $("#operatorID").val();
     //初始化
     pageInit();
-    operatorID = $("#operatorID").val();
     //隐藏多选项
     $(document).click(function(){
         $(".options").hide();
@@ -48,7 +48,7 @@ $(function () {
     //处理中导航
     $(".handlingOrder").on("click",function () {
         infoPanelInit();
-        setOrderInfo(getOrder(5),false);
+        setOrderInfo(getOrderInHandle(operatorID),false);
     });
     //表格获取
     $("#table-item").on("change",function () {
@@ -59,7 +59,7 @@ $(function () {
     });
     //处理完成
     $(".infoPanel").on("click",".finishOrderAction",function () {
-       finishOrder();
+       finishOrder(operatorID);
     });
     //退出视图
     $(".infoPanel").on("click",".quitDisplayOrderAction",function () {
@@ -103,7 +103,7 @@ function infoPanelShow() {
 //主页初始化
 function homePanelInit() {
     $(".homePanel").html('<div class="header">\n' +
-        '        <span class="name">程鹏</span><span class="status free"><i class="iconfont icon-dot"></i>&ensp;休息中</span>\n' +
+        '        <span class="name"></span><span class="status free"><i class="iconfont icon-dot"></i>&ensp;休息中</span>\n' +
         '    </div>\n' +
         '    <div class="content">\n' +
         '        <button class="checkWorkAction">打卡</button>\n' +
@@ -265,7 +265,7 @@ function getMyOrderList(pageSize,currentPage,keyWord){
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\",\"operatorID\":\"'+operatorID+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data != null ){
@@ -329,7 +329,7 @@ function takeOrderAction(operatorID,order) {
         },
     });
 }
-//处理订单
+//获取订单
 function getOrder(orderID) {
     var order = null;
     $.ajax({
@@ -350,8 +350,30 @@ function getOrder(orderID) {
     });
     return order;
 }
+
+//获取处理订单
+function getOrderInHandle(operatorID) {
+    var order = null;
+    $.ajax({
+        "url": "/repair/operator/getOrderInHandle",
+        "method": "post",
+        "async":false,
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"operatorID\":\"'+operatorID+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            order = data;
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+    return order;
+}
 //处理完成
-function finishOrder(orderID) {
+function finishOrder(operatorID) {
     $.ajax({
         "url": "/repair/operator/finishOrder",
         "method": "post",
@@ -359,7 +381,7 @@ function finishOrder(orderID) {
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"orderID\":\"'+orderID+'\"}',
+        "data": '{\"operatorID\":\"'+operatorID+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data.message == 'true'){
@@ -378,7 +400,7 @@ function finishOrder(orderID) {
 function getMyAttendence(operatorID) {
     var myAttendence = null;
     $.ajax({
-        "url": "/repair/operator/getMyAttendence",
+        "url": "/repair/operator/getAttendence",
         "method": "post",
         "async":false,
         "headers": {
