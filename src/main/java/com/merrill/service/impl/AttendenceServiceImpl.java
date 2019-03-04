@@ -2,6 +2,7 @@ package com.merrill.service.impl;
 
 import com.merrill.dao.entity.Attendence;
 import com.merrill.dao.mapper.AttendenceMapper;
+import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.service.IAttendenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class AttendenceServiceImpl implements IAttendenceService {
 
     @Autowired
     private AttendenceMapper attendenceMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Override
     public boolean checkin(Long id) {
@@ -47,12 +51,24 @@ public class AttendenceServiceImpl implements IAttendenceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Attendence getAttendenceByOperatorID(Long operatorID) {
         Attendence attendence = attendenceMapper.getAttendenceByOperatorID(operatorID);
          if (attendence == null){
              attendence = new Attendence();
          }
         return attendence;
+    }
+
+    @Override
+    public boolean updateStatusByOperatorID(Long operatorID) {
+        if (attendenceMapper.updateStatusByOperatorID(operatorID, 0) <= 0) {
+            return false;
+        }
+        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 4) <= 0){
+            return false;
+        }
+        return true;
     }
 
 }

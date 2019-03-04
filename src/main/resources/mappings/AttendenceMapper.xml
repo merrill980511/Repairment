@@ -46,12 +46,20 @@
         SET status = #{status}
         WHERE id = #{id}
     </update>
+    <update id="updateStatusByOperatorID">
+        UPDATE attendence
+        SET status = #{status}
+        WHERE operator_id = #{operatorID} AND a.status = 1
+    </update>
     <select id="getLastID" resultType="long">
         SELECT LAST_INSERT_ID()
     </select>
     <select id="getAttendenceByOperatorID" resultType="Attendence">
         <include refid="selectBase"/>
         WHERE op.id = #{operatorID} AND (a.status = 0 OR a.status = 1)
+    </select>
+    <select id="getAttendenceNumByStatus" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM attendence WHERE status = #{status}
     </select>
 
 </mapper>

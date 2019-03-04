@@ -24,6 +24,7 @@
             <mvc:exclude-mapping path="/admin/login"/>
             <mvc:exclude-mapping path="/admin/loginCommit"/>
             <mvc:exclude-mapping path="/admin/"/>
+            <mvc:exclude-mapping path="/admin"/>
             <mvc:exclude-mapping path="/admin/css/**"/>
             <mvc:exclude-mapping path="/admin/js/**"/>
             <mvc:exclude-mapping path="/admin/images/**"/>
@@ -34,5 +35,6 @@
     <mvc:view-controller path="/user/" view-name="redirect:repairmentApply"/>
     <mvc:view-controller path="/operator/" view-name="redirect:orderListView"/>
     <mvc:view-controller path="/admin/" view-name="redirect:login"/>
+    <mvc:view-controller path="/admin" view-name="redirect:admin/login"/>
 
 </beans>

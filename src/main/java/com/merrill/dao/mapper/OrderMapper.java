@@ -73,4 +73,6 @@ public interface OrderMapper {
     int getOrderNumberByOperatorID(Long id);
 
     int getOrderFinishedNumberByOperatorID(Long id);
+
+    int updateOrderByOperatorAndStatus(@Param("operatorID") Long operatorID, @Param("fromStatus") int fromStatus, @Param("toStatus") int toStatus);
 }

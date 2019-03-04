@@ -11,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public class OrderRate {
+    private int totalNumber;
+
     private int finishedNumber;
 
     private int unfinishedNumber;

@@ -138,6 +138,9 @@
             repairment       = #{repairment}
         WHERE id = #{id}
     </update>
+    <update id="updateOrderByOperatorAndStatus">
+        UPDATE `order` SET status = #{toStatus} WHERE op.id =#{operatorID} AND status = #{fromStatus}
+    </update>
     <delete id="deleteOrderByID">
         DELETE
         FROM `order`

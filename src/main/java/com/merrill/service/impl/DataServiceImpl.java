@@ -1,5 +1,7 @@
 package com.merrill.service.impl;
 
+import com.merrill.dao.entity.Attendence;
+import com.merrill.dao.mapper.AttendenceMapper;
 import com.merrill.dao.mapper.OperatorMapper;
 import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.dao.mapper.UserMapper;
@@ -30,6 +32,9 @@ public class DataServiceImpl implements IDataService {
     @Autowired
     private OperatorMapper operatorMapper;
 
+    @Autowired
+    private AttendenceMapper attendenceMapper;
+
     @Override
     @Transactional(readOnly = true)
     public List<Integer> getAdminOverview() {
@@ -37,10 +42,12 @@ public class DataServiceImpl implements IDataService {
         list.add(orderMapper.getOrderNumberByStatus(0));
         int unfinishedNum = orderMapper.getOrderNumberByDate(DateUtil.date2String(new Date()));
         int finishedNum = orderMapper.getOrderFinishedNumberByDate(DateUtil.date2String(new Date()));
+        int num1 = attendenceMapper.getAttendenceNumByStatus(0);
+        int num2 = attendenceMapper.getAttendenceNumByStatus(1);
         list.add(unfinishedNum + finishedNum);
         list.add(finishedNum);
-        list.add(0);
-        list.add(0);
+        list.add(num1);
+        list.add(num2);
         return list;
     }
 }

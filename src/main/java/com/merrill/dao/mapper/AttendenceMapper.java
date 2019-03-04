@@ -25,4 +25,8 @@ public interface AttendenceMapper {
     Attendence getAttendenceByOperatorID(Long operatorID);
 
     int updateAttendenceStatusByID(@Param("id") Long id, @Param("status") int status);
+
+    int updateStatusByOperatorID(@Param("operatorID") Long operatorID, @Param("status") int status);
+
+    int getAttendenceNumByStatus(int status);
 }

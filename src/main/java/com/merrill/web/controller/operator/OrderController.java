@@ -2,6 +2,7 @@ package com.merrill.web.controller.operator;
 
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
+import com.merrill.service.IAttendenceService;
 import com.merrill.service.IOperatorService;
 import com.merrill.service.IOrderService;
 import com.merrill.web.vo.Status;
@@ -29,6 +30,9 @@ public class OrderController {
 
     @Autowired
     private IOperatorService operatorService;
+
+    @Autowired
+    private IAttendenceService attendenceService;
 
     @Autowired
     private Status status;
@@ -83,9 +87,15 @@ public class OrderController {
         return orderService.getOrderListByOperatorID(qo);
     }
 
-//    @RequestMapping("/finishOrder")
-//    @ResponseBody
-//    public Object finishOrder(@RequestBody Map<String, String> map) {
-//        return orderService.getOrderListByOperatorID(qo);
-//    }
+    @RequestMapping("/finishOrder")
+    @ResponseBody
+    public Object finishOrder(@RequestBody Map<String, String> map) {
+        Long operatorID = Long.valueOf(map.get("operatorID"));
+        if (attendenceService.updateStatusByOperatorID(operatorID)) {
+            status.setMessage("true");
+        } else {
+            status.setMessage("结束订单失败，请稍后重试");
+        }
+        return status;
+    }
 }

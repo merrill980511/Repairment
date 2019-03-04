@@ -136,8 +136,9 @@ public class OrderServiceImpl implements IOrderService {
             int total = finishedNumber + unfinishedNumber;
             orderRate.setFinishedNumber(finishedNumber);
             orderRate.setUnfinishedNumber(unfinishedNumber);
+            orderRate.setTotalNumber(total);
             if (total == 0){
-                orderRate.setRate(0);
+                orderRate.setRate(1);
             } else {
                 orderRate.setRate(finishedNumber / total);
             }
