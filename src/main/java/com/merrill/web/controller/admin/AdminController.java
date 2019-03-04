@@ -40,16 +40,21 @@ public class AdminController {
     public Object loginCommit(@RequestBody Map<String, String> map){
         String id = map.get("id");
         String password = map.get("password");
-        Admin admin = adminService.login(Long.valueOf(id), password);
         Map<String, String> returnMap = new HashMap<>();
-        if (admin != null){
-            String token = Token.sign(admin.getId(), password);
-            if (token != null){
-                returnMap.put("token", token);
-                returnMap.put("location", "/repair/admin/index");
-            }
+        if (adminService.login(Long.valueOf(id), password)){
+            returnMap.put("location", "/repair/admin/index");
         }
         return returnMap;
+//        Admin admin = adminService.login(Long.valueOf(id), password);
+//        Map<String, String> returnMap = new HashMap<>();
+//        if (admin != null){
+//            String token = Token.sign(admin.getId(), password);
+//            if (token != null){
+//                returnMap.put("token", token);
+//                returnMap.put("location", "/repair/admin/index");
+//            }
+//        }
+//        return returnMap;
     }
 
     @RequestMapping("/editPassword")

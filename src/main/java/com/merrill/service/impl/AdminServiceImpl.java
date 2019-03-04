@@ -3,6 +3,9 @@ package com.merrill.service.impl;
 import com.merrill.dao.entity.Admin;
 import com.merrill.dao.mapper.AdminMapper;
 import com.merrill.service.IAdminService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +24,18 @@ public class AdminServiceImpl implements IAdminService {
     private AdminMapper adminMapper;
 
     @Override
-    public Admin login(Long id, String password) {
-        return adminMapper.login(id, password);
+    public boolean login(Long id, String password) {
+
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token =
+                new UsernamePasswordToken(id.toString(), password);
+        try {
+            subject.login(token);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

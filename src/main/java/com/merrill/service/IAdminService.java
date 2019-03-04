@@ -10,7 +10,7 @@ import com.merrill.dao.entity.Admin;
  * Description:
  */
 public interface IAdminService {
-    Admin login(Long id, String password);
+    boolean login(Long id, String password);
 
     boolean editPassword(Long id, String password);
 }

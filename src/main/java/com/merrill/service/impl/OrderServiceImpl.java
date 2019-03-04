@@ -65,6 +65,10 @@ public class OrderServiceImpl implements IOrderService {
         if (orderMapper.deleteOrderByID(id) <= 0){
             return false;
         }
+        Attendence attendence = attendenceMapper.getLastAttendenceByOperatorID(id);
+        if (attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 0) <= 0){
+            return false;
+        }
         if (order.getOperator() == null){
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     null, order.getLocation(), order.getPhone(),

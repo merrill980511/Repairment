@@ -1,6 +1,7 @@
 package com.merrill.service.impl;
 
 import com.merrill.dao.entity.Attendence;
+import com.merrill.dao.entity.Order;
 import com.merrill.dao.mapper.AttendenceMapper;
 import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.service.IAttendenceService;
@@ -34,6 +35,9 @@ public class AttendenceServiceImpl implements IAttendenceService {
             return false;
         }
         if (attendenceMapper.checkin(id) > 0){
+            if (orderMapper.getOrderByOperatorIDAndStatus(id, 1) != null){
+                attendenceMapper.updateStatusByOperatorID(id, 0, 1);
+            }
             return true;
         } else {
             return false;
@@ -62,7 +66,7 @@ public class AttendenceServiceImpl implements IAttendenceService {
 
     @Override
     public boolean updateStatusByOperatorID(Long operatorID) {
-        if (attendenceMapper.updateStatusByOperatorID(operatorID, 0) <= 0) {
+        if (attendenceMapper.updateStatusByOperatorID(operatorID, 1, 0) <= 0) {
             return false;
         }
         if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 4) <= 0){

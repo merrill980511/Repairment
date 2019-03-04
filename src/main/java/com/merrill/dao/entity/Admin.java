@@ -2,6 +2,8 @@ package com.merrill.dao.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: 梅峰鑫
@@ -11,7 +13,8 @@ import lombok.Data;
  */
 
 @Data
-public class Admin {
+public class Admin implements Serializable {
+    private static final long serialVersionUID = 8093665314568321262L;
     /**
      * 管理员的id
      */

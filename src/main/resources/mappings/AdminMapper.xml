@@ -9,5 +9,8 @@
     <select id="login" resultType="Admin">
         SELECT * FROM admin WHERE id = #{id} AND password = #{password}
     </select>
+    <select id="getByID" resultType="Admin">
+        SELECT * FROM admin WHERE id = #{id}
+    </select>
 
 </mapper>

@@ -16,4 +16,6 @@ public interface AdminMapper {
     Admin login(@Param("id") Long id, @Param("password") String password);
 
     int editPassword(@Param("id") Long id, @Param("password") String password);
+
+    Admin getByID(String id);
 }
