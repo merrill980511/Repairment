@@ -173,7 +173,6 @@ function updatePassword(id,password) {
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
-            "token":getToken(),
         },
         "data": "{\"id\":\""+id+"\",\"password\":\""+password+"\"}",
         "dataType": "json",

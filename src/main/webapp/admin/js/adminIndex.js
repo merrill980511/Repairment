@@ -15,9 +15,8 @@ function getOrderLinearChart(num){
         "url": "/repair/admin/getOrderFinishRate",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(getDateListJson(num)),
         "dataType": "json",
         "success": function (data) {
@@ -34,9 +33,8 @@ function getOrderBarChart(num){
         "url": "/repair/admin/getOrderFinishRate",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(getDateListJson(num)),
         "dataType": "json",
         "success": function (data) {
@@ -137,9 +135,8 @@ function getOverview() {
         "url": "/repair/admin/overview",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": "",
         "dataType": "json",
         "success": function (data) {
@@ -165,9 +162,8 @@ function getOrderSortByNum(num) {
         "url": "/repair/admin/getOrderSortByDate",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": "{\"number\":\""+num+"\"}",
         "dataType": "json",
         "success": function (data) {

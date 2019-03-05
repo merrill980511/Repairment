@@ -6,6 +6,8 @@ function getOrderStatus(status) {
        case 1 :
            return "处理中";
        case 2:
+           return "处理完未确认";
+       case 3:
            return "处理完成";
        default:
            return "无";

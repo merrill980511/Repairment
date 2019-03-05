@@ -44,6 +44,7 @@ public class AdminController {
         if (adminService.login(Long.valueOf(id), password)){
             returnMap.put("location", "/repair/admin/index");
         }
+        returnMap.put("message", "账号或密码错误");
         return returnMap;
 //        Admin admin = adminService.login(Long.valueOf(id), password);
 //        Map<String, String> returnMap = new HashMap<>();

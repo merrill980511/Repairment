@@ -166,9 +166,8 @@ function getOrderList(pageSize,currentPage,keyWord){
         "url": "/repair/admin/getOrderList",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -192,9 +191,8 @@ function getOrderFinishedList(pageSize,currentPage,keyWord){
         "url": "/repair/admin/getOrderFinishedList",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -218,9 +216,8 @@ function getOperatorList(pageSize,currentPage,keyWord){
         "url": "/repair/admin/getOperatorList",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -244,9 +241,8 @@ function getUserList(pageSize,currentPage,keyWord){
         "url": "/repair/admin/getUserList",
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -470,9 +466,8 @@ function deleteItem(id,url){
         "url": url,
         "method": "post",
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"id\":\"'+id+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -496,9 +491,8 @@ function getAllOperatorList() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": "",
         "dataType": "json",
         "success": function (data) {
@@ -518,9 +512,8 @@ function getItem(id,url) {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": '{\"id\":\"'+id+'\"}',
         "dataType": "json",
         "success": function (data) {
@@ -547,9 +540,8 @@ function updateOrder() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(editItem),
         "dataType": "json",
         "success": function (data) {
@@ -581,9 +573,8 @@ function updateOrderFinished() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(editItem),
         "dataType": "json",
         "success": function (data) {
@@ -610,9 +601,8 @@ function updateOperator() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(editItem),
         "dataType": "json",
         "success": function (data) {
@@ -639,9 +629,8 @@ function updateUser() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(editItem),
         "dataType": "json",
         "success": function (data) {
@@ -671,9 +660,8 @@ function addUser() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(user),
         "dataType": "json",
         "success": function (data) {
@@ -709,9 +697,8 @@ function addOrder() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(order),
         "dataType": "json",
         "success": function (data) {
@@ -741,9 +728,8 @@ function addOperator() {
         "method": "post",
         "async":false,
         "headers": {
-            "Content-Type": "application/json",
-            "token":getToken(),
-        },
+                "Content-Type": "application/json",
+            },
         "data": JSON.stringify(operator),
         "dataType": "json",
         "success": function (data) {

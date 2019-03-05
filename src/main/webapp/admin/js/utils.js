@@ -1,15 +1,17 @@
 //订单状态转换
 function getOrderStatus(status) {
-   switch (status) {
-       case 0 :
-           return "未处理";
-       case 1 :
-           return "处理中";
-       case 2:
-           return "处理完成";
-       default:
-           return "无";
-   }
+    switch (status) {
+        case 0 :
+            return "未处理";
+        case 1 :
+            return "处理中";
+        case 2:
+            return "处理完未确认";
+        case 3:
+            return "处理完成";
+        default:
+            return "无";
+    }
 };
 //通用时间格式化
 function dateLoad(date) {

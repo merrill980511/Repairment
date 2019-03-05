@@ -1,15 +1,17 @@
 //订单状态转换
 function getOrderStatus(status) {
-   switch (status) {
-       case 0 :
-           return "未处理";
-       case 1 :
-           return "处理中";
-       case 2:
-           return "处理完成";
-       default:
-           return "无";
-   }
+    switch (status) {
+        case 0 :
+            return "未处理";
+        case 1 :
+            return "处理中";
+        case 2:
+            return "处理完未确认";
+        case 3:
+            return "处理完成";
+        default:
+            return "无";
+    }
 };
 //通用时间格式化
 function dateLoad(date) {
@@ -35,6 +37,15 @@ Date.prototype.Format = function (fmt) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
+//检测电话格式
+function isTel(tel) {
+    var reg = /^8611\d{4}$/;
+    if(reg.test(tel)){
+        return true;
+    }else{
+        return false;
+    }
+}
 //检测手机号码格式
 function isPhone(phone){
     var reg = /^1[3,5,8]\d{9}$/;

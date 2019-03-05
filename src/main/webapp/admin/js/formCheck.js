@@ -136,7 +136,6 @@ function isUser(userId) {
         "async":false,
         "headers": {
             "Content-Type": "application/json",
-            "token":getToken(),
         },
         "data": '{\"id\":\"'+userId+'\"}',
         "dataType": "json",

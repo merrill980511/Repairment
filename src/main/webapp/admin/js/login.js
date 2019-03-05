@@ -49,14 +49,15 @@ $(function(){
             "headers": {
                 "Content-Type": "application/json",
             },
-            "data":"{\"id\":\""+id.val()+"\",\"password\":\""+password.val()+"\"}",
+            "data":"{\"id\":\""+id.val()+"\",\"password\":\""+hex_md5(password.val())+"\"}",
             "dataType":"json",
             "success":function(data){
                 if(data.location != null && data.location != ""){
-                    setToken(data.token);
                     location.href = data.location;
                     setCookie("id",id.val());
                     return true;
+                }else{
+                    alert(data.message);
                 }
             },
             "fail":function(data){

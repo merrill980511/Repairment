@@ -139,7 +139,7 @@
         WHERE id = #{id}
     </update>
     <update id="updateOrderByOperatorAndStatus">
-        UPDATE `order` SET status = #{toStatus} WHERE op.id =#{operatorID} AND status = #{fromStatus}
+        UPDATE `order` SET status = #{toStatus} WHERE operator_id =#{operatorID} AND status = #{fromStatus}
     </update>
     <delete id="deleteOrderByID">
         DELETE
@@ -158,7 +158,7 @@
     </delete>
     <select id="getOrderByUserID" resultMap="Order">
         <include refid="orderSelectBase"/>
-        WHERE u.id = #{id} AND o.status = 0 OR o.status = 1
+        WHERE u.id = #{id} AND o.status = 0 OR o.status = 1 OR o.status = 3
     </select>
     <select id="getOrderByID" resultMap="Order">
         <include refid="orderSelectBase"/>

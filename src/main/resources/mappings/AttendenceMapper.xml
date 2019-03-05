@@ -66,8 +66,7 @@
     </select>
     <select id="getLastAttendenceByOperatorID" resultMap="Attendence">
         <include refid="selectBase"/>
-        FROM attendence t1
-        WHERE t1.operator_id = (SELECT MAX(operator_id) FROM attendence t2 WHERE operator_id = 2)
+        WHERE a.operator_id = (SELECT MAX(operator_id) FROM attendence t2 WHERE operator_id = #{id})
     </select>
 
 </mapper>

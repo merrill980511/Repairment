@@ -2,6 +2,7 @@
 var visiblePages = 6;
 var operatorID = '';
 var orderList = [];
+var orderItem;
 $(function () {
     operatorID = $("#operatorID").val();
     //初始化
@@ -17,15 +18,14 @@ $(function () {
         event.stopPropagation();
     });
     //点击我去处理
-    $(".table").on("click",".takeOrderAction",function () {
-        var index = $(this).parents(".order").index();
-        takeOrderAction(operatorID,orderList[index-1]);
+    $(".infoPanel").on("click",".takeOrderAction",function () {
+        takeOrderAction(operatorID,orderItem);
     });
     //点击查看信息
     $(".table").on("click",".displayOrderAction",function () {
         var index = $(this).parents(".order").index();
         infoPanelInit();
-        setOrderInfo(getOrder(orderList[index-1].id),true);
+        setOrderInfo(getOrder(orderList[index-1].id),$("#table-item").val() == 'order-finished');
     });
     //导航
     $(".indexButton").on("click",function () {
@@ -73,6 +73,15 @@ $(function () {
     $(".homePanel").on("click",".checkOutAction",function () {
         checkOut(operatorID);
     });
+    $("#checkAction").on("click",function () {
+        getList($("#pageSize").val(), $("#currentPage").val());
+    });
+    setInterval(function () {
+        if($(".table").css("display") != 'none'){
+            getList($("#pageSize").val(), $("#currentPage").val());
+        }
+        },1000*30
+    )
 });
 //界面初始化
 function pageInit() {
@@ -113,13 +122,13 @@ function homePanelInit() {
 //表单初始化
 function tableInit(){
     $(".table").html('<div class="tr">\n' +
-        '        <div class="th location">地点</div><div class="th userDescription">用户备注</div><div class="th repairment">提交表单</div><div class="th action">操作</div>\n' +
+        '        <div class="th location">地点</div><div class="th userDescription">用户备注</div><div class="th repairment">提交表单</div><div class="th status">状态</div><div class="th action">操作</div>\n' +
         '    </div>');
     tableShow();
 };
 //信息面板初始化
 function infoPanelInit(){
-    $(".infoPanel").html(' <div class="info"><label class="title">申&ensp;请&ensp;人：</label><label class="user"></label></div>\n' +
+    $(".infoPanel").html('<div class="info"><label class="title">申&ensp;请&ensp;人：</label><label class="user"></label></div>\n' +
         '        <div class="info"><label class="title">地&emsp;&emsp;点：</label><label class="location"></label></div>\n' +
         '        <div class="info"><label class="title">电&emsp;&emsp;话：</label><label class="phone"></label></div>\n' +
         '        <div class="info"><label class="title">提交时间：</label><label class="beginTime"></label></div>\n' +
@@ -135,27 +144,29 @@ function infoPanelInit(){
 };
 //主页信息置入
 function setHomePanelInfo(attendence) {
-    $(".homePanel .header .name").html(attendence.operator == null?"":attendence.operator.name);
-    if(attendence.id != null){
-        $(".homePanel .content").html('<button class="checkWorkAction checkOutAction">下班打卡</button>');
-        switch (attendence.status) {
-            case 0:
-                $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;值班中');
-                $(".homePanel .header .status").removeClass().addClass("status normal");
-                break;
-            case 1:
-                $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;外勤中');
-                $(".homePanel .header .status").removeClass().addClass("status busy");
-                break;
-            default:
-                $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;异常');
-                $(".homePanel .header .status").removeClass().addClass("status free");
-                break;
+    if(attendence != null){
+        $(".homePanel .header .name").html(attendence.operator == null?"":attendence.operator.name);
+        if(attendence.id != null){
+            $(".homePanel .content").html('<button class="checkWorkAction checkOutAction">下班打卡</button>');
+            switch (attendence.status) {
+                case 0:
+                    $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;值班中');
+                    $(".homePanel .header .status").removeClass().addClass("status normal");
+                    break;
+                case 1:
+                    $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;外勤中');
+                    $(".homePanel .header .status").removeClass().addClass("status busy");
+                    break;
+                default:
+                    $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;异常');
+                    $(".homePanel .header .status").removeClass().addClass("status free");
+                    break;
+            }
+        }else{
+            $(".homePanel .content").html('<button class="checkWorkAction checkInAction">上班打卡</button>');
+            $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;休息中');
+            $(".homePanel .header .status").removeClass().addClass("status free");
         }
-    }else{
-        $(".homePanel .content").html('<button class="checkWorkAction checkInAction">上班打卡</button>');
-        $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;休息中');
-        $(".homePanel .header .status").removeClass().addClass("status free");
     }
 }
 //表格信息置入/数据获取方法
@@ -178,7 +189,7 @@ function getList(pageSize,currentPage) {
 }
 //信息面板详细信息置入
 function setOrderInfo(order,isDisplay) {
-    if(order.id != null) {
+    if(order != null && order.id != null) {
         $("label.user").text(order.user == null ? "":order.user.name);
         $("label.location").text(order.location);
         $("label.phone").text(order.phone);
@@ -191,18 +202,26 @@ function setOrderInfo(order,isDisplay) {
         $("label.repairment").text(order.repairment);
         $("label.userDescription").text(order.userDescription);
         $("label.description").text(order.description);
-        if(isDisplay) {
-            setQuitOrderButton();
-        } else if(order.operator != null && order.operator.id == operatorID ){
-            setFinishedOrderButton();
+        if(!isDisplay){
+            if(order.operator != null && order.operator.id == operatorID && order.status == '1'){
+                setFinishedOrderButton();
+            }else if(order.status == '0'){
+                setTakeOrderButton();
+            }
         }
+        setQuitOrderButton();
     }else{
         alert("没有该订单！");
+        $(".indexButton.order").click();
     }
 }
 //处理完成按钮置入
 function setFinishedOrderButton() {
     $(".infoPanel").append('<div class="info"><label class="title">&emsp;</label><button class="finishOrderAction">处理完成</button></div>');
+}
+//我去处理按钮置入
+function setTakeOrderButton() {
+    $(".infoPanel").append('<div class="info"><label class="title">&emsp;</label><button class="takeOrderAction">我去处理</button></div>');
 }
 //处理完成按钮置入
 function setQuitOrderButton() {
@@ -213,7 +232,6 @@ function getOrderList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/operator/getOrderList",
         "method": "post",
-        "async":false,
         "headers": {
             "Content-Type": "application/json",
         },
@@ -237,7 +255,6 @@ function getOrderFinishedList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/operator/getOrderFinishedList",
         "method": "post",
-        "async":false,
         "headers": {
             "Content-Type": "application/json",
         },
@@ -261,7 +278,6 @@ function getMyOrderList(pageSize,currentPage,keyWord){
     $.ajax({
         "url": "/repair/operator/getMyOrderList",
         "method": "post",
-        "async":false,
         "headers": {
             "Content-Type": "application/json",
         },
@@ -287,18 +303,18 @@ function getOrderListHtml(orderList) {
     var orderListCopyed = $.extend(true, [], orderList);
     for(var i in orderListCopyed){
         var order = orderListCopyed[i];
-        var button = '<input type="button" value="查看信息" class="displayOrderAction"/>';
+        var statusClass = 'standby';
         if(order.userDescription == null || order.userDescription == ''){
             order.userDescription = "&emsp;";
         }
         if(order.repairment == null || order.repairment == ''){
             order.repairment = "&emsp;";
         }
-        if(order.status == '0'){
-            button = '<input type="button" value="我去处理" class="takeOrderAction"/>';
+        if(order.status == '1'){
+            statusClass = 'handling';
         }
         orderListHTML += '<div class="tr order">\n' +
-            '        <div class="td location">'+order.location+'</div><div class="td userDescription">'+order.userDescription+'</div><div class="td repairment">'+order.repairment+'</div><div class="td action">'+button+'</div>\n' +
+            '        <div class="td location">'+order.location+'</div><div class="td userDescription">'+order.userDescription+'</div><div class="td repairment">'+order.repairment+'</div><div class="td status '+statusClass+'">'+getOrderStatus(order.status)+'</div><div class="td action"><input type="button" value="查看信息" class="displayOrderAction"/></div>\n' +
             '    </div>';
     }
     return orderListHTML;
@@ -343,6 +359,7 @@ function getOrder(orderID) {
         "dataType": "json",
         "success": function (data) {
             order = data;
+            orderItem = data;
         },
         "fail": function () {
             alert("服务器繁忙，请稍后再试");
@@ -365,6 +382,7 @@ function getOrderInHandle(operatorID) {
         "dataType": "json",
         "success": function (data) {
             order = data;
+            orderItem = data;
         },
         "fail": function () {
             alert("服务器繁忙，请稍后再试");

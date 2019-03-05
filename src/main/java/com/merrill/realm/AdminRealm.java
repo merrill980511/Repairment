@@ -38,14 +38,4 @@ public class AdminRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;
     }
-
-
-    public static void main(String[] args) {
-        String hashAlgorithmName = "MD5";//加密方式
-        Object credential = "123";//密码原值
-        ByteSource salt = ByteSource.Util.bytes("123");//以账号作为盐值
-        int hashIterations = 3;//加密3次
-        SimpleHash hash = new SimpleHash(hashAlgorithmName, credential, salt, hashIterations);
-        System.out.println(hash.toString());
-    }
 }

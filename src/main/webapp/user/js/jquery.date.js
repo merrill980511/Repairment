@@ -58,11 +58,11 @@
             location:null //before 跳转至之前选择的时间，如果为空则跳转至当前时间
         };
     //dom渲染
-    domDate = '<div id="date-wrapper"><h3>选择日期</h3><div id="d-content"><div id="d-tit"><div class="t1">年</div><div class="t2">月</div><div class="t3">日</div><div class="t4">时</div><div class="t5">分</div><div class="t6">秒</div></div><div id="d-bg"><ol id="d-year"></ol><ol id="d-month"></ol><ol id="d-day"></ol><ol id="d-hours"></ol><ol id="d-minutes"></ol><ol id="d-seconds"></ol></div></div><a id="d-cancel" href="javascript:">取消</a><a id="d-confirm" href="javascript:">确定</a></div><div id="d-mask"></div>';
+    domDate = '<div id="date-wrapper"><h3>选择时间</h3><div id="d-content"><div id="d-tit"><div class="t1">年</div><div class="t2">月</div><div class="t3">日</div><div class="t4">时</div><div class="t5">分</div><div class="t6">秒</div></div><div id="d-bg"><ol id="d-year"></ol><ol id="d-month"></ol><ol id="d-day"></ol><ol id="d-hours"></ol><ol id="d-minutes"></ol><ol id="d-seconds"></ol></div></div><a id="d-cancel" href="javascript:">取消</a><a id="d-confirm" href="javascript:">确定</a></div><div id="d-mask"></div>';
     var css = '<style type="text/css">a{text-decoration:none;}ol,li{margin:0;padding:0}li{list-style-type:none}#date-wrapper{position:fixed;top:50%;left:50%;width:90%;margin: -139px 0 0 -45%;z-index:56;text-align:center;background:#fff;border-radius:3px;padding-bottom:15px;display:none}#d-mask{position:fixed;width:100%;height:100%;top:0;left:0;background:#000;filter:alpha(Opacity=50);-moz-opacity:.5;opacity:.5;z-index:55;display:none}#date-wrapper h3{line-height:50px;background:#009fe8;color:#fff;font-size:20px;margin:0;border-radius:3px 3px 0 0}#date-wrapper ol,#d-tit>div{width:16.6666666%;float:left;position:relative}#d-content{padding:10px}#d-content #d-bg{background:#f8f8f8;border:1px solid #e0e0e0;border-radius:0 0 5px 5px;height:120px;overflow:hidden;margin-bottom:10px;position:relative}#d-cancel,#d-confirm{border-radius:3px;float:left;width:40%;line-height:30px;font-size:16px;background:#dcdddd;color:#666;margin:0 5%}#d-confirm{background:#009fe8;color:#fff}#date-wrapper li{line-height:40px;height:40px;cursor:pointer;position:relative}#d-tit{background:#f8f8f8;overflow:hidden;border-radius:5px 5px 0 0;line-height:30px;border:1px solid #e0e0e0;margin-bottom:-1px}#date-wrapper ol{-webkit-overflow-scrolling:touch;position:absolute;top:0;left:0}#date-wrapper ol:nth-child(2){left:16.6666666%}#date-wrapper ol:nth-child(3){left:33.3333332%}#date-wrapper ol:nth-child(4){left:49.9999998%}#date-wrapper ol:nth-child(5){left:66.6666664%}#date-wrapper ol:nth-child(6){left:83.333333%}#d-content #d-bg:after{content:\'\';height:40px;background:#ddd;position:absolute;top:40px;left:0;width:100%;z-index:1}#date-wrapper li span{position:absolute;width:100%;z-index:99;height:100%;left:0;top:0}#date-wrapper.two ol,.two #d-tit>div{width:50%}#date-wrapper.two ol:nth-child(2){left:50%}#date-wrapper.three ol,.three #d-tit>div{width:33.333333%}#date-wrapper.three ol:nth-child(2){left:33.333333%}#date-wrapper.three ol:nth-child(3){left:66.666666%}#date-wrapper.four ol,.four #d-tit>div{width:25%}#date-wrapper.four ol:nth-child(2){left:25%}#date-wrapper.four ol:nth-child(3){left:50%}#date-wrapper.four ol:nth-child(4){left:75%}#date-wrapper.five ol,.five #d-tit>div{width:20%}#date-wrapper.five ol:nth-child(2){left:20%}#date-wrapper.five ol:nth-child(3){left:40%}#date-wrapper.five ol:nth-child(4){left:60%}#date-wrapper.five ol:nth-child(5){left:80%}#date-wrapper.hms #d-hours{left:0;}#date-wrapper.hms #d-minutes{left:33.333333%;}#date-wrapper.hms #d-seconds{left:66.666666%;}#date-wrapper.hm #d-hours{left:0;}#date-wrapper.hm #d-minutes{left:50%;}</style>';
 	
 	if(isEnglish){
-		domDate = domDate.replace('选择日期','DatePicker').replace('取消','cancel').replace('确定','confirm');
+		domDate = domDate.replace('选择时间','DatePicker').replace('取消','cancel').replace('确定','confirm');
 		css = css.replace('</style>','#date-wrapper #d-tit{display:none;}</style>');
 	}
 	if(h != 40){
@@ -212,7 +212,7 @@
         resetActive:function(el){
              var d = new Date(),
 				 date = el.data('fullDate');
-  
+             d.setMinutes(d.getMinutes() + 30);
              if(opt.location == 'before' && date){
                 d = new Date(date);
 				//if(d == 'Invalid Date'){d = new Date();}
@@ -425,12 +425,22 @@
 
         if(opt.limitTime == 'today'){
             var d = new Date(),
-				error = !isEnglish ? '不能选择过去的时间':'You can\'t choose the past time';
+				error = !isEnglish ? '请选择有效时间（上午8:30-11:30，下午14:00-16:30,且在当前时间30分钟后）':'You can\'t choose the time';
             //当前日期
-            var day = String(d.getFullYear())+'-'+String(d.getMonth() + 1)+'-'+String(d.getDate());
-            var d1 = new Date(str.replace(/\-/g, "\/")); 
-            var d2 = new Date(day.replace(/\-/g, "\/"));
-            if(d1 < d2){
+            d.setMinutes(d.getMinutes() + 30);
+            var day = String(d.getFullYear())+ '-' + String(d.getMonth() + 1) +'-'+String(d.getDate()) + ' ' + String(d.getHours())+ ':' + String(d.getMinutes());
+            var d1 = new Date(str.replace(/\s\-:/g, "\/"));
+            var d2 = new Date(day.replace(/\s\-:/g, "\/"));
+            var dMinDateStr = String(d1.getFullYear())+'-'+String(d1.getMonth() + 1)+'-'+String(d1.getDate()) + " " + String(8)+":"+String(30);
+            var dLimitDateLeftStr = String(d1.getFullYear())+'-'+String(d1.getMonth() + 1)+'-'+String(d1.getDate()) + " " + String(11)+":"+String(30);
+            var dLimitDateRightStr = String(d1.getFullYear())+'-'+String(d1.getMonth() + 1)+'-'+String(d1.getDate()) + " " + String(14)+":"+String(0);
+            var dMaxDateStr = String(d1.getFullYear())+'-'+String(d1.getMonth() + 1)+'-'+String(d1.getDate()) + " " + String(16)+":"+String(30);
+            var dMinDate = new Date(dMinDateStr.replace(/\s\-:/g, "\/"));
+            var dLimitDateLeft = new Date(dLimitDateLeftStr.replace(/\s\-:/g, "\/"));
+            var dLimitDateRight = new Date(dLimitDateRightStr.replace(/\s\-:/g, "\/"));
+            var dMaxDate = new Date(dMaxDateStr.replace(/\s\-:/g, "\/"));
+            var isDisabled = (d1 < dMinDate || (d1 > dLimitDateLeft&&d1 < dLimitDateRight) || d1 > dMaxDate);
+            if((d1 < d2)||isDisabled){
                 alert(error);
                 return false;
             }  

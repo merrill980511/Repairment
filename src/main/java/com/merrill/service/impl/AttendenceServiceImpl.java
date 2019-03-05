@@ -3,12 +3,14 @@ package com.merrill.service.impl;
 import com.merrill.dao.entity.Attendence;
 import com.merrill.dao.entity.Order;
 import com.merrill.dao.mapper.AttendenceMapper;
+import com.merrill.dao.mapper.OperatorMapper;
 import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.service.IAttendenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -27,6 +29,9 @@ public class AttendenceServiceImpl implements IAttendenceService {
     private AttendenceMapper attendenceMapper;
 
     @Autowired
+    private OperatorMapper operatorMapper;
+
+    @Autowired
     private OrderMapper orderMapper;
 
     @Override
@@ -35,7 +40,7 @@ public class AttendenceServiceImpl implements IAttendenceService {
             return false;
         }
         if (attendenceMapper.checkin(id) > 0){
-            if (orderMapper.getOrderByOperatorIDAndStatus(id, 1) != null){
+            if (orderMapper.getOrderByOperatorIDAndStatus(id, 1).size() != 0){
                 attendenceMapper.updateStatusByOperatorID(id, 0, 1);
             }
             return true;
@@ -60,6 +65,7 @@ public class AttendenceServiceImpl implements IAttendenceService {
         Attendence attendence = attendenceMapper.getAttendenceByOperatorID(operatorID);
          if (attendence == null){
              attendence = new Attendence();
+             attendence.setOperator(operatorMapper.getOperator(operatorID));
          }
         return attendence;
     }
@@ -69,7 +75,7 @@ public class AttendenceServiceImpl implements IAttendenceService {
         if (attendenceMapper.updateStatusByOperatorID(operatorID, 1, 0) <= 0) {
             return false;
         }
-        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 4) <= 0){
+        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 3) <= 0){
             return false;
         }
         return true;
