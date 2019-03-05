@@ -28,6 +28,7 @@ public class OperatorServiceImpl implements IOperatorService {
 
     @Autowired
     private OperatorMapper operatorMapper;
+
     @Autowired
     private AttendenceMapper attendenceMapper;
 

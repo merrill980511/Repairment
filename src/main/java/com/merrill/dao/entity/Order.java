@@ -86,10 +86,10 @@ public class Order implements Serializable {
 
     /**
      * 订单状态
-     * 1 未处理
-     * 2 处理中
-     * 3 处理完，未确认
-     * 4 已完成
+     * 0 未处理
+     * 1 处理中
+     * 2 处理完，未确认
+     * 3 已完成
      */
     private int status;
 }

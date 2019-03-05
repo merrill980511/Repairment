@@ -44,4 +44,6 @@ public interface IOrderService {
     Order getOrderInHandle(Long operatorID);
 
     Page getOrderListByOperatorID(OperatorQueryObject qo);
+
+    boolean deleteOrderByID(Long orderID);
 }

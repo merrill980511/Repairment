@@ -25,6 +25,7 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private OrderMapper orderMapper;
 

@@ -1,0 +1,14 @@
+table .first-col{
+    padding: 8px 8px;
+    width: 36px;
+}
+.table th:not(.first-col),.table td:not(.first-col){
+    width: calc((100% - 36px) / 7);
+}
+.table th a{
+    float: right;
+    color: inherit;
+}
+.form .info select{
+    margin-bottom: 5px;
+}

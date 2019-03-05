@@ -48,8 +48,8 @@
             </a>
         </li>
         <li>
-            <a href="step">
-                <i class="iconfont icon-solution"></i>用户选项
+            <a href="schedule">
+                <i class="iconfont icon-calendar-check"></i>考勤
             </a>
         </li>
         <li>

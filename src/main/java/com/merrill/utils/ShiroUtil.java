@@ -49,8 +49,8 @@ public class ShiroUtil {
 
     public static void main(String[] args) {
         String hashAlgorithmName = "MD5";//加密方式
-        Object credential = "202cb962ac59075b964b07152d234b70";//密码原值
-        ByteSource salt = ByteSource.Util.bytes("123");//以账号作为盐值
+        Object credential = "330af4503dc0deae2e907a18162b0f5a";//密码原值
+        ByteSource salt = ByteSource.Util.bytes("20211916118");//以账号作为盐值
         int hashIterations = 3;//加密3次
         SimpleHash hash = new SimpleHash(hashAlgorithmName, credential, salt, hashIterations);
         System.out.println(hash.toString());

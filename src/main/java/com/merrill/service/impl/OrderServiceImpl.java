@@ -36,13 +36,10 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderMapper orderMapper;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private AttendenceMapper attendenceMapper;
 
     @Override
     public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription, Date reservationTime) {
-        User user = userMapper.getUserByID(id);
         if (reservationTime == null){
             reservationTime = new Date();
         }
@@ -66,21 +63,21 @@ public class OrderServiceImpl implements IOrderService {
             return false;
         }
         Attendence attendence = attendenceMapper.getLastAttendenceByOperatorID(id);
-        if (attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 0) <= 0){
+        if (attendence != null && attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 0) <= 0){
             return false;
         }
         if (order.getOperator() == null){
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     null, order.getLocation(), order.getPhone(),
                     order.getBeginTime(), order.getHandleTime(), order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 2, order.getReservationTime()) <= 0){
+                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0){
                 return false;
             }
         } else {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     order.getOperator().getId(), order.getLocation(), order.getPhone(),
                     order.getBeginTime(), order.getHandleTime(),order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 2, order.getReservationTime()) <= 0){
+                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0){
                 return false;
             }
         }
@@ -236,5 +233,13 @@ public class OrderServiceImpl implements IOrderService {
         page.setList(list);
         page.setPageSize(pageSize);
         return page;
+    }
+
+    @Override
+    public boolean deleteOrderByID(Long orderID) {
+        if (orderMapper.deleteOrderByID(orderID) > 0){
+            return true;
+        }
+        return false;
     }
 }

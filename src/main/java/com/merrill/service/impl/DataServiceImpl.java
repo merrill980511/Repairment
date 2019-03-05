@@ -30,9 +30,6 @@ public class DataServiceImpl implements IDataService {
     private OrderMapper orderMapper;
 
     @Autowired
-    private OperatorMapper operatorMapper;
-
-    @Autowired
     private AttendenceMapper attendenceMapper;
 
     @Override

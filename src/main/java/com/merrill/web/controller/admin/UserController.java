@@ -50,7 +50,6 @@ public class UserController {
         return status;
     }
 
-    @RequestMapping("deleteUser")
     @ResponseBody
     public Object deleteUser(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
@@ -62,7 +61,6 @@ public class UserController {
         return status;
     }
 
-    @RequestMapping("deleteUserAndOrder")
     @ResponseBody
     public Object deleteUserAndOrder(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));

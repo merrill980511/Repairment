@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.merrill.dao.mapper.ScheduleMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <resultMap id="Schedule" type="Schedule">
+        <id column="id" property="id"/>
+        <result column="date" property="date"/>
+        <association property="operator1" javaType="com.merrill.dao.entity.Operator">
+            <id column="o1_id" property="id"/>
+            <result column="o1_open_id" property="openID"/>
+            <result column="o1_name" property="name"/>
+            <result column="o1_phone" property="phone"/>
+        </association>
+        <association property="operator2" javaType="com.merrill.dao.entity.Operator">
+            <id column="o2_id" property="id"/>
+            <result column="o2_open_id" property="openID"/>
+            <result column="o2_name" property="name"/>
+            <result column="o2_phone" property="phone"/>
+        </association>
+        <association property="operator3" javaType="com.merrill.dao.entity.Operator">
+            <id column="o3_id" property="id"/>
+            <result column="o3_open_id" property="openID"/>
+            <result column="o3_name" property="name"/>
+            <result column="o3_phone" property="phone"/>
+        </association>
+        <association property="operator4" javaType="com.merrill.dao.entity.Operator">
+            <id column="o4_id" property="id"/>
+            <result column="o4_open_id" property="openID"/>
+            <result column="o4_name" property="name"/>
+            <result column="o4_phone" property="phone"/>
+        </association>
+    </resultMap>
+
+    <sql id="selectBase">
+        SELECT s.id,
+               s.date,
+               o1.id      AS o1_id,
+               o1.open_id AS o1_open_id,
+               o1.name    AS o1_name,
+               o1.phone   AS o1_phone,
+               o2.id      AS o2_id,
+               o2.open_id AS o2_open_id,
+               o2.name    AS o2_name,
+               o2.phone   AS o2_phone,
+               o3.id      AS o3_id,
+               o3.open_id AS o3_open_id,
+               o3.name    AS o3_name,
+               o3.phone   AS o3_phone,
+               o4.id      AS o4_id,
+               o4.open_id AS o4_open_id,
+               o4.name    AS o4_name,
+               o4.phone   AS o4_phone
+        FROM schedule s
+                 LEFT JOIN operator o1 on s.operator_id1 = o1.id
+                 LEFT JOIN operator o2 on s.operator_id2 = o2.id
+                 LEFT JOIN operator o3 on s.operator_id3 = o3.id
+                 LEFT JOIN operator o4 on s.operator_id4 = o4.id
+    </sql>
+
+
+    <select id="getScheduleListByDate" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE s.date = #{date}
+        ORDER BY s.number ASC
+    </select>
+
+</mapper>

@@ -75,7 +75,7 @@ public class AttendenceServiceImpl implements IAttendenceService {
         if (attendenceMapper.updateStatusByOperatorID(operatorID, 1, 0) <= 0) {
             return false;
         }
-        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 3) <= 0){
+        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 2) <= 0){
             return false;
         }
         return true;

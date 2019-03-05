@@ -82,6 +82,18 @@ public class OrderController {
         return "";
     }
 
+    @RequestMapping("/deleteOrder")
+    @ResponseBody
+    public Object deleteOrder(@RequestBody Map<String, String> map){
+        Long orderID = Long.valueOf(map.get("orderID"));
+        if (orderService.deleteOrderByID(orderID)) {
+            status.setMessage("true");
+        } else {
+            status.setMessage("删除失败，请稍后重试");
+        }
+        return status;
+    }
+
     @RequestMapping("/updateOrder")
     @ResponseBody
     public Object updateOrder(@RequestBody Map<String, String> map) {

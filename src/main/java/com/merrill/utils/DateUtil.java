@@ -29,4 +29,15 @@ public class DateUtil {
         DateFormat bf = new SimpleDateFormat("yyyyMMdd");
         return bf.format(date);
     }
+
+    public static Date string2Date(String string){
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format1.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 }
