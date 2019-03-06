@@ -6,7 +6,7 @@ $(function () {
     weekDateList = getWeekDateList(0);
     scheduleTableInit();
     $(".editScheduleAction").on("click",function () {
-        var index = $(this).index();
+        var index = $(this).parents("th").index();
         editScheduleList = totalScheduleList[index - 1];
         var date = $(this).parents("th").attr("date-item");
         showForm(date,"编辑排班","确认修改","取消修改","editAction editScheduleAction");
@@ -47,20 +47,30 @@ function setScheduleTableInfo() {
 }
 //单列数据置入
 function setScheduleColInfo(i,sheduleList) {
-    var j = Number(i+1);
         $(".table tbody tr").each(function (index,item) {
             if(sheduleList[index] != null) {
                 var operatorName1 = sheduleList[index].operator1 == null ? "" : sheduleList[index].operator1.name + ",";
                 var operatorName2 = sheduleList[index].operator2 == null ? "" : sheduleList[index].operator2.name + "<br/>";
                 var operatorName3 = sheduleList[index].operator3 == null ? "" : sheduleList[index].operator3.name + ",";
                 var operatorName4 = sheduleList[index].operator4 == null ? "" : sheduleList[index].operator4.name;
-                $(this).find("td").eq(j).html(operatorName1 + operatorName2 + operatorName3 + operatorName4);
+                var j = Number(i)+2;
+                $(this).find("td:nth-child("+j+")").html("123"+operatorName1 + operatorName2 + operatorName3 + operatorName4);
             }
         });
 };
 //表单信息置入
 function setEditScheduleFormInfo(scheduleList){
     $(".form .body").html(getEditScheduleFormInfo(scheduleList));
+    var scheduleInfo = $(".form .info");
+    scheduleInfo.each(function (index,item) {
+        var editSchedule = scheduleList[index];
+        if(editSchedule != null){
+            $(this).find("select:nth-child(1)").val(editSchedule.operator1==null? 0:editSchedule.operator1.id);
+            $(this).find("select:nth-child(2)").val(editSchedule.operator2==null? 0:editSchedule.operator2.id);
+            $(this).find("select:nth-child(3)").val(editSchedule.operator3==null? 0:editSchedule.operator3.id);
+            $(this).find("select:nth-child(4)").val(editSchedule.operator4==null? 0:editSchedule.operator4.id);
+        }
+    });
 }
 //表单HTML获取
 function getEditScheduleFormInfo(scheduleList) {
@@ -126,14 +136,6 @@ function getEditScheduleFormInfo(scheduleList) {
         operatorListHtml+
         '</select>\n' +
         '</div>';
-    var scheduleSelect = $(".form .info select");
-    scheduleSelect.each(function (index,item) {
-       var editSchedule = scheduleList[index];
-        $(this).find("option:nth-child(1)").val(editSchedule.operator1==null? 0:editSchedule.operator1.id);
-        $(this).find("option:nth-child(2)").val(editSchedule.operator2==null? 0:editSchedule.operator2.id);
-        $(this).find("option:nth-child(3)").val(editSchedule.operator3==null? 0:editSchedule.operator3.id);
-        $(this).find("option:nth-child(4)").val(editSchedule.operator4==null? 0:editSchedule.operator4.id);
-    });
     return scheduleFormBodyHTML;
 }
 //获取总考勤
@@ -152,6 +154,7 @@ function getUpdateScheduleList() {
         updateScheduleList[index].operator3 = getOperator($(this).find("option:nth-child(3)").val());
         updateScheduleList[index].operator4 = getOperator($(this).find("option:nth-child(4)").val());
     });
+    console.log(updateScheduleList);
     return updateScheduleList;
 }
 //更新考勤

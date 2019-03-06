@@ -30,6 +30,11 @@
             <result column="o4_name" property="name"/>
             <result column="o4_phone" property="phone"/>
         </association>
+        <association property="workTime" javaType="com.merrill.dao.entity.WorkTime">
+            <id column="number" property="number"/>
+            <result column="begin_time" property="beginTime"/>
+            <result column="end_time" property="endTime"/>
+        </association>
     </resultMap>
 
     <sql id="selectBase">
@@ -50,12 +55,14 @@
                o4.id      AS o4_id,
                o4.open_id AS o4_open_id,
                o4.name    AS o4_name,
-               o4.phone   AS o4_phone
+               o4.phone   AS o4_phone,
+               w.number   AS w_number
         FROM schedule s
                  LEFT JOIN operator o1 on s.operator_id1 = o1.id
                  LEFT JOIN operator o2 on s.operator_id2 = o2.id
                  LEFT JOIN operator o3 on s.operator_id3 = o3.id
                  LEFT JOIN operator o4 on s.operator_id4 = o4.id
+                 LEFT JOIN work_time w on s.number = w.number
     </sql>
 
 

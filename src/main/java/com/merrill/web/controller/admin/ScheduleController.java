@@ -1,7 +1,9 @@
 package com.merrill.web.controller.admin;
 
+import com.merrill.dao.entity.Schedule;
 import com.merrill.service.IScheduleService;
 import com.merrill.utils.DateUtil;
+import com.merrill.web.vo.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,9 @@ public class ScheduleController {
     @Autowired
     private IScheduleService scheduleService;
 
+    @Autowired
+    private Status status;
+
     @RequestMapping("/schedule")
     public String schedule(){
         return "/admin/views/adminSchedule";
@@ -38,4 +43,10 @@ public class ScheduleController {
         return scheduleService.getScheduleListByDate(date);
     }
 
+    @RequestMapping("/updateSchedule")
+    @ResponseBody
+    public Object updateSchedule(@RequestBody Schedule schedule){
+
+        return status;
+    }
 }

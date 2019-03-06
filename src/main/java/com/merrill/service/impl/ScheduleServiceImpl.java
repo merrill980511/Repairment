@@ -1,6 +1,7 @@
 package com.merrill.service.impl;
 
 import com.merrill.dao.entity.Schedule;
+import com.merrill.dao.entity.WorkTime;
 import com.merrill.dao.mapper.ScheduleMapper;
 import com.merrill.service.IScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,16 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     public List<Schedule> getScheduleListByDate(Date date) {
-        return scheduleMapper.getScheduleListByDate(date);
+        List<Schedule> list = scheduleMapper.getScheduleListByDate(date);
+        for (int i = 0; i < 4; i++) {
+            if (i >= list.size()) {
+                Schedule schedule = new Schedule();
+                WorkTime workTime = new WorkTime();
+                workTime.setNumber(i + 1);
+                schedule.setWorkTime(workTime);
+                list.add(schedule);
+            }
+        }
+        return list;
     }
 }

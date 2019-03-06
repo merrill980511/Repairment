@@ -226,7 +226,6 @@ li.divider{
     border-radius: 3px;
     padding: 1px 5px;
     cursor: pointer;
-    float: right;
 }
 .btn:hover {
     background-color: #e6e6e6;
