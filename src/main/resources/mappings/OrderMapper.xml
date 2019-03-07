@@ -158,7 +158,7 @@
     </delete>
     <select id="getOrderByUserID" resultMap="Order">
         <include refid="orderSelectBase"/>
-        WHERE u.id = #{id} AND o.status = 0 OR o.status = 1 OR o.status = 3
+        WHERE u.id = #{id}
     </select>
     <select id="getOrderByID" resultMap="Order">
         <include refid="orderSelectBase"/>
