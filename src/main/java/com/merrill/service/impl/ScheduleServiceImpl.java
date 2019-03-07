@@ -32,6 +32,7 @@ public class ScheduleServiceImpl implements IScheduleService {
         for (int i = 0; i < 4; i++) {
             if (i >= list.size()) {
                 Schedule schedule = new Schedule();
+                schedule.setId(-2L);
                 WorkTime workTime = new WorkTime();
                 workTime.setNumber(i + 1);
                 schedule.setWorkTime(workTime);
@@ -39,5 +40,26 @@ public class ScheduleServiceImpl implements IScheduleService {
             }
         }
         return list;
+    }
+
+    @Override
+    public boolean updateScheduleList(Schedule[] scheduleList) {
+        for (int i = 0; i < scheduleList.length; i++) {
+            if (scheduleList[i].getId().equals(-2L)) {
+//                java.sql.Date sqlDate = new java.sql.Date(scheduleList[i].getDate().getTime());
+                if (scheduleMapper.addSchedule(scheduleList[i].getDate(), scheduleList[i].getWorkTime().getNumber(),
+                        scheduleList[i].getOperator1().getId(), scheduleList[i].getOperator2().getId(),
+                        scheduleList[i].getOperator3().getId(), scheduleList[i].getOperator4().getId()) < 0) {
+                    return false;
+                }
+            } else {
+                if (scheduleMapper.updateSchedule(scheduleList[i].getId(),
+                        scheduleList[i].getOperator1().getId(), scheduleList[i].getOperator2().getId(),
+                        scheduleList[i].getOperator3().getId(), scheduleList[i].getOperator4().getId()) < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

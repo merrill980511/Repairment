@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface IScheduleService {
     List<Schedule> getScheduleListByDate(Date date);
+
+    boolean updateScheduleList(Schedule[] scheduleList);
 }

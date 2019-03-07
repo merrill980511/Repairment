@@ -1,23 +1,23 @@
-function Admin() {
-    return Admin("","","");
+function newAdmin() {
+    return Admin(null,null,null);
 }
-function User() {
-    return User("","","");
+function newUser() {
+    return User(null,null,null);
 }
-function Operator() {
-    return Operator("","","","","");
+function newOperator() {
+    return Operator(null,null,null,null,null);
 }
-function Order() {
-    return Order("",User(),Operator(),"","","","","","","","","");
+function newOrder() {
+    return Order(null,User(),Operator(),null,null,null,null,null,null,null,null,null);
 }
-function Step() {
-    return Step("","","",Link(),[]);
+function newStep() {
+    return Step(null,null,null,Link(),null);
 }
-function Link() {
-    return Link("","","");
+function newLink() {
+    return Link(null,null,null);
 }
-function Option() {
-    return Option("","","","","");
+function newOption() {
+    return Option(null,null,null,null,null);
 }
 function Admin(id,password,name) {
     var admin = new Object();

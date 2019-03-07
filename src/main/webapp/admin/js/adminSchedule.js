@@ -13,26 +13,26 @@ $(function () {
         setEditScheduleFormInfo(editScheduleList);
     });
     $(".form").on("click",".editScheduleAction",function () {
-        updateSchedule(getUpdateScheduleList());
+        updateScheduleList(getUpdateScheduleList());
     });
     $(".panel-default .header .panel-item").on("change",function () {
         var panelItem = $(this).val();
         switch (panelItem) {
             case "thisWeek":
                 weekDateList = getWeekDateList(0);
-                scheduleTableInit();
                 break;
             case "nextWeek":
                 weekDateList = getWeekDateList(1);
-                scheduleTableInit();
                 break;
             default:
                 break;
         }
+        scheduleTableInit();
     });
 });
 //表格初始化
 function scheduleTableInit() {
+    lidInit();
     $("th:not(.first-col)").each(function (index,item) {
         $(this).attr("date-item",new Date(weekDateList[index]).Format("yyyy-MM-dd"));
     });
@@ -49,12 +49,12 @@ function setScheduleTableInfo() {
 function setScheduleColInfo(i,sheduleList) {
         $(".table tbody tr").each(function (index,item) {
             if(sheduleList[index] != null) {
-                var operatorName1 = sheduleList[index].operator1 == null ? "" : sheduleList[index].operator1.name + ",";
-                var operatorName2 = sheduleList[index].operator2 == null ? "" : sheduleList[index].operator2.name + "<br/>";
-                var operatorName3 = sheduleList[index].operator3 == null ? "" : sheduleList[index].operator3.name + ",";
-                var operatorName4 = sheduleList[index].operator4 == null ? "" : sheduleList[index].operator4.name;
+                var operatorName1 = sheduleList[index].operator1 == null ? "" : sheduleList[index].operator1.name;
+                var operatorName2 = sheduleList[index].operator2 == null ? "" : ","+sheduleList[index].operator2.name + "<br/>";
+                var operatorName3 = sheduleList[index].operator3 == null ? "" : sheduleList[index].operator3.name;
+                var operatorName4 = sheduleList[index].operator4 == null ? "" : ","+sheduleList[index].operator4.name;
                 var j = Number(i)+2;
-                $(this).find("td:nth-child("+j+")").html("123"+operatorName1 + operatorName2 + operatorName3 + operatorName4);
+                $(this).find("td:nth-child("+j+")").html(operatorName1 + operatorName2 + operatorName3 + operatorName4);
             }
         });
 };
@@ -65,16 +65,16 @@ function setEditScheduleFormInfo(scheduleList){
     scheduleInfo.each(function (index,item) {
         var editSchedule = scheduleList[index];
         if(editSchedule != null){
-            $(this).find("select:nth-child(1)").val(editSchedule.operator1==null? 0:editSchedule.operator1.id);
-            $(this).find("select:nth-child(2)").val(editSchedule.operator2==null? 0:editSchedule.operator2.id);
-            $(this).find("select:nth-child(3)").val(editSchedule.operator3==null? 0:editSchedule.operator3.id);
-            $(this).find("select:nth-child(4)").val(editSchedule.operator4==null? 0:editSchedule.operator4.id);
+            $(this).find("select:nth-child(2)").val(editSchedule.operator1==null? "-2":editSchedule.operator1.id);
+            $(this).find("select:nth-child(3)").val(editSchedule.operator2==null? "-2":editSchedule.operator2.id);
+            $(this).find("select:nth-child(4)").val(editSchedule.operator3==null? "-2":editSchedule.operator3.id);
+            $(this).find("select:nth-child(5)").val(editSchedule.operator4==null? "-2":editSchedule.operator4.id);
         }
     });
 }
 //表单HTML获取
 function getEditScheduleFormInfo(scheduleList) {
-    var operatorListHtml = "<option value='0'>无</option>";
+    var operatorListHtml = "<option value='-2'>无</option>";
     operatorList = getAllOperatorList();
     for(var i in operatorList){
         operatorListHtml += '<option value="'+operatorList[i].id+'">'+operatorList[i].name+'</option>\n';
@@ -140,6 +140,7 @@ function getEditScheduleFormInfo(scheduleList) {
 }
 //获取总考勤
 function getTotalScheduleList() {
+    totalScheduleList = [];
     for(var i in weekDateList){
         totalScheduleList.push(getScheduleList(weekDateList[i]));
     }
@@ -147,26 +148,26 @@ function getTotalScheduleList() {
 //获取新考勤
 function getUpdateScheduleList() {
     var updateScheduleList = editScheduleList;
-    var scheduleSelect = $(".form .info select");
-    scheduleSelect.each(function (index,item) {
-        updateScheduleList[index].operator1 = getOperator($(this).find("option:nth-child(1)").val());
-        updateScheduleList[index].operator2 = getOperator($(this).find("option:nth-child(2)").val());
-        updateScheduleList[index].operator3 = getOperator($(this).find("option:nth-child(3)").val());
-        updateScheduleList[index].operator4 = getOperator($(this).find("option:nth-child(4)").val());
+    var scheduleInfo = $(".form .info");
+    scheduleInfo.each(function (index,item) {
+        updateScheduleList[index].date = $(".form").attr("item-id");
+        updateScheduleList[index].operator1 = getOperator($(this).find("select:nth-child(2)").val());
+        updateScheduleList[index].operator2 = getOperator($(this).find("select:nth-child(3)").val());
+        updateScheduleList[index].operator3 = getOperator($(this).find("select:nth-child(4)").val());
+        updateScheduleList[index].operator4 = getOperator($(this).find("select:nth-child(5)").val());
     });
-    console.log(updateScheduleList);
     return updateScheduleList;
 }
 //更新考勤
-function updateSchedule(schedule) {
+function updateScheduleList(scheduleList) {
     $.ajax({
-        "url": "/repair/admin/updateScheduleByDate",
+        "url": "/repair/admin/updateScheduleList",
         "method": "post",
         "async":false,
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"schedule\":'+JSON.stringify(schedule)+'}',
+        "data": JSON.stringify(scheduleList),
         "dataType": "json",
         "success": function (data) {
             if(data.message == 'true'){
@@ -225,9 +226,13 @@ function getAllOperatorList() {
 function getOperator(id) {
     var operator = null;
     for(var i in operatorList){
-        if(operatorList[i].id = id){
+        if(operatorList[i].id == id){
             operator = operatorList[i];
         }
+    }
+    if(operator == null){
+        operator = newOperator();
+        operator.id = "-2";
     }
     return operator;
 }

@@ -64,7 +64,18 @@
                  LEFT JOIN operator o4 on s.operator_id4 = o4.id
                  LEFT JOIN work_time w on s.number = w.number
     </sql>
-
+    <insert id="addSchedule">
+        INSERT INTO schedule(`date`, number, operator_id1, operator_id2, operator_id3, operator_id4)
+        VALUES (#{date}, #{number}, #{id1}, #{id2}, #{id3}, #{id4})
+    </insert>
+    <update id="updateSchedule">
+        UPDATE schedule SET
+            operator_id1 = #{id1},
+            operator_id2 = #{id2},
+            operator_id3 = #{id3},
+            operator_id4 = #{id4}
+        WHERE id = #{id}
+    </update>
 
     <select id="getScheduleListByDate" resultMap="Schedule">
         <include refid="selectBase"/>

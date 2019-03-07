@@ -146,11 +146,12 @@
     </div>
 </div>
 <script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/repair/admin/js/adminSchedule.js"></script>
 <script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
 <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
+<script type="text/javascript" src="/repair/admin/js/entity.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.js"></script>
+<script type="text/javascript" src="/repair/admin/js/adminSchedule.js"></script>
 </body>
 </html>
 

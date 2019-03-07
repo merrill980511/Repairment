@@ -1,6 +1,7 @@
 package com.merrill.dao.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class Schedule implements Serializable {
 
     private Long id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private WorkTime workTime;

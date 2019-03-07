@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -43,10 +44,14 @@ public class ScheduleController {
         return scheduleService.getScheduleListByDate(date);
     }
 
-    @RequestMapping("/updateSchedule")
+    @RequestMapping("/updateScheduleList")
     @ResponseBody
-    public Object updateSchedule(@RequestBody Schedule schedule){
-
+    public Object updateScheduleList(@RequestBody Schedule[] scheduleList){
+        if (scheduleService.updateScheduleList(scheduleList)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("保存失败，请重试");
+        }
         return status;
     }
 }
