@@ -41,8 +41,8 @@ public class DataServiceImpl implements IDataService {
         list.add(orderMapper.getOrderNumberByStatus(0));
         int unfinishedNum = orderMapper.getOrderNumberByDate(DateUtil.date2String(new Date()));
         int finishedNum = orderMapper.getOrderFinishedNumberByDate(DateUtil.date2String(new Date()));
-        int num1 = attendenceMapper.getAttendenceNumByStatus(0);
-        int num2 = attendenceMapper.getAttendenceNumByStatus(1);
+        int num1 = attendenceMapper.getAttendenceNumByStatus(1);
+        int num2 = attendenceMapper.getAttendenceNumByStatus(0);
         list.add(unfinishedNum + finishedNum);
         list.add(finishedNum);
         list.add(num1);
