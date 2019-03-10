@@ -159,6 +159,19 @@ function showForm(id,title,confirm,cancel,confirmClass){
     $(".lid").show();
     $(".lid .form").show();
 }
+//表单显示
+function showViewForm(id,title){
+    var formHtml = '<div class="header">\n' +
+        '            '+title+'<i class="iconfont icon-close closeAction  action" title="关闭"></i>\n' +
+        '<input type="hidden" class="id" value="'+id+'"/>\n'+
+        '        </div>\n' +
+        '        <div class="body">\n' +
+        '        </div>';
+    $(".lid .form").attr("item-id",id);
+    $(".lid .form").html(formHtml);
+    $(".lid").show();
+    $(".lid .form").show();
+}
 function setAdminFormInfo(){
     $(".lid .form .body").html(getEditAdminFormBodyHTML());
 }
@@ -196,3 +209,43 @@ function addOptionsInTipByList(list) {
         addOptionsInTipByItem(list[i]);
     }
 }
+function getViewOrderFormBodyHTML(order) {
+    var order_user = order.user == null? "":order.user.name;
+    var orderFormBodyHTML = '<div class="info"><span class="name">报修人</span><input type="text" class="content user" value="'+dataLoad(order_user)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+        '<div class="info"><span class="name">地点</span><input type="text" class="content location" value="'+dataLoad(order.location)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">预约时间</span><input type="text" class="content beginTime" value="'+dateLoad(dataLoad(order.beginTime))+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">用户备注</span><textarea rows="5" class="content userDescription" readonly>'+dataLoad(order.userDescription)+'</textarea rows="5"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">备注</span><textarea rows="5" class="content description" readonly>'+dataLoad(order.description)+'</textarea rows="5"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">问题选项</span><textarea rows="5" class="content repairment" readonly>'+dataLoad(order.repairment)+'</textarea rows="5"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>';
+    return orderFormBodyHTML;
+}
+function getViewLeaveFormBodyHTML(leave) {
+    var leave_operator = leave.operator == null? "":leave.operator.name;
+    var orderFormBodyHTML = '<div class="info"><span class="name">请假申请人</span><input type="text" class="content operator" value="'+dataLoad(leave_operator)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+        '<div class="info"><span class="name">请假日期</span><input type="text" class="content date" value="'+dataLoad(new Date(leave.date).Format("yyyy-MM-dd"))+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">请假时间</span><input type="text" class="content number" value="'+dataLoad(getWorkTime(leave.number))+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
+        '<div class="info"><span class="name">请假缘由</span><textarea rows="5" class="content description" readonly>'+dataLoad(leave.description)+'</textarea rows="5"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>';
+    return orderFormBodyHTML;
+}
+//获得数据面板
+function getItem(id,url) {
+    var item = null;
+    $.ajax({
+        "url": url,
+        "method": "post",
+        "async":false,
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"id\":\"'+id+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            item = data;
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+    editItem = item;
+    return item;
+};

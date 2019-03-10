@@ -16,13 +16,18 @@ import java.util.List;
  */
 @Repository
 public interface ScheduleMapper {
-    List<Schedule> getScheduleListByDate(Date date);
+    List<Integer> getNumbersByDateAndOperatorID(@Param("date") Date date,
+                                                @Param("operatorID") Long operatorID);
+
+    List<Schedule> getScheduleListByDateAndNumber(@Param("date") Date date,
+                                                  @Param("number") int number);
+
+    int deleteScheduleListByDateAndNumber(@Param("date") Date date,
+                                          @Param("number") int number);
 
     int addSchedule(@Param("date") Date date, @Param("number") int number,
-                    @Param("id1") Long id1, @Param("id2") Long id2,
-                    @Param("id3") Long id3, @Param("id4") Long id4);
+                    @Param("operatorID") Long operatorId, @Param("status") int status);
 
-    int updateSchedule(@Param("id") Long id,
-                       @Param("id1") Long id1, @Param("id2") Long id2,
-                       @Param("id3") Long id3, @Param("id4") Long id4);
+    int updateScheduleOperatorStatus(@Param("operatorID") Long operatorID, @Param("date") Date date,
+                                     @Param("number") int number, @Param("status") int status);
 }

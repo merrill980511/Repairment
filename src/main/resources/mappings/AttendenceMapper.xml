@@ -5,8 +5,8 @@
 
     <resultMap id="Attendence" type="Attendence">
         <id column="id" property="id"/>
-        <result column="begin_time" property="checkinTime"/>
-        <result column="reservation_time" property="checkoutTime"/>
+        <result column="check_in_time" property="checkinTime"/>
+        <result column="check_out_time" property="checkoutTime"/>
         <result column="description" property="description"/>
         <result column="status" property="status"/>
         <association property="operator" javaType="Operator">
@@ -33,7 +33,7 @@
 
     <insert id="checkin">
         INSERT INTO attendence(operator_id)
-        VALUES (#{id})
+        VALUES (#{operatorID})
     </insert>
     <update id="checkout">
         UPDATE attendence
@@ -55,7 +55,7 @@
     <select id="getLastID" resultType="long">
         SELECT LAST_INSERT_ID()
     </select>
-    <select id="getAttendenceByOperatorID" resultType="Attendence">
+    <select id="getAttendenceByOperatorID" resultMap="Attendence">
         <include refid="selectBase"/>
         WHERE op.id = #{operatorID} AND (a.status = 0 OR a.status = 1)
     </select>
@@ -66,7 +66,12 @@
     </select>
     <select id="getLastAttendenceByOperatorID" resultMap="Attendence">
         <include refid="selectBase"/>
-        WHERE a.operator_id = (SELECT MAX(operator_id) FROM attendence t2 WHERE operator_id = #{id})
+        WHERE a.id = (SELECT MAX(id) FROM attendence t2 WHERE operator_id = #{id})
     </select>
+    <select id="getAttendenceByID" resultMap="Attendence">
+        <include refid="selectBase"/>
+        WHERE a.id = #{id}
+    </select>
+
 
 </mapper>

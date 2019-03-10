@@ -8,13 +8,16 @@ body,html{
     padding: 0px;
     margin: 0px;
 }
+a{
+    text-decoration: none;
+}
 body *{
     overflow: hidden;
 }
 .bottom-index,.bottom-index *{
     overflow: visible;
 }
-.table{
+body>.table{
     position: fixed;
     top: 127px;
     left: 0;
@@ -38,7 +41,7 @@ body *{
     right: 0;
     height: calc(100% - 61px);
 }
-.tr,.info{
+.tr,.infoPanel .info{
     position: relative;
     font-size: 16px;
     line-height: 44px;
@@ -54,25 +57,40 @@ body *{
 .th{
     font-weight: bold;
 }
-.info>label{
+.infoPanel .info>label{
     width: 95px;
     float: left;
 }
-.info>label:not(.title),.info>button{
-    width: calc(100% - 95px);
+.infoPanel .info>label:not(.title),.infoPanel .info>button{
+    width: calc(100% - 95px - 30px);
+    float: left;
 }
-.info>button{
+.infoPanel .info .iconfont{
+    cursor: pointer;
+    float: left;
+}
+.infoPanel .info textarea{
+    width: calc(100% - 95px - 50px);
+    background: transparent;
+    font-family: Arial;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 3px 8px;
+    resize: none;
+    float: left;
+}
+.infoPanel .info>button{
     color: #FFFFFF;
     height: 44px;
     border: none;
 }
-.info>button.finishOrderAction{
+.infoPanel .info>button.finishOrderAction{
     background-color: #ff5b5b;
 }
-.info>button.quitDisplayOrderAction{
+.infoPanel .info>button.quitDisplayOrderAction{
     background-color: #009fe8;
 }
-.errorMessage{
+.infoPanel .errorMessage{
     width: calc(100% - 185px - 95px - 30px);
     padding:3px;
     margin-top: 10px;
@@ -179,20 +197,23 @@ span.busy{
 .homePanel>.content{
     padding: 10px 15px;
     background-color: #e7e7e7;
-    height: calc(100% - 71px);
+    height: calc(100% - 71px - 20px);
+    overflow-y: scroll;
 }
-.homePanel>.content button{
-    width: 50%;
-    margin: 15% 25%;
+.homePanel>.content>button{
     color: #FFFFFF;
     height: 44px;
     border: none;
     cursor: pointer;
 }
 button.checkInAction{
+    width: 50%;
+    margin: 10% 25%;
     background-color: #009fe8;
 }
 button.checkOutAction{
+    width: 50%;
+    margin: 10% 25%;
     background-color: #ff5b5b;
 }
 .bottom-index{
@@ -257,7 +278,7 @@ tr.order:last-child{
 .indexSelectItem{
     position: relative;
 }
-.options{
+.indexSelect .options{
     position: absolute;
     bottom: 64px;
     right: 0;
@@ -277,6 +298,10 @@ tr.order:last-child{
 .options>div:last-child{
     border: none;
 }
+.options a:hover {
+    color: #262626;
+    background-color: #f5f5f5;
+}
 .hidden{
     display: none;
 }
@@ -288,4 +313,264 @@ tr.order:last-child{
 }
 button{
     cursor: pointer;
+}
+.homePanel .panel-default{
+    width: 80%;
+    margin: 10px 10%;
+}
+.form .info select{
+    margin-bottom: 5px;
+}
+/*panel-default默认*/
+.panel-default .table{
+    width: 100%;
+    text-align: left;
+    border-collapse: separate !important;
+}
+.panel-default table{
+    border-spacing: 0;
+    background-color: transparent;
+    table-layout: fixed;
+}
+.panel-default .table td,.panel-default .table th,.panel-default .table tbody,.panel-default .table{
+    border: 1px solid #ddd;
+}
+.panel-default .table td,.panel-default .table th{
+    padding: 8px 18px;
+    line-height: 1.42857143;
+}
+.panel-default tr.odd{
+    background-color: #f9f9f9;
+}
+.panel-default .table th,.panel-default .table td{
+    border-left-width: 0;
+    border-bottom-width: 0;
+}
+.panel-default .table th:last-child,.panel-default .table td:last-child{
+    border-right-width: 0;
+}
+.panel-default .table th{
+    border-top-width: 0;
+}
+.panel-default tbody tr:hover {
+    background-color: #f5f5f5;
+}
+.panel-default th,td{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.panel-default table .first-col{
+    padding: 8px 8px;
+    width: 36px;
+}
+.panel-default .table th:not(.first-col),.panel-default .table td:not(.first-col){
+    width: calc((100% - 36px) / 7);
+}
+.panel-default {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.panel-default,.panel-default *{
+    overflow: visible;
+}
+.panel-default .header {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    padding: 10px 15px;
+    border-bottom: 1px solid #dddddd;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.panel-default .body {
+    padding: 15px;
+}
+.panel-default .header .select {
+    float: right;
+    position: relative;
+}
+.panel-default .btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 1px 5px;
+    cursor: pointer;
+}
+.panel-default .hidden {
+    display: none;
+}
+.panel-default .select>.options {
+    margin-top: 10px;
+}
+.panel-default .options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0px;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+.panel-default .options ul {
+    padding: 0px;
+}
+.panel-default ul {
+    list-style: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+.panel-default .options li {
+    padding: 0px;
+}
+.panel-default .options a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+/*帮助菜单*/
+.helpPanel {
+    position: fixed;
+    top: 0;
+    bottom: 61px;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+}
+.helpPanel .header{
+    width: calc(100% - 30px);
+    padding: 5px 15px;
+    line-height: 44px;
+    height: 44px;
+    font-size: 18px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.helpPanel .header a {
+    width: 26px;
+    height: 26px;
+    margin: 9px 0px;
+    float: right;
+}
+.helpPanel .header img {
+    width: 26px;
+    height: 26px;
+    float: left;
+}
+.helpPanel>.body{
+    height: calc(100% - 55px);
+    overflow-y: scroll;
+}
+.helpPanel .body button{
+    width: 33%;
+    height: 44px;
+    padding: 5px auto;
+    display: inline-block;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border: 1px solid transparent;
+    margin: 20px auto;
+}
+.helpPanel .body .confirmAction{
+    margin-left: 10%;
+    margin-right: 7%;
+    background-color: #009fe8;
+}
+.helpPanel .body .cancelAction{
+    margin-left: 7%;
+    margin-right: 10%;
+    background-color: rgb(221, 221, 221);
+}
+.helpPanel .info{
+    width: calc(100% - 10px);
+    padding: 5px 10px;
+}
+.helpPanel .body .info>input:enabled, .helpPanel .body .info>textarea:enabled {
+    background: transparent;
+}
+.helpPanel .body .info>textarea {
+    font-family: Arial;
+}
+.helpPanel .body .info>input, .helpPanel .body .info>textarea, .helpPanel .body .info>select {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 3px 8px;
+    resize: none;
+}
+.helpPanel .body .info>span:not(.binding), .helpPanel .body .info>input, .helpPanel .body .info>textarea, .helpPanel .body .info>select {
+    width: calc(100% - 6px);
+    position: relative;
+    z-index: 4000;
+}
+.helpPanel .body .info>span.binding, .helpPanel .body .info>span:not(.binding), .helpPanel .body .info>input, .helpPanel .body .info .tip, .helpPanel .body .info>select {
+    line-height: 30px;
+}
+.helpPanel .body .info>select {
+    height: 37.6px;
+}
+.helpPanel .body .info>.errorMessage {
+    width: 100%;
+    padding: 5px;
+    color: #ff5b5b;
+    font-size: 14px;
+    line-height: 18px;
+    overflow: hidden;
+    display: none;
+}
+.helpPanel .body .info>.errorMessage>img {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    margin-right: 2px;
+}
+/**/
+.askForLeaveAction,.freeTimeManagementAction{
+    width: 33%;
+    border-radius: 10px;
+    margin: 10% auto;
+    color: #FFFFFF;
+}
+.askForLeaveAction{
+    margin-left: 7%;
+    margin-right: 10%;
+    background-color: #a2a8ae;
+}
+.freeTimeManagementAction{
+    margin-left: 10%;
+    margin-right: 7%;
+    background-color: #ff5b5b;
+}
+.helpPanel td,.helpPanel th{
+    position: relative;
+}
+.helpPanel .panel-default{
+    width: 80%;
+    margin: 20px 10%;
+}
+.helpPanel td.selected{
+    background: #0fff5d;
 }

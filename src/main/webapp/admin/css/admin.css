@@ -543,3 +543,15 @@ i.action{
     text-overflow: ellipsis;
     display: none;
 }
+label.absent{
+    color:#878C92;
+}
+label.normal{
+    color: #0fff5d;
+}
+label.busy{
+    color: #ff5b5b;
+}
+.pointer,.pointer *{
+    cursor: pointer;
+}

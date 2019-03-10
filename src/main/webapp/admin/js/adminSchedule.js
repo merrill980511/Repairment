@@ -46,15 +46,23 @@ function setScheduleTableInfo() {
     }
 }
 //单列数据置入
-function setScheduleColInfo(i,sheduleList) {
+function setScheduleColInfo(i,scheduleList) {
         $(".table tbody tr").each(function (index,item) {
-            if(sheduleList[index] != null) {
-                var operatorName1 = sheduleList[index].operator1 == null ? "" : sheduleList[index].operator1.name;
-                var operatorName2 = sheduleList[index].operator2 == null ? "" : ","+sheduleList[index].operator2.name + "<br/>";
-                var operatorName3 = sheduleList[index].operator3 == null ? "" : sheduleList[index].operator3.name;
-                var operatorName4 = sheduleList[index].operator4 == null ? "" : ","+sheduleList[index].operator4.name;
+            if(scheduleList[index] != null) {
+                var operatorNames = '';
+                var length = 0;
+                for(var x in scheduleList[index].operatorList){
+                    if(scheduleList[index].operatorList[x] != null){
+                        length++;
+                        if(length%2 == 1){
+                            operatorNames += scheduleList[index].operatorList[x].name;
+                        }else{
+                            operatorNames += ","+scheduleList[index].operatorList[x].name + "<br/>";
+                        }
+                    }
+                }
                 var j = Number(i)+2;
-                $(this).find("td:nth-child("+j+")").html(operatorName1 + operatorName2 + operatorName3 + operatorName4);
+                $(this).find("td:nth-child("+j+")").html(operatorNames);
             }
         });
 };
@@ -64,11 +72,13 @@ function setEditScheduleFormInfo(scheduleList){
     var scheduleInfo = $(".form .info");
     scheduleInfo.each(function (index,item) {
         var editSchedule = scheduleList[index];
-        if(editSchedule != null){
-            $(this).find("select:nth-child(2)").val(editSchedule.operator1==null? "-2":editSchedule.operator1.id);
-            $(this).find("select:nth-child(3)").val(editSchedule.operator2==null? "-2":editSchedule.operator2.id);
-            $(this).find("select:nth-child(4)").val(editSchedule.operator3==null? "-2":editSchedule.operator3.id);
-            $(this).find("select:nth-child(5)").val(editSchedule.operator4==null? "-2":editSchedule.operator4.id);
+        if(editSchedule != null) {
+            for (var x in editSchedule.operatorList) {
+                if (editSchedule.operatorList[x] != null) {
+                    var j = Number(x)+2;
+                    $(this).find("select:nth-child(" +j+ ")").val(editSchedule.operatorList[x].id);
+                }
+            }
         }
     });
 }
@@ -151,10 +161,10 @@ function getUpdateScheduleList() {
     var scheduleInfo = $(".form .info");
     scheduleInfo.each(function (index,item) {
         updateScheduleList[index].date = $(".form").attr("item-id");
-        updateScheduleList[index].operator1 = getOperator($(this).find("select:nth-child(2)").val());
-        updateScheduleList[index].operator2 = getOperator($(this).find("select:nth-child(3)").val());
-        updateScheduleList[index].operator3 = getOperator($(this).find("select:nth-child(4)").val());
-        updateScheduleList[index].operator4 = getOperator($(this).find("select:nth-child(5)").val());
+        updateScheduleList[index].operatorList = [];
+        for(var i = 0;i<4;i++){
+            updateScheduleList[index].operatorList.push(getOperator($(this).find("select:nth-child("+Number(i)+2+")").val()));
+        }
     });
     return updateScheduleList;
 }

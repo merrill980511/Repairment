@@ -24,7 +24,10 @@
 </div>
 <div class="table"></div>
 <div class="infoPanel"></div>
-<div class="homePanel"></div>
+<div class="homePanel">
+</div>
+<div class="helpPanel">
+</div>
 <div class="bottom-index">
     <div class="indexButton checkIn" table-item="checkIn">打卡</div>
     <div class="indexButton order" table-item="order">未处理</div>
@@ -39,8 +42,11 @@
 </div>
 <script type="text/javascript" src="/repair/operator/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/repair/operator/js/utils.js"></script>
+<script type="text/javascript" src="/repair/operator/js/jquery.date.js"></script>
 <script type="text/javascript" src="/repair/operator/js/jqPaginator.js"></script>
 <script type="text/javascript" src="/repair/operator/js/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/operator/js/formCheck.js"></script>
 <script type="text/javascript" src="/repair/operator/js/orderListView.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operatorSchedule.js"></script>
 </body>
 </html>

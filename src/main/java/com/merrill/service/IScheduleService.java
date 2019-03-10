@@ -1,6 +1,6 @@
 package com.merrill.service;
 
-import com.merrill.dao.entity.Schedule;
+import com.merrill.web.vo.ScheduleVO;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * Description:
  */
 public interface IScheduleService {
-    List<Schedule> getScheduleListByDate(Date date);
+    List<ScheduleVO> getScheduleListByDate(Date date);
 
-    boolean updateScheduleList(Schedule[] scheduleList);
+    boolean updateScheduleList(ScheduleVO[] scheduleList);
 }

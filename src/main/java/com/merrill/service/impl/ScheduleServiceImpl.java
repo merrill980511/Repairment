@@ -1,13 +1,16 @@
 package com.merrill.service.impl;
 
+import com.merrill.dao.entity.Operator;
 import com.merrill.dao.entity.Schedule;
-import com.merrill.dao.entity.WorkTime;
 import com.merrill.dao.mapper.ScheduleMapper;
+import com.merrill.dao.mapper.WorkTimeMapper;
 import com.merrill.service.IScheduleService;
+import com.merrill.web.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,40 +29,43 @@ public class ScheduleServiceImpl implements IScheduleService {
     @Autowired
     private ScheduleMapper scheduleMapper;
 
+    @Autowired
+    private WorkTimeMapper workTimeMapper;
+
     @Override
-    public List<Schedule> getScheduleListByDate(Date date) {
-        List<Schedule> list = scheduleMapper.getScheduleListByDate(date);
-        for (int i = 0; i < 4; i++) {
-            if (i >= list.size()) {
-                Schedule schedule = new Schedule();
-                schedule.setId(-2L);
-                WorkTime workTime = new WorkTime();
-                workTime.setNumber(i + 1);
-                schedule.setWorkTime(workTime);
-                list.add(schedule);
+    @Transactional(readOnly = true)
+    public List<ScheduleVO> getScheduleListByDate(Date date) {
+        List<ScheduleVO> scheduleVOS = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            List<Schedule> list = scheduleMapper.getScheduleListByDateAndNumber(new java.sql.Date(date.getTime()), i);
+            ScheduleVO scheduleVO = new ScheduleVO();
+            scheduleVO.setDate(date);
+            scheduleVO.setWorkTime(workTimeMapper.getWorkTimeByNumber(i));
+            List<Operator> operators = new ArrayList<>();
+            for (Schedule schedule : list) {
+                operators.add(schedule.getOperator());
             }
+            scheduleVO.setOperatorList(operators);
+            scheduleVOS.add(scheduleVO);
         }
-        return list;
+        return scheduleVOS;
     }
 
     @Override
-    public boolean updateScheduleList(Schedule[] scheduleList) {
-        for (int i = 0; i < scheduleList.length; i++) {
-            if (scheduleList[i].getId().equals(-2L)) {
-//                java.sql.Date sqlDate = new java.sql.Date(scheduleList[i].getDate().getTime());
-                if (scheduleMapper.addSchedule(scheduleList[i].getDate(), scheduleList[i].getWorkTime().getNumber(),
-                        scheduleList[i].getOperator1().getId(), scheduleList[i].getOperator2().getId(),
-                        scheduleList[i].getOperator3().getId(), scheduleList[i].getOperator4().getId()) < 0) {
-                    return false;
-                }
-            } else {
-                if (scheduleMapper.updateSchedule(scheduleList[i].getId(),
-                        scheduleList[i].getOperator1().getId(), scheduleList[i].getOperator2().getId(),
-                        scheduleList[i].getOperator3().getId(), scheduleList[i].getOperator4().getId()) < 0) {
+    public boolean updateScheduleList(ScheduleVO[] scheduleList) {
+        for (ScheduleVO scheduleVO : scheduleList) {
+            if (scheduleMapper.deleteScheduleListByDateAndNumber(scheduleVO.getDate(),
+                    scheduleVO.getWorkTime().getNumber()) < 0) {
+                return false;
+            }
+            for (Operator operator : scheduleVO.getOperatorList()) {
+                if (scheduleMapper.addSchedule(scheduleVO.getDate(),
+                        scheduleVO.getWorkTime().getNumber(), operator.getId(), 0) <= 0) {
                     return false;
                 }
             }
         }
         return true;
     }
+
 }

@@ -2,6 +2,7 @@ package com.merrill.web.controller.operator;
 
 import com.merrill.service.IAttendenceService;
 import com.merrill.service.IOperatorService;
+import com.merrill.utils.DateUtil;
 import com.merrill.utils.RequestUtil;
 import com.merrill.web.vo.Status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,5 +59,17 @@ public class AttendenceController {
     public Object getAttendence(@RequestBody Map<String, String> map) {
         Long operatorID = Long.valueOf(map.get("operatorID"));
         return attendenceService.getAttendenceByOperatorID(operatorID);
+    }
+
+    @RequestMapping("/submitLeave")
+    @ResponseBody
+    public Object submitLeave(@RequestBody Map<String, String> map) {
+        String d = map.get("date");
+//        Date date = DateUtil
+        String description = map.get("description");
+        int number = Integer.valueOf(map.get("number"));
+        Long operatorID = Long.valueOf(map.get("operatorID"));
+
+        return null;
     }
 }

@@ -16,6 +16,4 @@ public interface IAttendenceService {
     String checkout(Long id);
 
     Attendence getAttendenceByOperatorID(Long operatorID);
-
-    boolean updateStatusByOperatorID(Long operatorID);
 }

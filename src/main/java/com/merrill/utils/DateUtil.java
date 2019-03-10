@@ -1,9 +1,13 @@
 package com.merrill.utils;
 
+import javax.xml.crypto.Data;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,5 +43,31 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static String getCurrentTime() {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//可以方便地修改日期格式
+        return dateFormat.format(now);
+    }
+
+    public static Time getTimeByDate(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String dateString = simpleDateFormat.format(date);
+        try {
+            Date d = simpleDateFormat.parse(dateString);
+            return new Time(d.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public static void main(String[] args) {
+        Time time = getTimeByDate(new Date());
+        System.out.println(time);
+
     }
 }

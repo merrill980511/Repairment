@@ -15,12 +15,17 @@ import java.io.Serializable;
 @Data
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 5279642815829238035L;
+    private static final long serialVersionUID = 172731548080409078L;
 
     /**
      * 用户的id
      */
     private Long id;
+
+    /**
+     * 用户的账号
+     */
+    private String account;
 
     /**
      * 用户微信的openID

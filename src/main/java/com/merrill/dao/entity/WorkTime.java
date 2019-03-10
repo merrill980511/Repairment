@@ -3,7 +3,7 @@ package com.merrill.dao.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Time;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,8 +20,8 @@ public class WorkTime implements Serializable {
 
     private int number;
 
-    private Date beginTime;
+    private Time beginTime;
 
-    private Date endTime;
+    private Time endTime;
 
 }

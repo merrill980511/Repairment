@@ -32,9 +32,6 @@ public class OrderController {
     private IOperatorService operatorService;
 
     @Autowired
-    private IAttendenceService attendenceService;
-
-    @Autowired
     private Status status;
 
 
@@ -91,7 +88,8 @@ public class OrderController {
     @ResponseBody
     public Object finishOrder(@RequestBody Map<String, String> map) {
         Long operatorID = Long.valueOf(map.get("operatorID"));
-        if (attendenceService.updateStatusByOperatorID(operatorID)) {
+        String description = map.get("description");
+        if (orderService.updateStatusByOperatorID(operatorID, description)) {
             status.setMessage("true");
         } else {
             status.setMessage("结束订单失败，请稍后重试");

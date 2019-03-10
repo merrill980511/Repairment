@@ -54,6 +54,7 @@ public class Attendence implements Serializable {
      * 3 缺勤
      * 4 迟到
      * 5 早退
+     * 6 既迟到又早退
      */
     private int status;
 }

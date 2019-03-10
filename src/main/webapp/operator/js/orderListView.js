@@ -3,6 +3,7 @@ var visiblePages = 6;
 var operatorID = '';
 var orderList = [];
 var orderItem;
+var operatorName;
 $(function () {
     operatorID = $("#operatorID").val();
     //初始化
@@ -10,6 +11,9 @@ $(function () {
     //隐藏多选项
     $(document).click(function(){
         $(".options").hide();
+    });
+    $(".homePanel").on("click",".select *",function(){
+        event.stopPropagation();
     });
     $(".indexSelectItem").on("click",function () {
         event.stopPropagation();
@@ -22,7 +26,7 @@ $(function () {
         takeOrderAction(operatorID,orderItem);
     });
     //点击查看信息
-    $(".table").on("click",".displayOrderAction",function () {
+    $("div.table").on("click",".displayOrderAction",function () {
         var index = $(this).parents(".order").index();
         infoPanelInit();
         setOrderInfo(getOrder(orderList[index-1].id),$("#table-item").val() == 'order-finished');
@@ -57,6 +61,20 @@ $(function () {
             getPages(1,visiblePages,1);
         }
     });
+    //修改备注
+    $(".infoPanel").on("click",".editDescriptionAction",function () {
+        var description = $(this).prevAll("label.description").text();
+        $(this).prevAll("label.description").replaceWith("<textarea rows='6' placeholder='请输入备注' class='description'>"+description+"</textarea>");
+        $(this).css("margin","30px 0px 30px 20px");
+        $(this).removeClass("icon-edit-solid").removeClass("editDescriptionAction").addClass("icon-save").addClass("saveDescriptionAction");
+    });
+    //保存备注
+    $(".infoPanel").on("click",".saveDescriptionAction",function () {
+        var description = $(this).prevAll("textarea.description").val();
+        $(this).prevAll("textarea.description").replaceWith("<label class='description'>"+description+"</label>");
+        $(this).css("margin","auto");
+        $(this).removeClass("icon-save").removeClass("saveDescriptionAction").addClass("icon-edit-solid").addClass("editDescriptionAction");
+    });
     //处理完成
     $(".infoPanel").on("click",".finishOrderAction",function () {
        finishOrder(operatorID);
@@ -69,19 +87,40 @@ $(function () {
     $(".homePanel").on("click",".checkInAction",function () {
        checkIn(operatorID);
     });
-    //上班打卡
+    //下班打卡
     $(".homePanel").on("click",".checkOutAction",function () {
         checkOut(operatorID);
     });
-    $("#checkAction").on("click",function () {
+    //检索
+    $("#page_devide").on("click","#checkAction",function () {
         getList($("#pageSize").val(), $("#currentPage").val());
     });
+    $(".homePanel").on("click",".panel-default .options a",function () {
+        $(this).parents(".options").prevAll(".dropdown-toggle").html($(this).text()+"<i class=\"iconfont icon-xiajiantou\"></i>");
+        var newPanelItem = $(this).attr("panel-item");
+        var oldPanelItem = $(this).parents(".header").find(".panel-item").val();
+        if(newPanelItem != oldPanelItem){
+            $(this).parents(".header").find(".panel-item").val(newPanelItem);
+            $(".panel-default .header .panel-item").change();
+            $(".footer .addItem").removeClass().addClass("addItem").addClass(newPanelItem);
+        }
+    });
+    //标准下拉框选项点击
+    $(".homePanel").on("click",".options a",function () {
+        $(this).parents(".options").hide();
+    });
+    //标准下拉框
+    $(".homePanel").on("click",".dropdown-toggle",function () {
+        var others = $(".options").not($(this).nextAll(".options"));
+        others.hide();
+        $(this).nextAll(".options").slideToggle();
+    });
     setInterval(function () {
-        if($(".table").css("display") != 'none'){
+        if($("div.table").css("display") != 'none'){
             getList($("#pageSize").val(), $("#currentPage").val());
         }
         },1000*30
-    )
+    );
 });
 //界面初始化
 function pageInit() {
@@ -90,24 +129,35 @@ function pageInit() {
 }
 //主页展示
 function homePanelShow() {
+    $(".helpPanel").hide();
     $(".infoPanel").hide();
-    $(".table").hide();
+    $("div.table").hide();
     $("#page_devide").hide();
     $(".homePanel").show();
 }
 //表格展示
 function tableShow() {
+    $(".helpPanel").hide();
     $(".homePanel").hide();
     $(".infoPanel").hide();
-    $(".table").show();
+    $("div.table").show();
     $("#page_devide").show();
 }
 //信息面板展示
 function infoPanelShow() {
+    $(".helpPanel").hide();
     $(".homePanel").hide();
     $("#page_devide").hide();
-    $(".table").hide();
+    $("div.table").hide();
     $(".infoPanel").show();
+}
+//提示面板展示
+function helpPanelShow() {
+    $(".homePanel").hide();
+    $("#page_devide").hide();
+    $("div.table").hide();
+    $(".infoPanel").hide();
+    $(".helpPanel").show();
 }
 //主页初始化
 function homePanelInit() {
@@ -121,7 +171,7 @@ function homePanelInit() {
 }
 //表单初始化
 function tableInit(){
-    $(".table").html('<div class="tr">\n' +
+    $("div.table").html('<div class="tr">\n' +
         '        <div class="th location">地点</div><div class="th userDescription">用户备注</div><div class="th repairment">提交表单</div><div class="th status">状态</div><div class="th action">操作</div>\n' +
         '    </div>');
     tableShow();
@@ -138,16 +188,96 @@ function infoPanelInit(){
         '        <div class="info"><label class="title">状&emsp;&emsp;态：</label><label class="status"></label></div>\n' +
         '        <div class="info"><label class="title">处&ensp;理&ensp;人：</label><label class="operator"></label></div>\n' +
         '        <div class="info"><label class="title">用户备注：</label><label class="userDescription"></label></div>\n'+
-        '        <div class="info"><label class="title">备&emsp;&emsp;注：</label><label class="description"></label></div>\n'+
-        '        <div class="info"><label class="title">报修信息：</label><label class="repairment"></label></div>\n');
+        '        <div class="info"><label class="title">报修信息：</label><label class="repairment"></label></div>\n' +
+        '        <div class="info"><label class="title">备&emsp;&emsp;注：</label><label class="description"></label></div>');
     infoPanelShow();
 };
 //主页信息置入
 function setHomePanelInfo(attendence) {
     if(attendence != null){
-        $(".homePanel .header .name").html(attendence.operator == null?"":attendence.operator.name);
+        operatorName = attendence.operator == null?"":attendence.operator.name;
+        $(".homePanel .header .name").html(operatorName);
         if(attendence.id != null){
-            $(".homePanel .content").html('<button class="checkWorkAction checkOutAction">下班打卡</button>');
+            $(".homePanel .content").html('<button class="checkWorkAction checkOutAction">下班打卡</button>' +
+                '<div class="panel-default step-management">\n' +
+                '            <div class="header">\n' +
+                '                <i class="iconfont icon-calendar-check"></i>考勤安排\n' +
+                '                <div class="select">\n' +
+                '                    <button class="changeIsMine btn" data-item="my" href="javascript:;" aria-expanded="false">' +
+                '                        总体排班' +
+                '                    </button>\n' +
+                '                    <button class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:;" aria-expanded="false">\n' +
+                '                        本周&emsp;&emsp;&emsp;<i class="iconfont icon-xiajiantou"></i>\n' +
+                '                    </button>\n' +
+                '                    <input type="text" class="hidden panel-item" value="my"/>\n' +
+                '                    <div class="hidden options">\n' +
+                '                        <ul>\n' +
+                '                            <li><a href="javascript:;" panel-item="thisWeek">本周&emsp;&emsp;&emsp;</a></li>\n' +
+                '                            <li><a href="javascript:;" panel-item="nextWeek">下周&emsp;&emsp;&emsp;</a></li>\n' +
+                '                        </ul>\n' +
+                '                    </div>\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '            <div class="body">\n' +
+                '                <table class="table schedule">\n' +
+                '                    <thead>\n' +
+                '                        <tr class="schedule_titile">\n' +
+                '                            <th class="first-col">&emsp;</th>\n' +
+                '                            <th class="mon">周一</th>\n' +
+                '                            <th class="tues">周二</th>\n' +
+                '                            <th class="wed">周三</th>\n' +
+                '                            <th class="thur">周四</th>\n' +
+                '                            <th class="fri">周五</th>\n' +
+                '                            <th class="sat">周六</th>\n' +
+                '                            <th class="sun">周日</th>\n' +
+                '                        </tr>\n' +
+                '                    </thead>\n' +
+                '                    <tbody>\n' +
+                '                        <tr class="schedule_content first odd">\n' +
+                '                            <td class="first-col">一<br/>二</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content second even">\n' +
+                '                            <td class="first-col">三<br/>四</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content third odd">\n' +
+                '                            <td class="first-col">五<br/>六</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content fourth even">\n' +
+                '                            <td class="first-col">七<br/>八</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                    </tbody>\n' +
+                '                </table>\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '<button class="freeTimeManagementAction">空闲时间安排</button><button class="askForLeaveAction">请假</button>');
             switch (attendence.status) {
                 case 0:
                     $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;值班中');
@@ -163,11 +293,92 @@ function setHomePanelInfo(attendence) {
                     break;
             }
         }else{
-            $(".homePanel .content").html('<button class="checkWorkAction checkInAction">上班打卡</button>');
+            $(".homePanel .content").html('<button class="checkWorkAction checkInAction">上班打卡</button>' +
+                '<div class="panel-default step-management">\n' +
+                '            <div class="header">\n' +
+                '                <i class="iconfont icon-calendar-check"></i>考勤安排\n' +
+                '                <div class="select">\n' +
+                '                    <button class="changeIsMine btn" data-item="my" href="javascript:;" aria-expanded="false">' +
+                '                        总体排班' +
+                '                    </button>\n' +
+                '                    <button class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:;" aria-expanded="false">\n' +
+                '                        本周&emsp;&emsp;&emsp;<i class="iconfont icon-xiajiantou"></i>\n' +
+                '                    </button>\n' +
+                '                    <input type="text" class="hidden panel-item" value="my"/>\n' +
+                '                    <div class="hidden options">\n' +
+                '                        <ul>\n' +
+                '                            <li><a href="javascript:;" panel-item="thisWeek">本周&emsp;&emsp;&emsp;</a></li>\n' +
+                '                            <li><a href="javascript:;" panel-item="nextWeek">下周&emsp;&emsp;&emsp;</a></li>\n' +
+                '                        </ul>\n' +
+                '                    </div>\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '            <div class="body">\n' +
+                '                <table class="table schedule">\n' +
+                '                    <thead>\n' +
+                '                        <tr class="schedule_titile">\n' +
+                '                            <th class="first-col">&emsp;</th>\n' +
+                '                            <th class="mon">周一</th>\n' +
+                '                            <th class="tues">周二</th>\n' +
+                '                            <th class="wed">周三</th>\n' +
+                '                            <th class="thur">周四</th>\n' +
+                '                            <th class="fri">周五</th>\n' +
+                '                            <th class="sat">周六</th>\n' +
+                '                            <th class="sun">周日</th>\n' +
+                '                        </tr>\n' +
+                '                    </thead>\n' +
+                '                    <tbody>\n' +
+                '                        <tr class="schedule_content first odd">\n' +
+                '                            <td class="first-col">一<br/>二</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content second even">\n' +
+                '                            <td class="first-col">三<br/>四</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content third odd">\n' +
+                '                            <td class="first-col">五<br/>六</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                        <tr class="schedule_content fourth even">\n' +
+                '                            <td class="first-col">七<br/>八</td>\n' +
+                '                            <td class="mon"></td>\n' +
+                '                            <td class="tues"></td>\n' +
+                '                            <td class="wed"></td>\n' +
+                '                            <td class="thur"></td>\n' +
+                '                            <td class="fri"></td>\n' +
+                '                            <td class="sat"></td>\n' +
+                '                            <td class="sun"></td>\n' +
+                '                        </tr>\n' +
+                '                    </tbody>\n' +
+                '                </table>\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '<button class="freeTimeManagementAction">空闲时间安排</button><button class="askForLeaveAction">请假</button>');
             $(".homePanel .header .status").html('<i class="iconfont icon-dot"></i>&ensp;休息中');
             $(".homePanel .header .status").removeClass().addClass("status free");
         }
     }
+    weekDateList = getWeekDateList(0);
+    scheduleTableInit();
 }
 //表格信息置入/数据获取方法
 function getList(pageSize,currentPage) {
@@ -217,6 +428,7 @@ function setOrderInfo(order,isDisplay) {
 }
 //处理完成按钮置入
 function setFinishedOrderButton() {
+    $("label.description").parents(".info").append("<i class='iconfont icon-edit-solid editDescriptionAction'></i>");
     $(".infoPanel").append('<div class="info"><label class="title">&emsp;</label><button class="finishOrderAction">处理完成</button></div>');
 }
 //我去处理按钮置入
@@ -241,7 +453,7 @@ function getOrderList(pageSize,currentPage,keyWord){
             if(data != null ){
                 orderList = data.list;
                 tableInit();
-                $(".table").append(getOrderListHtml(orderList));
+                $("div.table").append(getOrderListHtml(orderList));
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
@@ -264,7 +476,7 @@ function getOrderFinishedList(pageSize,currentPage,keyWord){
             if(data != null ){
                 orderList = data.list;
                 tableInit();
-                $(".table").append(getOrderListHtml(orderList));
+                $("div.table").append(getOrderListHtml(orderList));
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
@@ -287,7 +499,7 @@ function getMyOrderList(pageSize,currentPage,keyWord){
             if(data != null ){
                 orderList = data.list;
                 tableInit();
-                $(".table").append(getOrderListHtml(orderList));
+                $("div.table").append(getOrderListHtml(orderList));
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
@@ -392,6 +604,7 @@ function getOrderInHandle(operatorID) {
 }
 //处理完成
 function finishOrder(operatorID) {
+    var description = $(".description").text();
     $.ajax({
         "url": "/repair/operator/finishOrder",
         "method": "post",
@@ -399,7 +612,7 @@ function finishOrder(operatorID) {
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"operatorID\":\"'+operatorID+'\"}',
+        "data": '{\"operatorID\":\"'+operatorID+'\",\"description\":\"'+description+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data.message == 'true'){

@@ -141,7 +141,7 @@ public class OrderServiceImpl implements IOrderService {
             if (total == 0){
                 orderRate.setRate(1);
             } else {
-                orderRate.setRate(finishedNumber / total);
+                orderRate.setRate((double) finishedNumber / total);
             }
             list.add(orderRate);
         }
@@ -241,5 +241,19 @@ public class OrderServiceImpl implements IOrderService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean updateStatusByOperatorID(Long operatorID, String description) {
+        if (attendenceMapper.updateStatusByOperatorID(operatorID, 1, 0) <= 0) {
+            return false;
+        }
+        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 2) <= 0){
+            return false;
+        }
+        if (orderMapper.updateDescription(operatorID, description, 2)){
+            return true;
+        }
+        return true;
     }
 }

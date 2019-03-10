@@ -21,7 +21,7 @@
 <body>
     <div class="adcenter"></div>
     <div class="top-index">
-        <div class="top-left-index "><a href="javascript:;" class="admin-name">曹勇志</a></div>
+        <div class="top-left-index "><a href="javascript:;" class="admin-name">曹永志</a></div>
         <div class="top-right-index">
             <ul>
                 <li>
@@ -68,51 +68,51 @@
                 <div class="body">
                     <div class="panel">
                         <a href="javascript:;">
-                            <span class="num">8</span>
+                            <span class="num"></span>
                             <span class="name">未处理</span>
                         </a>
                     </div>
                     <div class="panel">
                         <a href="javascript:;">
-                            <span class="num">5</span>
+                            <span class="num"></span>
                             <span class="name">今日问题</span>
                         </a>
                     </div>
                     <div class="panel">
                         <a href="javascript:;">
-                            <span class="num">3</span>
+                            <span class="num"></span>
                             <span class="name">今日已处理</span>
                         </a>
                     </div>
                     <div class="panel">
                         <a href="javascript:;">
-                            <span class="num">10</span>
+                            <span class="num"></span>
                             <span class="name">处理中人员</span>
                         </a>
                     </div>
                     <div class="panel">
                         <a href="javascript:;">
-                            <span class="num">1</span>
+                            <span class="num"></span>
                             <span class="name">值班室人员</span>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="left-col">
-                <div class="panel-default order-linear-chart">
+                <div class="panel-default order-chart">
                     <div class="header">
-                        <i class="iconfont icon-areachart"></i>问题详情线性图
+                        <i class="iconfont icon-barchart"></i>问题详情
                     </div>
                     <div class="body">
-                        <canvas id="orderLinearChart"></canvas>
+                        <canvas id="orderChart"></canvas>
                     </div>
                 </div>
-                <div class="panel-default order-bar-chart">
+                <div class="panel-default attendenceChart">
                     <div class="header">
-                        <i class="iconfont icon-barchart"></i>问题详情柱状图
+                        <i class="iconfont icon-areachart"></i>迟到早退率
                     </div>
                     <div class="body">
-                        <canvas id="orderBarChart"></canvas>
+                        <canvas id="attendenceChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -129,24 +129,37 @@
                                 <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
                                 <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
                                 <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
-                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
-                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
-                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
-                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
-                                <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="footer">
-                        <button class="btn">30个未处理问题<i class="iconfont icon-right"></i></button>
+                        <a href="table"><button class="btn">0个未处理问题<i class="iconfont icon-right"></i></button></a>
                     </div>
                 </div>
-                <div class="panel-default order-pie-chart">
+                <div class="panel-default currentOperator">
                     <div class="header">
-                        <i class="iconfont icon-piechart"></i>问题详情饼状图
+                        <i class="iconfont icon-team"></i>当前人员
                     </div>
                     <div class="body">
-                        <canvas id="orderPieChart" width="129%"></canvas>
+                    </div>
+                </div>
+                <div class="panel-default leaveTable">
+                    <div class="header">
+                        <i class="iconfont icon-order"></i>请假请求
+                    </div>
+                    <div class="body">
+                        <table class="table">
+                            <tbody>
+                            <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                            <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                            <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                            <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                            <tr><td><label class="location left">&emsp;</label><label class="time right">&emsp;</label></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="footer">
+                        <a href="schedule"><button class="btn">0个未处理请求<i class="iconfont icon-right"></i></button></a>
                     </div>
                 </div>
             </div>
@@ -163,7 +176,7 @@
     <script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
     <script type="text/javascript" src="/repair/admin/js/formCheck.js"></script>
     <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/adminIndex.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/adminIndex.js"></script>
 </body>
 </html>
