@@ -2,6 +2,7 @@ package com.merrill.web.controller.admin;
 
 import com.merrill.dao.entity.Operator;
 import com.merrill.dao.entity.Schedule;
+import com.merrill.query.QueryObject;
 import com.merrill.service.IScheduleService;
 import com.merrill.utils.DateUtil;
 import com.merrill.web.vo.ScheduleVO;
@@ -40,7 +41,7 @@ public class ScheduleController {
     @ResponseBody
     public Object getScheduleList(@RequestBody Map<String, String> map) {
         String str = map.get("date");
-        Date date = DateUtil.string2Date(str);
+        Date date = DateUtil.string2UtilDate(str);
         return scheduleService.getScheduleListByDate(date);
     }
 
@@ -79,6 +80,55 @@ public class ScheduleController {
             status.setMessage("true");
         } else {
             status.setMessage("保存失败，请重试");
+        }
+        return status;
+    }
+
+    @RequestMapping("/getLeaveList")
+    @ResponseBody
+    private Object getLeaveList() {
+        return scheduleService.getLeaveList();
+    }
+
+    @RequestMapping("/getReviewedLeaveList")
+    @ResponseBody
+    private Object getReviewedLeaveList(@RequestBody QueryObject qo) {
+        return scheduleService.getReviewedLeaveList(qo);
+    }
+
+    @RequestMapping("/getUnReviewedLeaveList")
+    @ResponseBody
+    private Object getUnReviewedLeaveList(@RequestBody QueryObject qo) {
+        return scheduleService.getUnReviewedLeaveList(qo);
+    }
+
+    @RequestMapping("/getLeave")
+    @ResponseBody
+    private Object getLeave(@RequestBody Map<String, String> map) {
+        Long id = Long.valueOf(map.get("id"));
+        return scheduleService.getSchedule(id);
+    }
+
+    @RequestMapping("/agreeLeave")
+    @ResponseBody
+    private Object agreeLeave(@RequestBody Map<String, String> map) {
+        Long id = Long.valueOf(map.get("id"));
+        if (scheduleService.updateScheduleStatus(id, 9)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("同意失败，请稍后重试");
+        }
+        return status;
+    }
+
+    @RequestMapping("/disagreeLeave")
+    @ResponseBody
+    private Object disagreeLeave(@RequestBody Map<String, String> map) {
+        Long id = Long.valueOf(map.get("id"));
+        if (scheduleService.updateScheduleStatus(id, 10)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("驳回失败，请稍后重试");
         }
         return status;
     }

@@ -1,14 +1,7 @@
 var orderChart = document.getElementById("orderChart").getContext("2d");
 var attendenceChart = document.getElementById("attendenceChart").getContext("2d");
 $(function () {
-    getOverview();
-    getOrderChart(7);
-    getAttendenceChart(8);
-    getOrderSortByNum(5);
-    getLeaveListByNum(5)
-    getCurrentOperatorList();
-    //getOrderPieChart();
-    indexHeightInit();
+    indexInit();
     $(".orderTable").on("click","td.pointer",function () {
         var id = $(this).attr("item-id");
         showViewForm(id, "问题详情");
@@ -16,10 +9,19 @@ $(function () {
     });
     $(".leaveTable").on("click","td.pointer",function () {
         var id = $(this).attr("item-id");
-        showViewForm(id,"问题详情");
+        showLeaveForm(id,"请求详情","同意","驳回","agreeLeaveAction","disagreeLeaveAction");
         $(".form .body").html(getViewLeaveFormBodyHTML(getItem(id,"getLeave")));
     });
 });
+function indexInit() {
+    getOverview();
+    getOrderChart(7);
+    getAttendenceChart(8);
+    getOrderSortByNum(5);
+    getLeaveListByNum(5)
+    getCurrentOperatorList();
+    indexHeightInit();
+}
 //创建柱状图
 function getOrderChart(num){
     $.ajax({
@@ -61,7 +63,7 @@ function getAttendenceChart(num){
 
 function getCurrentOperatorList(){
     $.ajax({
-        "url": "/repair/admin/getCurrentOperatorList",
+        "url": "/repair/admin/getCurrentAttendenceList",
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
@@ -81,17 +83,17 @@ function setCurrentOperatorList(data){
     for(var i in data){
         var statusClass = 'absent';
         switch (data[i].status) {
-            case "0" :
+            case 0 :
                 statusClass = "normal";
                 break;
-            case "1":
+            case 1:
                 statusClass = "busy";
                 break;
             default:
                 statusClass = 'absent';
                 break;
         }
-        html += "<label class='"+statusClass+"'>"+data[i].name+"</label><br/>"
+        html += "<label class='"+statusClass+"'>"+data[i].operator.name+"</label><br/>"
     }
     $(".currentOperator .body").html(html);
 }
@@ -190,9 +192,9 @@ function setAttendenceChart(data,dateList) {
     var leaveEarlyRateList = [];
     var absenceRateList = [];
     for(var i in data){
-        comeLateRateList.push(data[i].comeLateRate);
-        leaveEarlyRateList.push(data[i].leaveEarlyRateRate)
-        absenceRateList.push(data[i].absenceRateList);
+        comeLateRateList.push(data[i].LateRate);
+        leaveEarlyRateList.push(data[i].leaveEarlyRate)
+        absenceRateList.push(data[i].absenceRate);
     }
     var chart = new Chart(attendenceChart, {
         type: 'line',
@@ -319,10 +321,10 @@ function getLeaveListByNum(num) {
             leaveTableInit();
             for(var i  = 0;i<num;i++){
                 if(data[i] != null){
-                    $(".leaveTable .table tr:eq("+i+")").html('<td class="pointer" itemid="'+data[i].id+'"><label class="name left">'+data[i].operator.name+'</label><label class="time right">'+new Date(data[i].date).Format("yyyy-MM-dd hh:mm")+" "+getWorkTime(data[i].number)+'</label></td>');
+                    $(".leaveTable .table tr:eq("+i+")").html('<td class="pointer" item-id="'+data[i].id+'"><label class="name left">'+data[i].operator.name+'</label><label class="time right">'+new Date(data[i].date).Format("yyyy-MM-dd")+" "+getWorkTime(data[i].workTime.number)+'</label></td>');
                 }
             }
-            $(".orderTable .footer .btn").html(data.length+'个未处理请求<i class="iconfont icon-right"></i>');
+            $(".leaveTable .footer .btn").html(data.length+'个未处理请求<i class="iconfont icon-right"></i>');
         },
         "fail": function () {
             alert("服务器繁忙，请稍后再试");

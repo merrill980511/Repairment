@@ -29,7 +29,7 @@ public class ScheduleController {
     @ResponseBody
     public Object getScheduleList(@RequestBody Map<String, String> map){
         String str = map.get("date");
-        Date date = DateUtil.string2Date(str);
+        Date date = DateUtil.string2UtilDate(str);
         return scheduleService.getScheduleListByDate(date);
     }
 

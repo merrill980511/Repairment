@@ -72,6 +72,10 @@
         <include refid="selectBase"/>
         WHERE a.id = #{id}
     </select>
+    <select id="getAttendenceByStatus" resultMap="Attendence">
+        <include refid="selectBase"/>
+        WHERE a.status = #{status}
+    </select>
 
 
 </mapper>

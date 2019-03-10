@@ -6,12 +6,14 @@ import com.merrill.dao.entity.Attendence;
 import com.merrill.dao.entity.Operator;
 import com.merrill.dao.mapper.AttendenceMapper;
 import com.merrill.dao.mapper.OperatorMapper;
+import com.merrill.dao.mapper.ScheduleMapper;
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.service.IOperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +33,10 @@ public class OperatorServiceImpl implements IOperatorService {
 
     @Autowired
     private AttendenceMapper attendenceMapper;
+
+    @Autowired
+    private ScheduleMapper scheduleMapper;
+
 
     @Override
     public boolean add(Operator operator) {
@@ -95,6 +101,4 @@ public class OperatorServiceImpl implements IOperatorService {
             return true;
         }
     }
-
-
 }

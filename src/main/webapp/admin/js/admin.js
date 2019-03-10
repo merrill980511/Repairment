@@ -60,7 +60,21 @@ $(function(){
             updatePassword(id,password);
         }
     });
+    $(".form").on("click",".agreeLeaveAction",function () {
+        var id = $(".form").attr("item-id");
+        agreeLeaveAction(id);
+    });
+    $(".form").on("click",".disagreeLeaveAction",function () {
+        var id = $(".form").attr("item-id");
+        disagreeLeaveAction(id);
+    });
 });
+//表格css初始化
+function tableCssInit() {
+    var thNum = $(".table thead th").length;
+    $(".table thead th").css("min-width","calc(100% / "+thNum+")");
+    $(".table tbody td").css("min-width","calc(100% / "+thNum+")");
+};
 //左侧导航栏下拉框图标变换
 function switchSlidIcon(div){
     var icon = div.children(".slidIcon");
@@ -77,10 +91,7 @@ function initSlidIcon(div){
 };
 //左侧导航栏高度初始化
 function indexHeightInit() {
-    var windowHeight = $("body").height();
-    if($(".center-index").height()>$("body").height()){
-        windowHeight = $(".center-index").height();
-    }
+    var windowHeight = $(".center-index").height();
     $(".left-index").height(windowHeight);
 }
 //遮罩初始化
@@ -153,6 +164,23 @@ function showForm(id,title,confirm,cancel,confirmClass){
         '        <div class="footer">\n' +
         '            <button class="submit '+confirmClass+'">'+confirm+'</button>\n' +
         '            <button class="cancelAction">'+cancel+'</button>\n' +
+        '        </div>';
+    $(".lid .form").attr("item-id",id);
+    $(".lid .form").html(formHtml);
+    $(".lid").show();
+    $(".lid .form").show();
+}
+//表单显示
+function showLeaveForm(id,title,agree,disagree,agreeClass,disagreeClass){
+    var formHtml = '<div class="header">\n' +
+        '            '+title+'<i class="iconfont icon-close closeAction  action" title="关闭"></i>\n' +
+        '<input type="hidden" class="id" value="'+id+'"/>\n'+
+        '        </div>\n' +
+        '        <div class="body">\n' +
+        '        </div>\n' +
+        '        <div class="footer">\n' +
+        '            <button class="agreeAction '+agreeClass+'">'+agree+'</button>\n' +
+        '            <button class="disagreeAction '+disagreeClass+'">'+disagree+'</button>\n' +
         '        </div>';
     $(".lid .form").attr("item-id",id);
     $(".lid .form").html(formHtml);
@@ -249,3 +277,47 @@ function getItem(id,url) {
     editItem = item;
     return item;
 };
+function agreeLeaveAction(id) {
+    $.ajax({
+        "url": "/repair/admin/agreeLeave",
+        "method": "post",
+        "async":false,
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"id\":\"'+id+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data.message == 'true'){
+                window.location.reload()
+            }else{
+                alert(data.message);
+            }
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+}
+function disagreeLeaveAction(id) {
+    $.ajax({
+        "url": "/repair/admin/disagreeLeave",
+        "method": "post",
+        "async":false,
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"id\":\"'+id+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data.message == 'true'){
+                window.location.reload()
+            }else{
+                alert(data.message);
+            }
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+}

@@ -2,6 +2,8 @@ package com.merrill.service;
 
 import com.merrill.dao.entity.Attendence;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: 梅峰鑫
@@ -16,4 +18,6 @@ public interface IAttendenceService {
     String checkout(Long id);
 
     Attendence getAttendenceByOperatorID(Long operatorID);
+
+    List<Attendence> getCurrentOperatorList();
 }

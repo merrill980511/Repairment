@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-
 /**
  * Created with IntelliJ IDEA.
  * User: 梅峰鑫
@@ -29,13 +27,13 @@ public class EmptyTimeServiceImpl implements IEmptyTimeService {
         String[][] temp = freeTime.getFreeTimeList();
         String[] date = freeTime.getDateList();
         for (int i = 0; i < temp.length; i++) {
-            if (emptyTimeMapper.deleteByFreeTime(DateUtil.string2Date(date[i]), operatorID) < 0){
+            if (emptyTimeMapper.deleteByFreeTime(DateUtil.string2UtilDate(date[i]), operatorID) < 0) {
                 return false;
             }
             for (int j = 0; j < temp[i].length; j++) {
-                if (temp[i][j].equals("1")){
-                    if (emptyTimeMapper.insertByFreeTime(new java.sql.Date(DateUtil.string2Date(date[i]).getTime()),
-                            j, operatorID) <=0 ){
+                if (temp[i][j].equals("1")) {
+                    if (emptyTimeMapper.insertByFreeTime(DateUtil.string2SqlDate(date[i]),
+                            j, operatorID) <= 0) {
                         return false;
                     }
                 }

@@ -1,6 +1,8 @@
 package com.merrill.service;
 
+import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Schedule;
+import com.merrill.query.QueryObject;
 import com.merrill.web.vo.ScheduleVO;
 
 import java.util.Date;
@@ -20,5 +22,15 @@ public interface IScheduleService {
 
     Schedule getSchedule(Long operatorID, Date string2Date, int number);
 
+    Schedule getSchedule(Long id);
+
     boolean updateScheduleDescriptionAndStatus(Long id, String description, int status);
+
+    List<Schedule> getLeaveList();
+
+    boolean updateScheduleStatus(Long id, int status);
+
+    PageInfo getReviewedLeaveList(QueryObject qo);
+
+    PageInfo getUnReviewedLeaveList(QueryObject qo);
 }

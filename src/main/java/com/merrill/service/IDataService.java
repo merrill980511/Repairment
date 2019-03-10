@@ -1,5 +1,7 @@
 package com.merrill.service;
 
+import com.merrill.web.vo.AttendenceRate;
+
 import java.util.List;
 
 /**
@@ -11,4 +13,6 @@ import java.util.List;
  */
 public interface IDataService {
     List<Integer> getAdminOverview();
+
+    List<AttendenceRate> getAttendenceRate(String[] date);
 }

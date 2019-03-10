@@ -75,7 +75,7 @@ public class AttendenceController {
         String description = map.get("description");
         int number = Integer.valueOf(map.get("number"));
         Long operatorID = Long.valueOf(map.get("operatorID"));
-        Schedule schedule = scheduleService.getSchedule(operatorID, DateUtil.string2Date(d), number);
+        Schedule schedule = scheduleService.getSchedule(operatorID, DateUtil.string2UtilDate(d), number);
         if (schedule == null){
             status.setMessage("请假时间有误，请核实时间之后再提交申请");
             return status;

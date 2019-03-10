@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -106,5 +107,13 @@ public class AttendenceServiceImpl implements IAttendenceService {
             attendence.setOperator(operatorMapper.getOperator(operatorID));
         }
         return attendence;
+    }
+
+    @Override
+    public List<Attendence> getCurrentOperatorList() {
+        List<Attendence> list = new ArrayList<>();
+        list.addAll(attendenceMapper.getAttendenceByStatus(0));
+        list.addAll(attendenceMapper.getAttendenceByStatus(1));
+        return list;
     }
 }

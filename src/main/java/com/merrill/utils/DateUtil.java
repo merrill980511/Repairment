@@ -34,7 +34,7 @@ public class DateUtil {
         return bf.format(date);
     }
 
-    public static Date string2Date(String string){
+    public static java.util.Date string2UtilDate(String string){
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
@@ -43,6 +43,17 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static java.sql.Date string2SqlDate(String string){
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format1.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new java.sql.Date(date.getTime());
     }
 
     public static String getCurrentTime() {

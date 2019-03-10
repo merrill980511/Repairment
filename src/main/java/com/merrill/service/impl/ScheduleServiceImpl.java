@@ -1,9 +1,13 @@
 package com.merrill.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Operator;
+import com.merrill.dao.entity.Order;
 import com.merrill.dao.entity.Schedule;
 import com.merrill.dao.mapper.ScheduleMapper;
 import com.merrill.dao.mapper.WorkTimeMapper;
+import com.merrill.query.QueryObject;
 import com.merrill.service.IScheduleService;
 import com.merrill.web.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +78,53 @@ public class ScheduleServiceImpl implements IScheduleService {
     }
 
     @Override
+    public Schedule getSchedule(Long id) {
+        return scheduleMapper.getScheduleByID(id);
+    }
+
+    @Override
     public boolean updateScheduleDescriptionAndStatus(Long id, String description, int status) {
         if (scheduleMapper.updateScheduleDescription(id, description, status) <= 0) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public List<Schedule> getLeaveList() {
+        return scheduleMapper.getScheduleListByStatus(8);
+    }
+
+    @Override
+    public boolean updateScheduleStatus(Long id, int status) {
+        if (scheduleMapper.updateScheduleStatus(id, status) <= 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public PageInfo getReviewedLeaveList(QueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Schedule> list = scheduleMapper.getReviewedLeaveList(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
+        }
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo getUnReviewedLeaveList(QueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Schedule> list = scheduleMapper.getUnReviewedLeaveList(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
+        }
+        return pageInfo;
+    }
+
 
 }

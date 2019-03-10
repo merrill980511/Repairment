@@ -1,6 +1,8 @@
 package com.merrill.dao.mapper;
 
+import com.merrill.dao.entity.Order;
 import com.merrill.dao.entity.Schedule;
+import com.merrill.query.QueryObject;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +38,18 @@ public interface ScheduleMapper {
 
     int updateScheduleDescription(@Param("id") Long id, @Param("description") String description,
                                   @Param("status") int status);
+
+    List<Long> getScheduleByStatus(int status);
+
+    int getNumberByDateAndStatus(@Param("date") Date date, @Param("status") int status);
+
+    List<Schedule> getScheduleListByStatus(int status);
+
+    Schedule getScheduleByID(Long id);
+
+    int updateScheduleStatus(@Param("id") Long id, @Param("status") int status);
+
+    List<Schedule> getReviewedLeaveList(QueryObject qo);
+
+    List<Schedule> getUnReviewedLeaveList(QueryObject qo);
 }

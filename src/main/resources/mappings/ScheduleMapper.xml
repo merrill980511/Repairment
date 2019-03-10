@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="date" property="date"/>
         <result column="status" property="status"/>
+        <result column="description" property="description"/>
         <association property="operator" javaType="com.merrill.dao.entity.Operator">
             <id column="o_id" property="id"/>
             <result column="o_open_id" property="openID"/>
@@ -24,6 +25,7 @@
         SELECT s.id,
                s.date,
                s.status,
+               s.description,
                s.number  AS s_number,
                o.id      AS o_id,
                o.open_id AS o_open_id,
@@ -48,7 +50,15 @@
           AND operator_id = #{operatorID}
     </update>
     <update id="updateScheduleDescription">
-        UPDATE schedule SET description = #{description}, status = #{status} WHERE id = #{id}
+        UPDATE schedule
+        SET description = #{description},
+            status      = #{status}
+        WHERE id = #{id}
+    </update>
+    <update id="updateScheduleStatus">
+        UPDATE schedule
+        SET status = #{status}
+        WHERE id = #{id}
     </update>
     <delete id="deleteScheduleListByDateAndNumber">
         DELETE
@@ -69,7 +79,34 @@
     <select id="getSchedule" resultMap="Schedule">
         <include refid="selectBase"/>
         WHERE `date` = #{date} AND s.number = #{number}
-                AND operator_id = #{operatorID}
+        AND operator_id = #{operatorID}
+    </select>
+    <select id="getScheduleByStatus" resultType="java.lang.Long">
+        SELECT operator_id
+        FROM schedule
+        WHERE status = #{status}
+    </select>
+    <select id="getNumberByDateAndStatus" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM schedule
+        WHERE `date` = #{date}
+          AND status = #{status}
+    </select>
+    <select id="getScheduleListByStatus" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE s.status = #{status}
+    </select>
+    <select id="getScheduleByID" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE s.id = #{id}
+    </select>
+    <select id="getReviewedLeaveList" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE s.status = 9 OR s.status = 10
+    </select>
+    <select id="getUnReviewedLeaveList" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE s.status = 8
     </select>
 
 </mapper>

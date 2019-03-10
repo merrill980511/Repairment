@@ -13,6 +13,56 @@ function getOrderStatus(status) {
             return "无";
     }
 };
+//订单状态转换
+function getWorkTime(number) {
+    switch (number) {
+        case 1 :
+            return "一二";
+        case 2 :
+            return "三四";
+        case 3:
+            return "五六";
+        case 4:
+            return "七八";
+        default:
+            return "无";
+    }
+};
+//
+function getScheduleStatus(status) {
+    switch (status) {
+        case 0:
+            return "未打卡";
+            break;
+        case 3:
+            return "缺勤";
+            break;
+        case 4:
+            return "迟到";
+            break;
+        case 5:
+            return "早退";
+            break;
+        case 6:
+            return "既迟到又早退";
+            break;
+        case 7:
+            return "异常";
+            break;
+        case 8:
+            return "审核中";
+            break;
+        case 9:
+            return "已批准";
+            break;
+        case 10:
+            return "已驳回";
+            break;
+        default:
+            return "异常";
+            break;
+    }
+}
 //通用时间格式化
 function dateLoad(date) {
     var result = new Date(date).Format("yyyy-MM-dd hh:mm:ss");

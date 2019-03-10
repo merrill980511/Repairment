@@ -454,12 +454,6 @@ function getThHtml(obj) {
     }
     return thHtml;
 }
-//表格css初始化
-function tableCssInit() {
-    var thNum = $(".table thead th").length;
-    $(".table thead th").css("min-width","calc(100% / "+thNum+")");
-    $(".table tbody td").css("min-width","calc(100% / "+thNum+")");
-};
 //删除数据库表项
 function deleteItem(id,url){
     $.ajax({

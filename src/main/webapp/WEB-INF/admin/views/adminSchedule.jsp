@@ -137,8 +137,40 @@
                 </table>
             </div>
         </div>
+        <div class="panel-default leave-management">
+            <div class="header">
+                <i class="iconfont icon-calendar-check"></i>请假单
+                <div class="select">
+                    <button class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:;" aria-expanded="false">
+                        未审核&emsp;&emsp;<i class="iconfont icon-xiajiantou"></i>
+                    </button>
+                    <input type="text" class="hidden panel-item" value="notRead"/>
+                    <div class="hidden options">
+                        <ul>
+                            <li><a href="javascript:;" panel-item="notRead">未审核&emsp;&emsp;</a></li>
+                            <li><a href="javascript:;" panel-item="haveRead">已审核&emsp;&emsp;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="table-check"><div class="check"><input type="text" class="keyWord" placeholder="请输入关键词" autocomplete="new-check"/><a href="javascript:;" class="searchAction" title="搜索"><i class="iconfont icon-search"></i></a></div></div>
+                <table class="table">
+                    <input type="hidden" id="pageSize" value="5">
+                    <input type="hidden" id="currentPage" value="1">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <div class="page_devide">
+                    <div id="pages"></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 <div class="lid hidden">
     <div class="dialog hidden">
     </div>
@@ -148,6 +180,8 @@
 <script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
+<script type="text/javascript" src="/repair/admin/js/jqPaginator.js"></script>
+<script type="text/javascript" src="/repair/admin/js/pageFunction.js"></script>
 <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
 <script type="text/javascript" src="/repair/admin/js/entity.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.js"></script>

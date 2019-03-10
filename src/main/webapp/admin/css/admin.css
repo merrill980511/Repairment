@@ -111,7 +111,7 @@ a:focus, a:hover {
     left: 251px;
     right: 0;
 }
-.center-index .content{
+.center-index>.content{
     width:calc(100% - 30px);
     height: calc(100% - 40px);
     margin: 20px 15px;
@@ -554,4 +554,12 @@ label.busy{
 }
 .pointer,.pointer *{
     cursor: pointer;
+}
+button.agreeAction{
+    background-color: #337ab7;
+    color: #ffffff;
+}
+button.disagreeAction{
+    background-color: #ff5b5b;
+    color: #ffffff;
 }

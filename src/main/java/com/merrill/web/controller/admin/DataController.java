@@ -3,6 +3,7 @@ package com.merrill.web.controller.admin;
 import com.merrill.service.IDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,5 +27,9 @@ public class DataController {
         return dataService.getAdminOverview();
     }
 
-
+    @RequestMapping("/getAttendenceRate")
+    @ResponseBody
+    public Object getAttendenceRate(@RequestBody String[] date){
+        return dataService.getAttendenceRate(date);
+    }
 }

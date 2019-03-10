@@ -79,4 +79,5 @@ public class OperatorController {
     public Object getAllOperatorList() {
         return operatorService.getAllOperatorList();
     }
+
 }

@@ -4,8 +4,9 @@ import com.merrill.dao.entity.Attendence;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +30,7 @@ public interface AttendenceMapper {
     /**
      * 更新考勤表中的打卡下班时间
      *
-     * @param id 考勤记录的id
+     * @param id   考勤记录的id
      * @param date 打卡下班时间
      * @return 返回受影响的行数
      */
@@ -53,7 +54,7 @@ public interface AttendenceMapper {
     /**
      * 根据考勤记录的id更新记录的状态
      *
-     * @param id 考勤记录id
+     * @param id     考勤记录id
      * @param status 待更新的状态
      * @return
      */
@@ -66,4 +67,6 @@ public interface AttendenceMapper {
     Attendence getLastAttendenceByOperatorID(Long id);
 
     Attendence getAttendenceByID(Long id);
+
+    List<Attendence> getAttendenceByStatus(int status);
 }

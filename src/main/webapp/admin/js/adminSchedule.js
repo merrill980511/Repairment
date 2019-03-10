@@ -2,6 +2,11 @@ var totalScheduleList = [];
 var editScheduleList = [];
 var weekDateList = [];
 var operatorList = [];
+var totalPages = 1;
+var visiblePages = 5;
+var currentPage = 1;
+var list = [];
+var editItem = [];
 $(function () {
     weekDateList = getWeekDateList(0);
     scheduleTableInit();
@@ -29,10 +34,113 @@ $(function () {
         }
         scheduleTableInit();
     });
+    $(".panel-default .header .panel-item").on("change",function () {
+        $(".keyWord").val("");
+        getPages(totalPages,visiblePages,currentPage);
+    });
+    $(".searchAction").on("click",function () {
+        getList($("#pageSize").val(),$("#currentPage").val());
+    });
+    $(".panel-default").on("click",".notReadLeave .edit",function () {
+        var id = $(this).parents("tr").attr("item-id");
+        showLeaveForm(id,"请求详情","同意","驳回","agreeLeaveAction","disagreeLeaveAction");
+        $(".form .body").html(getViewLeaveFormBodyHTML(getItem(id,"getLeave")));
+    });
+    $(".panel-default").on("click",".haveReadLeave .edit",function () {
+        var id = $(this).parents("tr").attr("item-id");
+        showViewForm(id,"请求详情");
+        $(".form .body").html(getViewLeaveFormBodyHTML(getItem(id,"getLeave")));
+    });
 });
+//
+//获取表格数据
+function getList(pageSize,currentPage) {
+    var panelItem = $(".leave-management .header").find(".panel-item").val();
+    var keyWord = $(".keyWord").val();
+    switch (panelItem) {
+        case "notRead":
+            getNotReadLeavList(pageSize,currentPage,keyWord);
+            break;
+        case "haveRead":
+            getHaveReadLeavList(pageSize,currentPage,keyWord);
+            break;
+        default:
+            break;
+    };
+}
+//
+//获取订单数据
+function getNotReadLeavList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getUnReviewedLeaveList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".leave-management .table").removeClass().addClass("table notReadLeave");
+                $(".leave-management .table>thead").html(getLeaveThHtml());
+                $(".leave-management .table>tbody").html(getLeaveListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//
+function getHaveReadLeavList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getReviewedLeaveList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".leave-management .table").removeClass().addClass("table haveReadLeave");
+                $(".leave-management .table>thead").html(getLeaveThHtml());
+                $(".leave-management .table>tbody").html(getLeaveListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//格式化请假单列名
+function getLeaveThHtml() {
+    var leaveThHtml = '<tr><th>申请人</th><th>请假日期</th><th>请假时间</th><th>请假缘由</th><th>状态</th><th>操作</th></tr>';
+    return leaveThHtml;
+};
+//格式化请假单列表
+function getLeaveListHtml(leaveList) {
+    var leaveListHTML = '';
+    for(var i in leaveList){
+        var colorClass =  (i % 2)?"even":"odd";
+        var leave = leaveList[i];
+        var leave_operator = leave.operator == null? "":leave.operator.name;
+        leaveListHTML += '<tr class="'+colorClass+'" item-id="'+leave.id+'">\n' +
+            '        <td>'+leave_operator+'</td><td>'+new Date(leave.date).Format("yyyy-MM-dd")+'</td><td>'+getWorkTime(leave.workTime.number)+'</td><td>'+leave.description+'</td><td>'+getScheduleStatus(leave.status)+'</td><td class="action"><i class="edit iconfont icon-info-circle action" title="详情"></i></td>\n' +
+            '    </tr>';
+    }
+    return leaveListHTML;
+};
 //表格初始化
 function scheduleTableInit() {
     lidInit();
+    getPages(totalPages,visiblePages,currentPage);
     $("th:not(.first-col)").each(function (index,item) {
         $(this).attr("date-item",new Date(weekDateList[index]).Format("yyyy-MM-dd"));
     });
@@ -84,68 +192,29 @@ function setEditScheduleFormInfo(scheduleList){
 }
 //表单HTML获取
 function getEditScheduleFormInfo(scheduleList) {
-    var operatorListHtml = "<option value='-2'>无</option>";
-    operatorList = getAllOperatorList();
-    for(var i in operatorList){
-        operatorListHtml += '<option value="'+operatorList[i].id+'">'+operatorList[i].name+'</option>\n';
+    var date = $(".form").attr("item-id");
+    var scheduleFormBodyHTML = "";
+    for(var index = 0;index<4;index++){
+        operatorList = getOperatorListBySchedule(date,index+1);
+        var operatorListHtml = "<option value='-2'>无</option>";
+        for(var i in operatorList){
+            operatorListHtml += '<option value="'+operatorList[i].id+'">'+operatorList[i].name+'</option>\n';
+        }
+        scheduleFormBodyHTML += '<div class="info"><span class="name">'+getWorkTime(index+1)+'</span>' +
+            '<select class="content operator">\n' +
+            operatorListHtml+
+            '</select>\n'+
+            '<select class="content operator">\n' +
+            operatorListHtml+
+            '</select>\n' +
+            '<select class="content operator">\n' +
+            operatorListHtml+
+            '</select>\n' +
+            '<select class="content operator">\n' +
+            operatorListHtml+
+            '</select>\n' +
+            '</div>\n';
     }
-    var scheduleFormBodyHTML =
-        '<div class="info"><span class="name">一二</span>' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '</div>\n'+
-        '<div class="info"><span class="name">三四</span>' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '</div>\n'+
-        '<div class="info"><span class="name">五六</span>' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '</div>\n'+
-        '<div class="info"><span class="name">七八</span>' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '<select class="content operator">\n' +
-        operatorListHtml+
-        '</select>\n' +
-        '</div>';
     return scheduleFormBodyHTML;
 }
 //获取总考勤
@@ -212,16 +281,16 @@ function getScheduleList(date) {
     return scheduleList;
 }
 //获取运维人员列表
-function getAllOperatorList() {
+function getOperatorListBySchedule(date,number) {
     var operatorList = null;
     $.ajax({
-        "url": "/repair/admin/getAllOperatorList",
+        "url": "/repair/admin/getOperatorListBySchedule",
         "method": "post",
         "async":false,
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": "",
+        "data": "\"date\":\""+date+"\",\"number\":\""+number+"\"",
         "dataType": "json",
         "success": function (data) {
             operatorList = data;
