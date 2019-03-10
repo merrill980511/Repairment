@@ -299,7 +299,7 @@ function submitLeave(){
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"operatorID\":\"'+operatorID+'\",\"date\":\"'+date+'\",\"number\"'+number+'\",\"description\":\"'+description+'\"}',
+        "data": '{\"operatorID\":\"'+operatorID+'\",\"date\":\"'+date+'\",\"number\":\"'+number+'\",\"description\":\"'+description+'\"}',
         "dataType": "json",
         "success": function (data) {
             if(data.message == 'true'){
@@ -328,6 +328,7 @@ function submitFreeTimeList(){
     var freeTime = new Object();
     freeTime.operatorID = operatorID;
     freeTime.freeTimeList = freeTimeList;
+    freeTime.dateList = getWeekDateList(1);
     $.ajax({
         "url": "/repair/operator/submitFreeTimeList",
         "method": "post",
@@ -335,7 +336,7 @@ function submitFreeTimeList(){
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": '{\"freeTime\":\"'+JSON.stringify(freeTime)+'}',
+        "data": JSON.stringify(freeTime),
         "dataType": "json",
         "success": function (data) {
             if(data.message == 'true'){

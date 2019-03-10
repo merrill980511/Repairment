@@ -30,4 +30,10 @@ public interface ScheduleMapper {
 
     int updateScheduleOperatorStatus(@Param("operatorID") Long operatorID, @Param("date") Date date,
                                      @Param("number") int number, @Param("status") int status);
+
+    Schedule getSchedule(@Param("operatorID") Long operatorID, @Param("date") Date date,
+                         @Param("number") int number);
+
+    int updateScheduleDescription(@Param("id") Long id, @Param("description") String description,
+                                  @Param("status") int status);
 }

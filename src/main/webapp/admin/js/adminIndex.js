@@ -3,7 +3,7 @@ var attendenceChart = document.getElementById("attendenceChart").getContext("2d"
 $(function () {
     getOverview();
     getOrderChart(7);
-    getAttendenceChart(7);
+    getAttendenceChart(8);
     getOrderSortByNum(5);
     getLeaveListByNum(5)
     getCurrentOperatorList();
@@ -40,16 +40,18 @@ function getOrderChart(num){
 }
 
 function getAttendenceChart(num){
+    var dateList = getDateList(num);
+    dateList.splice(num-1,1);
     $.ajax({
         "url": "/repair/admin/getAttendenceRate",
         "method": "post",
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": JSON.stringify(getDateListJson(num)),
+        "data": JSON.stringify(dateList),
         "dataType": "json",
         "success": function (data) {
-            setAttendenceChart(data,getDateList(num));
+            setAttendenceChart(data,dateList);
         },
         "fail": function () {
             alert("服务器繁忙，请稍后再试");

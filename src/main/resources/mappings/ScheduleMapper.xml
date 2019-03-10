@@ -47,6 +47,9 @@
           AND `number` = #{number}
           AND operator_id = #{operatorID}
     </update>
+    <update id="updateScheduleDescription">
+        UPDATE schedule SET description = #{description}, status = #{status} WHERE id = #{id}
+    </update>
     <delete id="deleteScheduleListByDateAndNumber">
         DELETE
         FROM schedule
@@ -62,6 +65,11 @@
     <select id="getScheduleListByDateAndNumber" resultMap="Schedule">
         <include refid="selectBase"/>
         WHERE `date` = #{date} AND s.number = #{number}
+    </select>
+    <select id="getSchedule" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE `date` = #{date} AND s.number = #{number}
+                AND operator_id = #{operatorID}
     </select>
 
 </mapper>

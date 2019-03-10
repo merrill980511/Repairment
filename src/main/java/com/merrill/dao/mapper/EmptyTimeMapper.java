@@ -1,6 +1,9 @@
 package com.merrill.dao.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,4 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EmptyTimeMapper {
+    int insertByFreeTime(@Param("date") Date date, @Param("number") int number,
+                         @Param("operatorID") Long operatorID);
+
+    int deleteByFreeTime(@Param("date") Date date,
+                         @Param("operatorID") Long operatorID);
 }

@@ -1,6 +1,7 @@
 package com.merrill.web.controller.operator;
 
 import com.merrill.service.IEmptyTimeService;
+import com.merrill.web.vo.FreeTime;
 import com.merrill.web.vo.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,12 @@ public class EmptyTimeController {
 
     @RequestMapping("/submitFreeTimeList")
     @ResponseBody
-    public Object submitFreeTimeList(){
-
-        return null;
+    public Object submitFreeTimeList(@RequestBody FreeTime freeTime){
+        if (emptyTimeService.updateByFreeTime(freeTime)) {
+            status.setMessage("true");
+        } else {
+            status.setMessage("添加空闲时间失败，请稍后重试");
+        }
+        return status;
     }
 }

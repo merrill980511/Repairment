@@ -50,6 +50,10 @@ public class Schedule implements Serializable {
      * 4 迟到
      * 5 早退
      * 6 既迟到又早退
+     * 7 异常
+     * 8 请假申请
+     * 9 请假批准
+     * 10 请假驳回
      */
     private int status;
 

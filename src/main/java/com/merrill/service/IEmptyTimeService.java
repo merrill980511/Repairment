@@ -1,5 +1,7 @@
 package com.merrill.service;
 
+import com.merrill.web.vo.FreeTime;
+
 /**
  * Created with IntelliJ IDEA.
  * User: 梅峰鑫
@@ -8,4 +10,5 @@ package com.merrill.service;
  * Description:
  */
 public interface IEmptyTimeService {
+    boolean updateByFreeTime(FreeTime freeTime);
 }

@@ -68,4 +68,17 @@ public class ScheduleServiceImpl implements IScheduleService {
         return true;
     }
 
+    @Override
+    public Schedule getSchedule(Long operatorID, Date date, int number) {
+        return scheduleMapper.getSchedule(operatorID, date, number);
+    }
+
+    @Override
+    public boolean updateScheduleDescriptionAndStatus(Long id, String description, int status) {
+        if (scheduleMapper.updateScheduleDescription(id, description, status) <= 0) {
+            return false;
+        }
+        return true;
+    }
+
 }
