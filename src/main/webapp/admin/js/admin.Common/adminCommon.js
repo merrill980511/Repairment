@@ -126,9 +126,15 @@ function getOperator(id) {
             operator = operatorList[i];
         }
     }
-    if(operator == null){
-        operator = newOperator();
-        operator.id = "-2";
+    return operator;
+}
+//本地获取运维
+function getOperatorByScheduleList(index,id) {
+    var operator = null;
+    for(var i in operatorListBySchedule[index]){
+        if(operatorListBySchedule[index][i].id == id){
+            operator = operatorListBySchedule[index][i];
+        }
     }
     return operator;
 }

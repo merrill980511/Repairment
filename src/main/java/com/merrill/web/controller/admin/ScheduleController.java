@@ -1,7 +1,6 @@
 package com.merrill.web.controller.admin;
 
 import com.merrill.dao.entity.Operator;
-import com.merrill.dao.entity.Schedule;
 import com.merrill.query.QueryObject;
 import com.merrill.service.IScheduleService;
 import com.merrill.utils.DateUtil;
@@ -58,7 +57,7 @@ public class ScheduleController {
             }
             Set set = new HashSet<>(ids);
             if (set.size() < ids.size()) {
-                switch (schedule.getWorkTime().getNumber()){
+                switch (schedule.getWorkTime().getNumber()) {
                     case 1:
                         status.setMessage("第一二节课有人员重复，请确认后更新");
                         return status;
@@ -71,8 +70,8 @@ public class ScheduleController {
                     case 4:
                         status.setMessage("第七八节课有人员重复，请确认后更新");
                         return status;
-                        default:
-                            return "课程时间有误，请联系管理员";
+                    default:
+                        return "课程时间有误，请联系管理员";
                 }
             }
         }
@@ -113,7 +112,7 @@ public class ScheduleController {
     @ResponseBody
     public Object agreeLeave(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
-        if (scheduleService.updateScheduleStatus(id, 9)){
+        if (scheduleService.updateScheduleStatus(id, 9)) {
             status.setMessage("true");
         } else {
             status.setMessage("同意失败，请稍后重试");
@@ -125,7 +124,7 @@ public class ScheduleController {
     @ResponseBody
     public Object disagreeLeave(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
-        if (scheduleService.updateScheduleStatus(id, 10)){
+        if (scheduleService.updateScheduleStatus(id, 10)) {
             status.setMessage("true");
         } else {
             status.setMessage("驳回失败，请稍后重试");

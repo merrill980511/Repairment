@@ -352,7 +352,7 @@ function getScheduleList(date) {
 }
 //获取空闲运维人员列表
 function getOperatorListBySchedule(date,number) {
-    var operatorList = null;
+    var operatorListBySchedule = null;
     $.ajax({
         "url": "/repair/admin/getOperatorListBySchedule",
         "method": "post",
@@ -363,13 +363,13 @@ function getOperatorListBySchedule(date,number) {
         "data": "{\"date\":\""+date+"\",\"number\":\""+number+"\"}",
         "dataType": "json",
         "success": function (data) {
-            operatorList = data;
+            operatorListBySchedule = data;
         },
         "fail": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
-    return operatorList;
+    return operatorListBySchedule;
 }
 //更新考勤
 function updateScheduleList(scheduleList) {

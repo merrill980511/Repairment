@@ -63,10 +63,7 @@ function setEditScheduleFormInfo(scheduleList){
     $(".form .body").html(getEditScheduleFormInfo(scheduleList));
     var scheduleInfo = $(".form .info");
     scheduleInfo.each(function (index,item) {
-        var editSchedule = null;
-        if(scheduleList != null){
-            editSchedule = scheduleList[index];
-        }
+        var editSchedule = scheduleList[index];
         if(editSchedule != null) {
             for (var x in editSchedule.operatorList) {
                 if (editSchedule.operatorList[x] != null) {

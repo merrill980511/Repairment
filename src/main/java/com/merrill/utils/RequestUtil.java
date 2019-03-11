@@ -1,6 +1,7 @@
 package com.merrill.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,6 +11,16 @@ import javax.servlet.http.HttpServletRequest;
  * Description:
  */
 public class RequestUtil {
+
+    private static Properties p = new Properties();
+
+    static {
+        try {
+            p.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("ip.properties"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * java 后台获取访问客户端ip地址
@@ -29,5 +40,19 @@ public class RequestUtil {
             clientIp = request.getRemoteAddr();
         }
         return clientIp;
+    }
+
+    public static boolean isValid(String ip){
+        String str = p.getProperty("ip1");
+        if (ip.startsWith(str)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = p.getProperty("ip6");
+        System.out.println(s);
     }
 }

@@ -108,11 +108,12 @@ function getEditAdminFormBodyHTML() {
 function getEditScheduleFormInfo(scheduleList) {
     var date = $(".form").attr("item-id");
     var scheduleFormBodyHTML = "";
+    operatorListBySchedule = [];
     for(var index = 0;index<4;index++){
-        operatorList = getOperatorListBySchedule(date,index+1);
+        operatorListBySchedule.push(getOperatorListBySchedule(date,index+1));
         var operatorListHtml = "<option value='-2'>无</option>";
-        for(var i in operatorList){
-            operatorListHtml += '<option value="'+operatorList[i].id+'">'+operatorList[i].name+'</option>\n';
+        for(var i in operatorListBySchedule[index]){
+            operatorListHtml += '<option value="'+operatorListBySchedule[index][i].id+'">'+operatorListBySchedule[index][i].name+'</option>\n';
         }
         scheduleFormBodyHTML += '<div class="info"><span class="name">'+getWorkTime(index+1)+'</span>' +
             '<select class="content operator">\n' +

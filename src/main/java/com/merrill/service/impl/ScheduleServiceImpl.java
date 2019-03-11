@@ -67,7 +67,8 @@ public class ScheduleServiceImpl implements IScheduleService {
     @Override
     public boolean updateScheduleList(ScheduleVO[] scheduleList) {
         for (ScheduleVO scheduleVO : scheduleList) {
-            if (scheduleMapper.deleteScheduleListByDateAndNumber(scheduleVO.getDate(),
+            String s = DateUtil.date2String2(scheduleVO.getDate());
+            if (scheduleMapper.deleteScheduleListByDateAndNumber(DateUtil.string2SqlDate(s),
                     scheduleVO.getWorkTime().getNumber()) < 0) {
                 return false;
             }

@@ -46,7 +46,7 @@ function getUpdateScheduleList() {
         updateScheduleList[index].date = $(".form").attr("item-id");
         updateScheduleList[index].operatorList = [];
         for(var i = 0;i<4;i++){
-            updateScheduleList[index].operatorList.push(getOperator($(this).find("select:nth-child("+Number(i)+2+")").val()));
+            updateScheduleList[index].operatorList.push(getOperatorByScheduleList(index,$(this).find("select:nth-child("+Number(i)+2+")").val()));
         }
     });
     return updateScheduleList;

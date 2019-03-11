@@ -80,8 +80,6 @@ public class DateUtil {
 
 
     public static void main(String[] args) {
-        Time time = getTimeByDate(new Date());
-        System.out.println(time);
 
     }
 }

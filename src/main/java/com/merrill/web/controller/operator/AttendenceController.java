@@ -43,6 +43,10 @@ public class AttendenceController {
     @RequestMapping("/checkIn")
     @ResponseBody
     public Object checkin(@RequestBody Map<String, String> map, HttpServletRequest req) {
+//        if (!RequestUtil.isValid(RequestUtil.getClientIpAddress(req))){
+//            status.setMessage("请在指定地点登录");
+//            return status;
+//        }
         RequestUtil.getClientIpAddress(req);
         Long id = Long.valueOf(map.get("operatorID"));
         if (attendenceService.checkin(id)){
