@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,4 +20,8 @@ public interface EmptyTimeMapper {
 
     int deleteByFreeTime(@Param("date") Date date,
                          @Param("operatorID") Long operatorID);
+
+    List<Long> getOperatorIDByDateAndNumber(@Param("date") Date date,
+                                            @Param("number") String number);
+
 }

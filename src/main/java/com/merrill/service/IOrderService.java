@@ -48,4 +48,6 @@ public interface IOrderService {
     boolean deleteOrderByID(Long orderID);
 
     boolean updateStatusByOperatorID(Long operatorID, String description);
+
+    boolean updateDescription(Long orderID, String description);
 }

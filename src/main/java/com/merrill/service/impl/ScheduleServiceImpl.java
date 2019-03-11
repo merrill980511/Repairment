@@ -3,12 +3,14 @@ package com.merrill.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Operator;
-import com.merrill.dao.entity.Order;
 import com.merrill.dao.entity.Schedule;
+import com.merrill.dao.mapper.EmptyTimeMapper;
+import com.merrill.dao.mapper.OperatorMapper;
 import com.merrill.dao.mapper.ScheduleMapper;
 import com.merrill.dao.mapper.WorkTimeMapper;
 import com.merrill.query.QueryObject;
 import com.merrill.service.IScheduleService;
+import com.merrill.utils.DateUtil;
 import com.merrill.web.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,13 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Autowired
     private WorkTimeMapper workTimeMapper;
+
+    @Autowired
+    private EmptyTimeMapper emptyTimeMapper;
+
+    @Autowired
+    private OperatorMapper operatorMapper;
+
 
     @Override
     @Transactional(readOnly = true)
@@ -97,7 +106,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     public boolean updateScheduleStatus(Long id, int status) {
-        if (scheduleMapper.updateScheduleStatus(id, status) <= 0){
+        if (scheduleMapper.updateScheduleStatus(id, status) <= 0) {
             return false;
         } else {
             return true;
@@ -126,5 +135,21 @@ public class ScheduleServiceImpl implements IScheduleService {
         return pageInfo;
     }
 
+    @Override
+    public List<Operator> getOperatorListBySchedule(String date, String number) {
+        List<Operator> list = new ArrayList<>();
+        List<Long> ids = emptyTimeMapper.getOperatorIDByDateAndNumber(DateUtil.string2SqlDate(date), number);
+        for (Long id : ids) {
+            list.add(operatorMapper.getOperator(id));
+        }
+        return list;
+    }
 
+    @Override
+    public List<Schedule> getLeaveListByOperatorID(Long operatorID) {
+        java.sql.Date date = DateUtil.getCurrentSqlDate();
+        return scheduleMapper.getLeaveListByOperatorID(date, operatorID);
+
+
+    }
 }

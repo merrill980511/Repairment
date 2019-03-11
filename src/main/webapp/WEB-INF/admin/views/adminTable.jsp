@@ -54,14 +54,14 @@
         </li>
         <li>
             <a href="table">
-                <i class="iconfont icon-database-solid"></i>数据库
+                <i class="iconfont icon-file-exception"></i>报障
             </a>
         </li>
     </ul>
 </div>
 <div class="center-index">
     <div class="content">
-        <div class="panel-default">
+        <div class="panel-default table-panel">
             <div class="header">
                 <i class="iconfont icon-table"></i>数据库表格
                 <div class="select">
@@ -105,15 +105,20 @@
     <div class="form hidden">
     </div>
 </div>
-<script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="/repair/admin/js/jqPaginator.js"></script>
-<script type="text/javascript" src="/repair/admin/js/pageFunction.js"></script>
-<script type="text/javascript" src="/repair/admin/js/utils.js"></script>
-<script type="text/javascript" src="/repair/admin/js/formCheck.js"></script>
-<script type="text/javascript" src="/repair/admin/js/adminTable.js"></script>
-<script type="text/javascript" src="/repair/admin/js/admin.js"></script>
-<script type="text/javascript" src="/repair/admin/js/entity.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/entity.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/utils.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/formCheck.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminHtml.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminGetData.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminInit.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminSetInfo.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Unity/adminTable.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminCommon.js"></script>
 </body>
 </html>
 

@@ -55,14 +55,14 @@
         </li>
         <li>
             <a href="table">
-                <i class="iconfont icon-database-solid"></i>数据库
+                <i class="iconfont icon-file-exception"></i>报障
             </a>
         </li>
     </ul>
 </div>
 <div class="center-index">
     <div class="content">
-        <div class="panel-default step-management">
+        <div class="panel-default schedule-management">
             <div class="header">
                 <i class="iconfont icon-calendar-check"></i>考勤安排
                 <div class="select">
@@ -137,9 +137,9 @@
                 </table>
             </div>
         </div>
-        <div class="panel-default leave-management">
+        <div class="panel-default leave-management table-panel">
             <div class="header">
-                <i class="iconfont icon-calendar-check"></i>请假单
+                <i class="iconfont icon-audit"></i>请假单
                 <div class="select">
                     <button class="dropdown-toggle btn" data-toggle="dropdown" href="javascript:;" aria-expanded="false">
                         未审核&emsp;&emsp;<i class="iconfont icon-xiajiantou"></i>
@@ -171,21 +171,27 @@
             </div>
         </div>
     </div>
+</div>
 <div class="lid hidden">
     <div class="dialog hidden">
     </div>
     <div class="form hidden">
     </div>
 </div>
-<script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="/repair/admin/js/Chart.js"></script>
-<script type="text/javascript" src="/repair/admin/js/jqPaginator.js"></script>
-<script type="text/javascript" src="/repair/admin/js/pageFunction.js"></script>
-<script type="text/javascript" src="/repair/admin/js/utils.js"></script>
-<script type="text/javascript" src="/repair/admin/js/entity.js"></script>
-<script type="text/javascript" src="/repair/admin/js/admin.js"></script>
-<script type="text/javascript" src="/repair/admin/js/adminSchedule.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/entity.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/utils.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/formCheck.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminHtml.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminGetData.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminInit.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminSetInfo.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Unity/adminSchedule.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminCommon.js"></script>
 </body>
 </html>
 

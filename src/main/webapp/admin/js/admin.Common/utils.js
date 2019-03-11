@@ -98,69 +98,62 @@ Date.prototype.Format = function (fmt) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
-//检测手机号码格式
-function isPhone(phone){
-    var reg = /^1[3,5,8]\d{9}$/;
-    if(reg.test(phone))
-    {
-        return true;
+//获取dateList JSON对象
+function getDateListJson(num) {
+    var dateListJson = new Object();
+    dateListJson.dateList = getDateList(num);
+    return dateListJson;
+}
+//获取dateList对象
+function getDateList(num) {
+    var dateList = [];
+    var now = new Date();
+    for(var i=-num;i<0;i++){
+        var date = new Date();
+        date.setDate(now.getDate() + i + 1);
+        dateList.push(date.Format("yyyy-MM-dd"));
     }
-    else
-    {
-        return false;
+    return dateList;
+};
+//获取当前星期几
+function getWeekDay() {
+    var curWeek = new Date().getDay();
+    if(curWeek == 0){
+        curWeek = 7;
     }
-};
-//检测是否为空
-function isNotNull(value) {
-    if(value != ""){
-        return true;
-    }else{
-        return false;
-    }
-};
-function getUserInfo(userID) {
-    var user = null;
-    $.ajax({
-        "url": "/user/getUser",
-        "async": false ,
-        "method": "post",
-        "headers": {
-            "Content-Type": "application/json",
-        },
-        "data": '{\"userID\":\"'+userID+'\"}',
-        "dataType": "json",
-        "success": function (data) {
-                user =  data;
-        },
-        "fail": function () {
-
-        },
-    });
-    return user;
-};
-//获取时间
-function GetDateStr(AddDayCount) {
+    return curWeek;
+}
+//获取单周日期
+function getWeekDateList(num) {
     var date = new Date();
-    date.setDate(date.getDate()+AddDayCount);
-    var year = date.getFullYear();
-    var month = date.getMonth()+1;
-    var day = date.getDate();
-    return year+"-"+month+"-"+day;
-};
-
-//修改带T的时间
-function ChangeDateStr(date){
-    return date.replace("T", " ");
-};
-function setCookie(name,value) {
-    return $.cookie(name,value,{ expires: 1, path: '/' });
+    var curMonDayDate;
+    var curWeek = getWeekDay();
+    var stDay = 1 - curWeek;
+    curMonDayDate = addDate(date, stDay);
+    var arrDate = [];
+    for (var i = 7*num; i < 7*num+7; i++) {
+        arrDate.push(addDate(new Date(curMonDayDate), i));
+    }
+    return arrDate;
 }
-function getCookie(name) {
-    return $.cookie(name);
+//增加天数
+function addDate(date, days) {
+    var d = new Date(date);
+    d.setDate(d.getDate() + days);
+    var m = d.getMonth() + 1;
+    return d.getFullYear() + '-' + m + '-' + d.getDate();
 }
-function setToken(value){
-    return setCookie("token",value);
+//obj转mapString
+function changeObjToMapString(obj) {
+    for(var i in obj){
+        if(isObj(obj[i])){
+            changeObjToMapString(obj[i]);
+        }
+        obj[i] = obj[i] + "";
+    }
+    return obj;
 }
-function getToken() {
-    return getCookie("token");
+//判断是否为对象
+function isObj(o){
+    return (typeof o == 'object');
 }

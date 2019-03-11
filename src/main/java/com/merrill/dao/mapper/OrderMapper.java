@@ -76,5 +76,7 @@ public interface OrderMapper {
 
     int updateOrderByOperatorAndStatus(@Param("operatorID") Long operatorID, @Param("fromStatus") int fromStatus, @Param("toStatus") int toStatus);
 
-    boolean updateDescription(@Param("operatorID") Long operatorID, @Param("description") String description, @Param("status") int status);
+    int updateDescription(@Param("operatorID") Long operatorID, @Param("description") String description, @Param("status") int status);
+
+    int updateOrderDescription(@Param("orderID") Long orderID, @Param("description") String description);
 }

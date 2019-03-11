@@ -139,10 +139,21 @@
         WHERE id = #{id}
     </update>
     <update id="updateOrderByOperatorAndStatus">
-        UPDATE `order` SET status = #{toStatus} WHERE operator_id =#{operatorID} AND status = #{fromStatus}
+        UPDATE `order`
+        SET status = #{toStatus}
+        WHERE operator_id = #{operatorID}
+          AND status = #{fromStatus}
     </update>
     <update id="updateDescription">
-        UPDATE `order` SET description = #{description} WHERE operator_id =#{operatorID} AND status = #{status}
+        UPDATE `order`
+        SET description = #{description}
+        WHERE operator_id = #{operatorID}
+          AND status = #{status}
+    </update>
+    <update id="updateOrderDescription">
+        UPDATE `order`
+        SET description = #{description}
+        WHERE id = #{orderID}
     </update>
     <delete id="deleteOrderByID">
         DELETE
@@ -249,10 +260,14 @@
         LIMIT #{start}, #{pageSize}
     </select>
     <select id="getOrderNumberByOperatorID" resultType="int">
-        SELECT COUNT(*) FROM `order` WHERE operator_id = #{id}
+        SELECT COUNT(*)
+        FROM `order`
+        WHERE operator_id = #{id}
     </select>
     <select id="getOrderFinishedNumberByOperatorID" resultType="int">
-        SELECT COUNT(*) FROM `order_finish` WHERE operator_id = #{id}
+        SELECT COUNT(*)
+        FROM `order_finish`
+        WHERE operator_id = #{id}
     </select>
 
 </mapper>

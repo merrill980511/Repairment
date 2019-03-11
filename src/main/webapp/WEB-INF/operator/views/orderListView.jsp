@@ -40,13 +40,18 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/repair/operator/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/repair/operator/js/utils.js"></script>
-<script type="text/javascript" src="/repair/operator/js/jquery.date.js"></script>
-<script type="text/javascript" src="/repair/operator/js/jqPaginator.js"></script>
-<script type="text/javascript" src="/repair/operator/js/pageFunction.js"></script>
-<script type="text/javascript" src="/repair/operator/js/formCheck.js"></script>
-<script type="text/javascript" src="/repair/operator/js/orderListView.js"></script>
-<script type="text/javascript" src="/repair/operator/js/operatorSchedule.js"></script>
+<script type="text/javascript" src="/repair/operator/js/tools/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/repair/operator/js/tools/jquery.date.js"></script>
+<script type="text/javascript" src="/repair/operator/js/tools/jqPaginator.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/globalVariable.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/utils.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/pageFunction.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/formCheck.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/operatorGetData.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/operatorSetInfo.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/operatorHtml.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/operatorInit.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Common/operatorCommon.js"></script>
+<script type="text/javascript" src="/repair/operator/js/operator.Unity/orderListView.js"></script>
 </body>
 </html>

@@ -12,10 +12,9 @@
     <meta charset="UTF-8">
     <title>用户登录</title>
     <link rel="stylesheet" href="/repair/admin/css/login.css" type="text/css">
-    <script type="text/javascript" src="/repair/admin/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/md5.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/utils.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/md5.js"></script>
     <script type="text/javascript" src="/repair/admin/js/login.js"></script>
 </head>
 <body>

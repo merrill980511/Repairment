@@ -33,4 +33,10 @@ public class ScheduleController {
         return scheduleService.getScheduleListByDate(date);
     }
 
+    @RequestMapping("/getLeaveListByOperatorID")
+    @ResponseBody
+    public Object getLeaveListByOperatorID(@RequestBody Map<String, String> map){
+        Long operatorID = Long.valueOf(map.get("operatorID"));
+        return scheduleService.getLeaveListByOperatorID(operatorID);
+    }
 }

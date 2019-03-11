@@ -8,38 +8,9 @@ $(function(){
             $("#loginAction").click();
         }
     });
-    //账号获得焦点
-    id.on("focus",function(){
-        id.next().hide();
-    });
-    //账号失去焦点
-    id.on("blur",function(){
-        if(!isNotNull(id.val())){
-            id.next().children("label").text("账号不能为空");
-            id.next().show();
-        }else{
-            id.next().hide();
-        }
-    });
-    //密码获得焦点
-    password.on("focus",function() {
-        password.next().hide();
-    });
-    //密码失去焦点
-    password.on("blur",function(){
-        if(!isNotNull(password.val())){
-            id.next().children("label").text("密码不能为空");
-            id.next().show();
-        }else{
-            id.next().hide();
-        }
-    });
     //点击登录
     loginAction.on("click",function(){
-        if(isNotNull(id.val())&&isNotNull(password.val())){
-            loginAction.next().hide();
-            sendLogin(id,password);
-        }
+        sendLogin(id,password);
     });
     //登录动作
     function sendLogin(id,password){
@@ -53,8 +24,8 @@ $(function(){
             "dataType":"json",
             "success":function(data){
                 if(data.location != null && data.location != ""){
+                    $.cookie('id', id, { expires: 1 ,path: '/' });
                     location.href = data.location;
-                    setCookie("id",id.val());
                     return true;
                 }else{
                     alert(data.message);

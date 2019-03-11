@@ -22,7 +22,7 @@ import java.util.*;
  * Time: 13:50
  * Description:
  */
-@Controller
+@Controller("adminScheduleController")
 @RequestMapping("/admin")
 public class ScheduleController {
 
@@ -86,32 +86,32 @@ public class ScheduleController {
 
     @RequestMapping("/getLeaveList")
     @ResponseBody
-    private Object getLeaveList() {
+    public Object getLeaveList() {
         return scheduleService.getLeaveList();
     }
 
     @RequestMapping("/getReviewedLeaveList")
     @ResponseBody
-    private Object getReviewedLeaveList(@RequestBody QueryObject qo) {
+    public Object getReviewedLeaveList(@RequestBody QueryObject qo) {
         return scheduleService.getReviewedLeaveList(qo);
     }
 
     @RequestMapping("/getUnReviewedLeaveList")
     @ResponseBody
-    private Object getUnReviewedLeaveList(@RequestBody QueryObject qo) {
+    public Object getUnReviewedLeaveList(@RequestBody QueryObject qo) {
         return scheduleService.getUnReviewedLeaveList(qo);
     }
 
     @RequestMapping("/getLeave")
     @ResponseBody
-    private Object getLeave(@RequestBody Map<String, String> map) {
+    public Object getLeave(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
         return scheduleService.getSchedule(id);
     }
 
     @RequestMapping("/agreeLeave")
     @ResponseBody
-    private Object agreeLeave(@RequestBody Map<String, String> map) {
+    public Object agreeLeave(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
         if (scheduleService.updateScheduleStatus(id, 9)){
             status.setMessage("true");
@@ -123,7 +123,7 @@ public class ScheduleController {
 
     @RequestMapping("/disagreeLeave")
     @ResponseBody
-    private Object disagreeLeave(@RequestBody Map<String, String> map) {
+    public Object disagreeLeave(@RequestBody Map<String, String> map) {
         Long id = Long.valueOf(map.get("id"));
         if (scheduleService.updateScheduleStatus(id, 10)){
             status.setMessage("true");
@@ -131,6 +131,14 @@ public class ScheduleController {
             status.setMessage("驳回失败，请稍后重试");
         }
         return status;
+    }
+
+    @RequestMapping("/getOperatorListBySchedule")
+    @ResponseBody
+    public Object getOperatorListBySchedule(@RequestBody Map<String, String> map) {
+        String d = map.get("date");
+        String number = map.get("number");
+        return scheduleService.getOperatorListBySchedule(d, number);
     }
 
 }

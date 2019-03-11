@@ -52,4 +52,6 @@ public interface ScheduleMapper {
     List<Schedule> getReviewedLeaveList(QueryObject qo);
 
     List<Schedule> getUnReviewedLeaveList(QueryObject qo);
+
+    List<Schedule> getLeaveListByOperatorID(@Param("date") Date date, @Param("operatorID") Long operatorID);
 }

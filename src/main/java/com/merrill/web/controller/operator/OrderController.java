@@ -96,4 +96,17 @@ public class OrderController {
         }
         return status;
     }
+
+    @RequestMapping("/updateDescription")
+    @ResponseBody
+    public Object updateDescription(@RequestBody Map<String, String> map) {
+        String description = map.get("description");
+        Long orderID = Long.valueOf(map.get("orderID"));
+        if (orderService.updateDescription(orderID, description)){
+            status.setMessage("true");
+        } else {
+            status.setMessage("更新失败，请稍后重试");
+        }
+        return status;
+    }
 }

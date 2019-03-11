@@ -3,21 +3,18 @@ package com.merrill.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.merrill.dao.entity.Attendence;
-import com.merrill.dao.entity.Operator;
+import com.merrill.dao.entity.Order;
 import com.merrill.dao.mapper.AttendenceMapper;
+import com.merrill.dao.mapper.OrderMapper;
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
+import com.merrill.service.IOrderService;
 import com.merrill.utils.DateUtil;
 import com.merrill.web.vo.OrderRate;
 import com.merrill.web.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.merrill.dao.entity.Order;
-import com.merrill.dao.entity.User;
-import com.merrill.dao.mapper.OrderMapper;
-import com.merrill.dao.mapper.UserMapper;
-import com.merrill.service.IOrderService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,10 +37,10 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public boolean saveOrder(Long id, String phone, String repairment, String location, String userDescription, Date reservationTime) {
-        if (reservationTime == null){
+        if (reservationTime == null) {
             reservationTime = new Date();
         }
-        if(orderMapper.saveOrder(id, phone, location, repairment, userDescription, reservationTime) > 0){
+        if (orderMapper.saveOrder(id, phone, location, repairment, userDescription, reservationTime) > 0) {
             return true;
         } else {
             return false;
@@ -59,25 +56,25 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean finishOrder(Long id) {
         Order order = orderMapper.getOrderByID(id);
-        if (orderMapper.deleteOrderByID(id) <= 0){
+        if (orderMapper.deleteOrderByID(id) <= 0) {
             return false;
         }
         Attendence attendence = attendenceMapper.getLastAttendenceByOperatorID(id);
-        if (attendence != null && attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 0) <= 0){
+        if (attendence != null && attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 0) <= 0) {
             return false;
         }
-        if (order.getOperator() == null){
+        if (order.getOperator() == null) {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     null, order.getLocation(), order.getPhone(),
                     order.getBeginTime(), order.getHandleTime(), order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0){
+                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0) {
                 return false;
             }
         } else {
             if (orderMapper.saveFinishedOrder(order.getId(), order.getUser().getId(),
                     order.getOperator().getId(), order.getLocation(), order.getPhone(),
-                    order.getBeginTime(), order.getHandleTime(),order.getUserDescription(),
-                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0){
+                    order.getBeginTime(), order.getHandleTime(), order.getUserDescription(),
+                    order.getDescription(), order.getRepairment(), 3, order.getReservationTime()) <= 0) {
                 return false;
             }
         }
@@ -111,13 +108,13 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public String takeOrder(Long operatorID, Long orderID) {
         Attendence attendence = attendenceMapper.getAttendenceByOperatorID(operatorID);
-        if (attendence == null){
+        if (attendence == null) {
             return "您未打卡签到，请先签到";
         }
-        if (orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1).size() > 0){
+        if (orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1).size() > 0) {
             return "承接订单失败，请先处理完当前订单";
         }
-        if (attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 1) < 0){
+        if (attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 1) < 0) {
             return "承接订单失败，请稍后重试";
         }
         if (orderMapper.takeOrder(operatorID, orderID, 1, new Date()) > 0) {
@@ -138,7 +135,7 @@ public class OrderServiceImpl implements IOrderService {
             orderRate.setFinishedNumber(finishedNumber);
             orderRate.setUnfinishedNumber(unfinishedNumber);
             orderRate.setTotalNumber(total);
-            if (total == 0){
+            if (total == 0) {
                 orderRate.setRate(1);
             } else {
                 orderRate.setRate((double) finishedNumber / total);
@@ -158,7 +155,7 @@ public class OrderServiceImpl implements IOrderService {
     @Transactional(readOnly = true)
     public Order getOrderByID(Long id) {
         Order order = orderMapper.getOrderByID(id);
-        if (order == null){
+        if (order == null) {
             order = orderMapper.getOrderFinishedByID(id);
         }
         return order;
@@ -167,7 +164,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean updateOrder(Long id, String location, String description, String userDescription,
                                String repairment) {
-        if (orderMapper.updateOrder(id, location, description, userDescription, repairment) > 0){
+        if (orderMapper.updateOrder(id, location, description, userDescription, repairment) > 0) {
             return true;
         } else {
             return false;
@@ -177,7 +174,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean addOrder(Long userID, String location, String phone, String userDescription,
                             String description, String repairment) {
-        if (orderMapper.addOrder(userID, location, phone, description, userDescription, repairment, 0) > 0){
+        if (orderMapper.addOrder(userID, location, phone, description, userDescription, repairment, 0) > 0) {
             return true;
         } else {
             return false;
@@ -188,7 +185,7 @@ public class OrderServiceImpl implements IOrderService {
     @Transactional(readOnly = true)
     public Order getOrderInHandle(Long operatorID) {
         List<Order> list = orderMapper.getOrderByOperatorIDAndStatus(operatorID, 1);
-        if (list.size() > 0){
+        if (list.size() > 0) {
             return list.get(0);
         } else {
             return null;
@@ -210,19 +207,19 @@ public class OrderServiceImpl implements IOrderService {
         List<Order> list = orderMapper.getOrderListByOperatorID(start,
                 pageSize, id, keyWord);
         int remain = pageSize;
-        if (list.size() != 0){
+        if (list.size() != 0) {
             start = 0;
             remain = start + pageSize - orderNum;
         } else {
             start = start - orderNum;
         }
         //防止非第一次查询的缓存
-        if (list.size() < pageSize){
-            if (remain > 0){
+        if (list.size() < pageSize) {
+            if (remain > 0) {
                 list.addAll(orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord));
             }
         }
-        if (list.size() > pageSize){
+        if (list.size() > pageSize) {
             remain = total - pageSize * (currentPage - 1);
             start = pageSize * (currentPage - 1) - orderNum;
             list = orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord);
@@ -237,7 +234,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public boolean deleteOrderByID(Long orderID) {
-        if (orderMapper.deleteOrderByID(orderID) > 0){
+        if (orderMapper.deleteOrderByID(orderID) > 0) {
             return true;
         }
         return false;
@@ -248,11 +245,19 @@ public class OrderServiceImpl implements IOrderService {
         if (attendenceMapper.updateStatusByOperatorID(operatorID, 1, 0) <= 0) {
             return false;
         }
-        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 2) <= 0){
+        if (orderMapper.updateOrderByOperatorAndStatus(operatorID, 1, 2) <= 0) {
             return false;
         }
-        if (orderMapper.updateDescription(operatorID, description, 2)){
-            return true;
+        if (orderMapper.updateDescription(operatorID, description, 2) <= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateDescription(Long orderID, String description) {
+        if (orderMapper.updateOrderDescription(orderID, description) <= 0) {
+            return false;
         }
         return true;
     }

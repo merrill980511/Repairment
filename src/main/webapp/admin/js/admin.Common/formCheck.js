@@ -103,6 +103,7 @@ function isPhone(phone){
         return false;
     }
 };
+//检测电话格式
 function isTel(tel) {
     var reg = /^8611\d{4}$/;
     if(reg.test(tel)){
@@ -119,6 +120,7 @@ function isNotNull(value) {
         return false;
     }
 };
+//检测密码格式
 function isPassword(password) {
     var reg = /^[^\s\u4e00-\u9fa5]{8,16}$/;
     if(reg.test(password)){
@@ -126,29 +128,8 @@ function isPassword(password) {
     }else {
         return false;
     }
-
 }
-function isUser(userId) {
-    var isUser = false;
-    $.ajax({
-        "url": "/repair/admin/getUser",
-        "method": "post",
-        "async":false,
-        "headers": {
-            "Content-Type": "application/json",
-        },
-        "data": '{\"id\":\"'+userId+'\"}',
-        "dataType": "json",
-        "success": function (data) {
-            userData = data;
-            isUser = (data != null);
-        },
-        "fail": function () {
-            alert("服务器繁忙，请稍后再试");
-        },
-    });
-    return isUser;
-};
+//检测是否可提交
 function isSubmit() {
     onSubmit = true;
     $(".form").find(".content:enabled").each(function () {

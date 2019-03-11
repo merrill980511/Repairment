@@ -8,5 +8,8 @@
     <delete id="deleteByFreeTime">
         DELETE FROM empty_time WHERE `date` = #{date} AND operator_id = #{operatorID}
     </delete>
+    <select id="getOperatorIDByDateAndNumber" resultType="java.lang.Long">
+        SELECT operator_id FROM empty_time WHERE `date` = #{date} AND number = #{number}
+    </select>
 
 </mapper>

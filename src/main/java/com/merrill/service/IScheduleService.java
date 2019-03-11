@@ -1,6 +1,7 @@
 package com.merrill.service;
 
 import com.github.pagehelper.PageInfo;
+import com.merrill.dao.entity.Operator;
 import com.merrill.dao.entity.Schedule;
 import com.merrill.query.QueryObject;
 import com.merrill.web.vo.ScheduleVO;
@@ -33,4 +34,8 @@ public interface IScheduleService {
     PageInfo getReviewedLeaveList(QueryObject qo);
 
     PageInfo getUnReviewedLeaveList(QueryObject qo);
+
+    List<Operator> getOperatorListBySchedule(String date, String number);
+
+    List<Schedule> getLeaveListByOperatorID(Long operatorID);
 }

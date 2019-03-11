@@ -108,5 +108,9 @@
         <include refid="selectBase"/>
         WHERE s.status = 8
     </select>
+    <select id="getLeaveListByOperatorID" resultMap="Schedule">
+        <include refid="selectBase"/>
+        WHERE operator_id = #{operatorID} AND s.date &gt;= #{date}
+    </select>
 
 </mapper>

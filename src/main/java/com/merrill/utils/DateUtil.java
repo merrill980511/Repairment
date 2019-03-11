@@ -22,6 +22,11 @@ public class DateUtil {
         return bf.format(date);
     }
 
+    public static String date2String2(Date date){
+        DateFormat bf = new SimpleDateFormat("yyyy-MM-dd");
+        return bf.format(date);
+    }
+
     public static String string2String(String str){
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
@@ -56,10 +61,8 @@ public class DateUtil {
         return new java.sql.Date(date.getTime());
     }
 
-    public static String getCurrentTime() {
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");//可以方便地修改日期格式
-        return dateFormat.format(now);
+    public static java.sql.Date getCurrentSqlDate() {
+        return string2SqlDate(date2String2(new Date()));
     }
 
     public static Time getTimeByDate(Date date){
