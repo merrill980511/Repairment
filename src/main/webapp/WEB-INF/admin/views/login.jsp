@@ -19,7 +19,7 @@
 </head>
 <body>
 <div id="frame">
-    <div id="logo">信息办后台管理</div>
+    <div id="logo">信息办</div>
     <div id="form">
         <div class="info"><input type="text" placeholder="请输入登录账号" class="id" autofocus/>
             <div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div>

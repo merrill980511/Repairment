@@ -33,7 +33,7 @@ public class EmptyTimeServiceImpl implements IEmptyTimeService {
             for (int j = 0; j < temp[i].length; j++) {
                 if (temp[i][j].equals("1")) {
                     if (emptyTimeMapper.insertByFreeTime(DateUtil.string2SqlDate(date[i]),
-                            j, operatorID) <= 0) {
+                            j + 1, operatorID) <= 0) {
                         return false;
                     }
                 }

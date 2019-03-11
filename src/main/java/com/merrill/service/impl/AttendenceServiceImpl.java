@@ -83,13 +83,17 @@ public class AttendenceServiceImpl implements IAttendenceService {
                 if (beginTime.before(checkInTime) && endTime.after(checkInTime)) {
                     if (beginTime.before(checkOutTime) && endTime.after(checkOutTime)) {
                         scheduleMapper.updateScheduleOperatorStatus(operatorID, date, integer, 6);
+                        attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 6);
                     } else {
                         scheduleMapper.updateScheduleOperatorStatus(operatorID, date, integer, 4);
+                        attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 4);
                     }
                 } else if (beginTime.before(checkOutTime) && endTime.after(checkOutTime)) {
                     scheduleMapper.updateScheduleOperatorStatus(operatorID, date, integer, 5);
+                    attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 5);
                 } else {
                     scheduleMapper.updateScheduleOperatorStatus(operatorID, date, integer, 7);
+                    attendenceMapper.updateAttendenceStatusByID(attendence.getId(), 7);
                 }
             }
             return "true";

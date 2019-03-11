@@ -61,7 +61,7 @@ function scheduleTableInit() {
     lidInit();
     $("th:not(.first-col)").each(function (index,item) {
         $(this).attr("date-item",new Date(weekDateList[index]).Format("yyyy-MM-dd"));
-        $(this).append("&nbsp;("+new Date(weekDateList[index]).Format("MM-dd")+")");
+        $(this).find("span.date").html("("+new Date(weekDateList[index]).Format("MM-dd")+")");
     });
     getTotalScheduleList();
     setScheduleTableInfo();

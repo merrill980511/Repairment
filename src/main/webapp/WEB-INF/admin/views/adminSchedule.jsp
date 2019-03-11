@@ -22,7 +22,7 @@
 <body>
 <div class="adcenter"></div>
 <div class="top-index">
-    <div class="top-left-index "><a href="javascript:;" class="admin-name">曹勇志</a></div>
+    <div class="top-left-index "><a href="javascript:;" class="admin-name">管理员</a></div>
     <div class="top-right-index">
         <ul>
             <li>
@@ -83,13 +83,13 @@
                     <thead>
                         <tr class="schedule_titile">
                             <th class="first-col">&emsp;</th>
-                            <th class="mon">周一<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="tues">周二<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="wed">周三<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="thur">周四<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="fri">周五<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="sat">周六<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
-                            <th class="sun">周日<a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="mon">周一&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="tues">周二&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="wed">周三&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="thur">周四&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="fri">周五&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="sat">周六&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
+                            <th class="sun">周日&ensp;<span class="date"></span><a href="javascript:;" title="编辑"><i class="iconfont icon-edit-solid editScheduleAction"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -138,12 +138,12 @@ function getLeaveThHtml() {
 };
 //order列名
 function getOrderThHtml() {
-    var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>用户备注</th><th>问题选项</th><th>操作</th></tr>';
+    var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>问题选项</th><th>操作</th></tr>';
     return orderThHtml;
 };
 //orderFinished列名
 function getOrderFinishedThHtml() {
-    var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>用户备注</th><th>问题选项</th><th>处理人</th><th>部门备注</th><th>操作</th></tr>';
+    var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>问题选项</th><th>处理人</th><th>部门备注</th><th>操作</th></tr>';
     return orderThHtml;
 };
 //operator列名
@@ -177,7 +177,7 @@ function getOrderListHtml(orderList) {
         var order = orderList[i];
         var order_user = order.user == null? "":order.user.name;
         orderListHTML += '<tr class="'+colorClass+'" item-id="'+order.id+'">\n' +
-            '        <td>'+order.location+'</td><td>'+order_user+'</td><td>'+order.userDescription+'</td><td>'+order.repairment+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
+            '        <td>'+order.location+'</td><td>'+order_user+'</td><td>'+dateLoad(order.beginTime)+'</td><td>'+order.userDescription+'</td><td>'+order.repairment+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
             '    </tr>';
     }
     return orderListHTML;
@@ -191,7 +191,7 @@ function getOrderFinishedListHtml(orderFinishedList) {
         var orderFinished_user = orderFinished.user == null? "":orderFinished.user.name;
         var orderFinished_operator =  orderFinished.operator == null ? "":orderFinished.operator.name;
         orderFinishedListHTML += '<tr class="'+colorClass+'" item-id="'+orderFinished.id+'">\n' +
-            '        <td>'+orderFinished.location+'</td><td>'+orderFinished_user+'</td><td>'+orderFinished.userDescription+'</td><td>'+orderFinished.repairment+'</td><td>'+orderFinished_operator+'</td><td>'+orderFinished.description+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i></td>\n' +
+            '        <td>'+orderFinished.location+'</td><td>'+orderFinished_user+'</td><td>'+dateLoad(orderFinished.beginTime)+'</td><td>'+orderFinished.userDescription+'</td><td>'+orderFinished.repairment+'</td><td>'+orderFinished_operator+'</td><td>'+orderFinished.description+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i></td>\n' +
             '    </tr>';
     }
     return orderFinishedListHTML;

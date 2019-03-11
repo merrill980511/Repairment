@@ -360,7 +360,7 @@ function getOperatorListBySchedule(date,number) {
         "headers": {
             "Content-Type": "application/json",
         },
-        "data": "\"date\":\""+date+"\",\"number\":\""+number+"\"",
+        "data": "{\"date\":\""+date+"\",\"number\":\""+number+"\"}",
         "dataType": "json",
         "success": function (data) {
             operatorList = data;

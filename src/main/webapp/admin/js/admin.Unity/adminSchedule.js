@@ -4,6 +4,7 @@ $(function () {
     getPages(totalPages,visiblePages,currentPage);
     //编辑排班
     $(".editScheduleAction").on("click",function () {
+        getTotalScheduleList();
         var index = $(this).parents("th").index();
         editItem = list[index - 1];
         var date = $(this).parents("th").attr("date-item");

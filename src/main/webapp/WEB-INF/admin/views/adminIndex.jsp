@@ -21,7 +21,7 @@
 <body>
     <div class="adcenter"></div>
     <div class="top-index">
-        <div class="top-left-index "><a href="javascript:;" class="admin-name">曹永志</a></div>
+        <div class="top-left-index "><a href="javascript:;" class="admin-name">管理员</a></div>
         <div class="top-right-index">
             <ul>
                 <li>
@@ -67,31 +67,31 @@
                 </div>
                 <div class="body">
                     <div class="panel">
-                        <a href="javascript:;">
+                        <a href="table?table-item=order&table-item-name=未处理订单">
                             <span class="num"></span>
                             <span class="name">未处理</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="javascript:;">
+                        <a href="table?table-item=order&table-item-name=未处理订单">
                             <span class="num"></span>
                             <span class="name">今日问题</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="javascript:;">
+                        <a href="table?table-item=order-finished&table-item-name=已处理订单">
                             <span class="num"></span>
                             <span class="name">今日已处理</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="javascript:;">
+                        <a href="table?table-item=operator&table-item-name=运维人员&emsp;">
                             <span class="num"></span>
                             <span class="name">处理中人员</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="javascript:;">
+                        <a href="table?table-item=operator&table-item-name=运维人员&emsp;">
                             <span class="num"></span>
                             <span class="name">值班室人员</span>
                         </a>

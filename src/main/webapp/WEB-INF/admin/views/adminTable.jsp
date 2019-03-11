@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
     <title>信息办管理后台</title>
@@ -21,7 +22,7 @@
 <body>
 <div class="adcenter"></div>
 <div class="top-index">
-    <div class="top-left-index "><a href="javascript:;" class="admin-name">曹勇志</a></div>
+    <div class="top-left-index "><a href="javascript:;" class="admin-name">管理员</a></div>
     <div class="top-right-index">
         <ul>
             <li>

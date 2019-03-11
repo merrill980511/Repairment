@@ -72,9 +72,11 @@ public class ScheduleServiceImpl implements IScheduleService {
                 return false;
             }
             for (Operator operator : scheduleVO.getOperatorList()) {
-                if (scheduleMapper.addSchedule(scheduleVO.getDate(),
-                        scheduleVO.getWorkTime().getNumber(), operator.getId(), 0) <= 0) {
-                    return false;
+                if (operator != null){
+                    if (scheduleMapper.addSchedule(scheduleVO.getDate(),
+                            scheduleVO.getWorkTime().getNumber(), operator.getId(), 0) <= 0) {
+                        return false;
+                    }
                 }
             }
         }
@@ -106,11 +108,13 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     public boolean updateScheduleStatus(Long id, int status) {
+        if (scheduleMapper.deleteScheduleByID(id) <= 0) {
+            return false;
+        }
         if (scheduleMapper.updateScheduleStatus(id, status) <= 0) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     @Override
@@ -149,7 +153,5 @@ public class ScheduleServiceImpl implements IScheduleService {
     public List<Schedule> getLeaveListByOperatorID(Long operatorID) {
         java.sql.Date date = DateUtil.getCurrentSqlDate();
         return scheduleMapper.getLeaveListByOperatorID(date, operatorID);
-
-
     }
 }

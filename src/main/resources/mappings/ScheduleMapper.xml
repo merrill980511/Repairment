@@ -39,7 +39,7 @@
                  LEFT JOIN work_time w on s.number = w.number
     </sql>
     <insert id="addSchedule">
-        INSERT INTO schedule("date", number, operator_id, status)
+        INSERT INTO schedule(`date`, `number`, operator_id, status)
         VALUES (#{date}, #{number}, #{operatorID}, #{status})
     </insert>
     <update id="updateScheduleOperatorStatus">
@@ -66,6 +66,11 @@
         WHERE `date` = #{date}
           AND `number` = #{number}
     </delete>
+    <delete id="deleteScheduleByID">
+        DELETE
+        FROM schedule
+        WHERE id = #{id}
+    </delete>
     <select id="getNumbersByDateAndOperatorID" resultType="java.lang.Integer">
         SELECT number
         FROM schedule
@@ -74,7 +79,7 @@
     </select>
     <select id="getScheduleListByDateAndNumber" resultMap="Schedule">
         <include refid="selectBase"/>
-        WHERE `date` = #{date} AND s.number = #{number}
+        WHERE `date` = #{date} AND s.number = #{number} AND s.status &lt; 8
     </select>
     <select id="getSchedule" resultMap="Schedule">
         <include refid="selectBase"/>
