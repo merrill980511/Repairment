@@ -76,11 +76,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean deleteUserAndOrder(Long id) {
         if (orderMapper.deleteOrderByUserID(id) > 0 &&
-                orderMapper.deleteOrderFinishedByUserID(id) > 0){
+                orderMapper.deleteOrderFinishedByUserID(id) > 0) {
             if (userMapper.deleteUser(id) > 0) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public Long getIdByUserID(String userId) {
+        return userMapper.getIdByUserID(userId);
     }
 }

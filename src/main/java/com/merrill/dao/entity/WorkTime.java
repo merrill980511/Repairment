@@ -18,10 +18,19 @@ public class WorkTime implements Serializable {
 
     private static final long serialVersionUID = -8659643100659334165L;
 
+    /**
+     * 工作时间段
+     */
     private int number;
 
+    /**
+     * 工作开始时间
+     */
     private Time beginTime;
 
+    /**
+     * 工作结束时间
+     */
     private Time endTime;
 
 }

@@ -115,7 +115,7 @@
     </select>
     <select id="getLeaveListByOperatorID" resultMap="Schedule">
         <include refid="selectBase"/>
-        WHERE operator_id = #{operatorID} AND s.date &gt;= #{date}
+        WHERE operator_id = #{operatorID} AND s.date &gt;= #{date} AND s.status > 7
     </select>
 
 </mapper>

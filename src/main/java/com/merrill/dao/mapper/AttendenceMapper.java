@@ -4,7 +4,6 @@ import com.merrill.dao.entity.Attendence;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * User: 梅峰鑫
  * Date: 2019-03-01
  * Time: 17:23
- * Description:
+ * Description: 运维人员打卡接口
  */
 
 @Repository
@@ -56,17 +55,50 @@ public interface AttendenceMapper {
      *
      * @param id     考勤记录id
      * @param status 待更新的状态
-     * @return
+     * @return 返回受影响的行数
      */
     int updateAttendenceStatusByID(@Param("id") Long id, @Param("status") int status);
 
+    /**
+     * 根据运维人员的id将其所有记录的一个状态转换成另一个状态
+     *
+     * @param operatorID 运维人员id
+     * @param status     需要更改的状态
+     * @param toStatus   更改之后的状态
+     * @return 返回受影响的行数
+     */
     int updateStatusByOperatorID(@Param("operatorID") Long operatorID, @Param("fromStatus") int status, @Param("toStatus") int toStatus);
 
+    /**
+     * 根据状态查询打卡记录数量
+     *
+     * @param status 状态
+     * @return 该状态运维人员数量
+     */
     int getAttendenceNumByStatus(int status);
 
+    /**
+     * 根据状态查询所有的打卡记录
+     *
+     * @param status 状态
+     * @return 所有的打卡记录集合
+     */
+    List<Attendence> getAttendenceByStatus(int status);
+
+    /**
+     * 查询运维人员最后一次打卡的记录
+     *
+     * @param id 运维人员的id
+     * @return 完整的记录
+     */
     Attendence getLastAttendenceByOperatorID(Long id);
 
+    /**
+     * 根据记录的id获取整条记录
+     *
+     * @param id 记录的id
+     * @return 完整的记录
+     */
     Attendence getAttendenceByID(Long id);
 
-    List<Attendence> getAttendenceByStatus(int status);
 }

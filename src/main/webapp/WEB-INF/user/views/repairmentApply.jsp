@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/repair/user/css/repairmentApply.css">
 </head>
 <body>
-    <input type="hidden" id="userID" value="9"/>
+    <input type="hidden" id="userID" value="${param.id}"/>
     <div class="form">
 
     </div>

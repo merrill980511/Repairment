@@ -24,4 +24,7 @@
             </if>
         </where>
     </select>
+    <select id="getIdByUserID" resultType="java.lang.Long">
+        SELECT id FROM user WHERE open_id = #{userId}
+    </select>
 </mapper>

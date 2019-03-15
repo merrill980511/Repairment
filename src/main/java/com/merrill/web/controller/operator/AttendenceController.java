@@ -87,6 +87,6 @@ public class AttendenceController {
         if (scheduleService.updateScheduleDescriptionAndStatus(schedule.getId(), description, 8)) {
             status.setMessage("true");
         }
-        return null;
+        return status;
     }
 }

@@ -1487,46 +1487,61 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="350" parent="258" name="id">
+    <column id="350" parent="258" name="user_id">
       <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="351" parent="258" name="id">
+      <Position>4</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="258" name="name">
-      <Position>4</Position>
+    <column id="352" parent="258" name="name">
+      <Position>5</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="258" name="phone">
-      <Position>5</Position>
+    <column id="353" parent="258" name="phone">
+      <Position>6</Position>
       <DataType>varchar(20)|0s</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="353" parent="258" name="open_id_user">
+    <index id="354" parent="258" name="user_id">
+      <ColNames>user_id</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="355" parent="258" name="open_id_user">
       <ColNames>open_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="354" parent="258" name="PRIMARY">
+    <key id="356" parent="258" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="355" parent="259" name="number">
+    <key id="357" parent="258" name="user_id">
+      <ColNames>user_id</ColNames>
+      <UnderlyingIndexName>user_id</UnderlyingIndexName>
+    </key>
+    <column id="358" parent="259" name="number">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="356" parent="259" name="begin_time">
+    <column id="359" parent="259" name="begin_time">
       <Position>2</Position>
       <DataType>time|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="357" parent="259" name="end_time">
+    <column id="360" parent="259" name="end_time">
       <Position>3</Position>
       <DataType>time|0s</DataType>
       <ColumnKind>normal</ColumnKind>

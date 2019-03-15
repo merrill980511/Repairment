@@ -23,4 +23,6 @@ public interface IUserService {
     PageInfo getUserList(UserQueryObject qo);
 
     boolean deleteUserAndOrder(Long id);
+
+    Long getIdByUserID(String userId);
 }

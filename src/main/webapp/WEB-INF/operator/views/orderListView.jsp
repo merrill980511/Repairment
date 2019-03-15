@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_gujzm24hyip.css" media="all">
 </head>
 <body>
-<input type="hidden" id="operatorID" value="1"/>
+<input type="hidden" id="operatorID" value="${param.id}"/>
 <input type="hidden" id="totalPages" value="1"/>
 <input type="hidden" id="currentPage" value="1"/>
 <input type="hidden" id="pageSize" value="5"/>

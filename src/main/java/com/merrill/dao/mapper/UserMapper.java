@@ -27,4 +27,6 @@ public interface UserMapper {
     int deleteUser(Long id);
 
     List<User> getUserList(UserQueryObject qo);
+
+    Long getIdByUserID(String userId);
 }

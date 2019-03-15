@@ -42,8 +42,8 @@
                 /user/** = anon
                 /operator/** = anon
 
-                /logout = logout
-                /** = authc
+                /admin/logout = logout
+                /admin/** = authc
             </value>
         </property>
     </bean>
