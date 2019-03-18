@@ -3,7 +3,6 @@ package com.merrill.web.controller.user;
 import com.merrill.dao.entity.User;
 import com.merrill.service.IUserService;
 import com.merrill.web.vo.AccessTokenResult;
-import com.merrill.web.vo.CodeTokenResult;
 import com.merrill.web.vo.UserInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.Date;
+import java.util.Map;
 
 
 @Controller("UserWxController")
@@ -23,7 +21,7 @@ import java.util.Date;
 public class WxController {
     private String corpId = "wx3937f0d825370119";//企业号ID
     private String corpsecret = "kQclf6pPbCQp_mcf-jgOm1OiEgxd3VGb5q2-q9E-NaI";//应用secret
-    private String indexUrl = "http://localhost:8080/repair/user/repairmentApply";//主页地址
+    private String indexUrl = "http://wlbx.njit.edu.cn/repair/user/repairmentApply";//主页地址
 
     private String access_token;
     private Long access_token_updateTime;
@@ -59,30 +57,20 @@ public class WxController {
         getAccessToken();
         String code = request.getParameter("code");
 
-        FileWriter file = new FileWriter("/test.txt");
-        file.write("token    " + access_token + "\n");
-        file.write("code    " + code);
-        file.close();
-
         //code换userInfo
         String get_user_url = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE";
         get_user_url.replace("ACCESS_TOKEN", access_token).replace(
                 "CODE", code);
         RestTemplate restTemplate = new RestTemplate();
-        CodeTokenResult codeTokenResult = restTemplate.getForObject(
+        Map<String,String> codeTokenResult = restTemplate.getForObject(
                 String.format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=%s&code=%s",
-                        access_token,code ), CodeTokenResult.class);
-
-        String userId = codeTokenResult.getUserId();
-        System.out.println(userId);
-
-
+                        access_token,code ), Map.class);
+        String userId = codeTokenResult.get("UserId");
 
         UserInfoResult userInfoResult = restTemplate.getForObject(
                 String.format("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=%s&userid=%s",
-                        access_token,code ), UserInfoResult.class);
+                        access_token,userId ), UserInfoResult.class);
 
-        String userID = userInfoResult.getUserid();
         String name = userInfoResult.getName();
         String phone = userInfoResult.getMobile();
 
@@ -91,10 +79,10 @@ public class WxController {
         if (id == null){
             User user = new User();
             user.setName(name);
-            user.setOpenID(userID);
+            user.setOpenID(userId);
             user.setPhone(phone);
             userService.addUser(user);
-            id = userService.getIdByUserID(userID);
+            id = userService.getIdByUserID(userId);
         }
 
         response.sendRedirect(indexUrl+"?"+"id="+id);
@@ -105,7 +93,7 @@ public class WxController {
             return access_token;
         RestTemplate restTemplate = new RestTemplate();
         AccessTokenResult accessTokenResult = restTemplate.getForObject(
-                String.format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s",
+                String.format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s",
                         corpId,corpsecret ), AccessTokenResult.class);
         if (accessTokenResult.getErrcode() == null || accessTokenResult.getErrcode().equals("0")) {
             access_token_updateTime = new Date().getTime();
