@@ -27,9 +27,6 @@ public class  UserController {
     @ResponseBody
     public Object getUser(@RequestBody Map<String, String> map){
         String userID = map.get("userID");
-        if (userID.equals("")){
-            userID = "1";
-        }
         Long id = Long.valueOf(userID);
         User user = userService.getUserByID(id);
         return user;

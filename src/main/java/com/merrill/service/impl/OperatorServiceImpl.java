@@ -101,4 +101,9 @@ public class OperatorServiceImpl implements IOperatorService {
             return true;
         }
     }
+
+    @Override
+    public Long getIdByUserID(String userId){
+        return operatorMapper.getIdByUserID(userId);
+    }
 }

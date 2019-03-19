@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>信息办管理后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_t7qar5cy6b.css" media="all">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/admin.css">
     <link type="text/css" rel="stylesheet" href="/repair/admin/css/adminIndex.css">

@@ -19,7 +19,7 @@ public interface UserMapper {
     User getUserByID(Long id);
 
     int addUser(@Param("id") Long id, @Param("phone") String phone,
-                @Param("name") String name, @Param("openID") String openID);
+                @Param("name") String name,@Param("open_id") String openID);
 
     int updateUser(@Param("id") Long id, @Param("phone") String phone,
                    @Param("name") String name);

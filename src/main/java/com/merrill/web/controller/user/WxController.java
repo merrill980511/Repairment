@@ -3,6 +3,7 @@ package com.merrill.web.controller.user;
 import com.merrill.dao.entity.User;
 import com.merrill.service.IUserService;
 import com.merrill.web.vo.AccessTokenResult;
+import com.merrill.web.vo.CodeTokenResult;
 import com.merrill.web.vo.UserInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Date;
 import java.util.Map;
 
@@ -74,7 +77,7 @@ public class WxController {
         String name = userInfoResult.getName();
         String phone = userInfoResult.getMobile();
 
-        Long id = userService.getIdByUserID(userInfoResult.getUserid());
+        Long id = userService.getIdByUserID(userId);
 
         if (id == null){
             User user = new User();

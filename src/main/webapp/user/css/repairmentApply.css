@@ -90,9 +90,12 @@ body *{
     width: calc(100% - 95px);
 }
 .select-view{
-    width: calc(100% - 185px - 95px);
+    width: calc(100% - 44px - 95px);
     float: left;
     color: #777;
+}
+.select-view>label.red{
+    padding: 0 5px;
 }
 .select{
     width: 100%;
@@ -112,7 +115,7 @@ body *{
     float: left;
 }
 .link{
-    width: 170px;
+    width: 44px;
     text-align: left;
     float: right;
     text-decoration: none;
@@ -120,7 +123,7 @@ body *{
     cursor: pointer;
 }
 .errorMessage{
-    width: calc(100% - 185px - 95px - 30px);
+    width: calc(100% - 44px - 95px - 30px);
     padding:3px;
     margin-top: 10px;
     margin-left: 110px;
@@ -138,7 +141,7 @@ body *{
     float: left;
 }
 .submit{
-    width: calc(100% - 185px - 95px - 30px);
+    width: calc(100% - 44px - 95px - 30px);
     background-color: #009fe8;
     height: 44px;
     margin-top: 10%;
@@ -148,7 +151,7 @@ body *{
     border-radius: 5px;
 }
 .finishOrder{
-    width: calc(100% - 185px - 95px - 30px);
+    width: calc(100% - 44px - 95px - 30px);
     background-color: #ff5b5b;
     height: 44px;
     color: #ffffff;

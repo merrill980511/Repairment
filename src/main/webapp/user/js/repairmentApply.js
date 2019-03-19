@@ -60,7 +60,7 @@ function formInit(){
     $(".form").html('<div class="step">\n' +
         '            <label class="name">报修地点</label>\n' +
         '            <div class="select-view">\n' +
-        '                <input class="select location" placeholder="请输入保修地点" maxlength="250"/>\n' +
+        '                <input class="select location" placeholder="请输入报修地点" maxlength="250"/>\n' +
         '            </div>\n' +
         '        </div>\n' +
         '        <div class="step">\n' +
@@ -258,7 +258,7 @@ function getStepHtml(step) {
 function getFinalStepHtml(step) {
     var linkHtml = '<a class="link"></a>';
     if(step.link != null &&step.link.name != null&&step.link.name != ''){
-        linkHtml = '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'"><img src="/repair/user/images/questionMark.png">'+step.link.name+'</a>\n';
+        linkHtml = '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'"><img src="/repair/user/images/questionMark.png"></a>\n';
     }
     var stepHtml = ' <div class="step final">\n' +
         '            <label class="name">&emsp;</label>\n' +

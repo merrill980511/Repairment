@@ -75,6 +75,9 @@ public class AttendenceServiceImpl implements IAttendenceService {
             List<Integer> list = scheduleMapper.getNumbersByDateAndOperatorID(date, operatorID);
             for (Integer integer : list) {
                 WorkTime workTime = workTimeMapper.getWorkTimeByNumber(integer);
+                if (workTime == null){
+                    return "true";
+                }
                 Time beginTime = workTime.getBeginTime();
                 Time endTime = workTime.getEndTime();
                 if (beginTime.after(checkOutTime) || endTime.before(checkInTime)) {

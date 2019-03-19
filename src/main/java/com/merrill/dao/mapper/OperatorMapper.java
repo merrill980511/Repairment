@@ -70,4 +70,10 @@ public interface OperatorMapper {
      * @return 返回所有运维人员集合
      */
     List<Operator> getAllOperatorList();
+    /**
+     * 根据运维的学号获取其工号
+     *
+     * @return 返回所有运维人员集合
+     */
+    Long getIdByUserID(String userId);
 }

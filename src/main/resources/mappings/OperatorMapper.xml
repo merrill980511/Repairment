@@ -31,5 +31,7 @@
     <select id="getAllOperatorList" resultType="Operator">
         SELECT * FROM operator
     </select>
-
+    <select id="getIdByUserID" resultType="java.lang.Long">
+        SELECT id FROM operator WHERE open_id = #{userId}
+    </select>
 </mapper>

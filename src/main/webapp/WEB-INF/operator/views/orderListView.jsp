@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>运维</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="/repair/operator/css/orderListView.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1050125_gujzm24hyip.css" media="all">
 </head>
