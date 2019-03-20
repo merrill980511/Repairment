@@ -59,6 +59,10 @@ $(function () {
             updatePassword(id,password);
         }
     });
+    //登出
+    $(".logout").on("click",function () {
+        logout();
+    });
     //修改表项
     $(".panel-default .header .panel-item").on("change",function () {
         $(".keyWord").val("");
@@ -131,9 +135,9 @@ function getOperator(id) {
 //本地获取运维
 function getOperatorByScheduleList(index,id) {
     var operator = null;
-    for(var i in operatorListBySchedule[index]){
-        if(operatorListBySchedule[index][i].id == id){
-            operator = operatorListBySchedule[index][i];
+    for(var x in operatorListBySchedule[index]){
+        if(operatorListBySchedule[index][x].id == id){
+            operator = operatorListBySchedule[index][x];
         }
     }
     return operator;

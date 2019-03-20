@@ -26,6 +26,24 @@ function getList(pageSize,currentPage) {
             break;
     };
 }
+//登出
+function logout() {
+    $.ajax({
+        "url": "/repair/admin/logout",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": "",
+        "dataType": "json",
+        "success": function (data) {
+        },
+        "fail": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+    window.location.href = "login";
+}
 //修改密码
 function updatePassword(id,password) {
     $.ajax({
