@@ -29,4 +29,6 @@ public interface UserMapper {
     List<User> getUserList(UserQueryObject qo);
 
     Long getIdByUserID(String userId);
+
+    User getUserByopenID(Long openID);
 }

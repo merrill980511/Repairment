@@ -2,18 +2,21 @@ $(function () {
     //点击我去处理
     $(".infoPanel").on("click",".takeOrderAction",function () {
         takeOrderAction(operatorID,orderItem);
+        scrollTopDiv();
     });
     //点击查看信息
     $("div.table").on("click",".displayOrderAction",function () {
         var index = $(this).parents(".order").index();
         infoPanelInit();
         setOrderInfo(getOrder(orderList[index-1].id),$("#table-item").val() == 'order-finished');
+        scrollTopDiv();
     });
     //表格获取
     $("#table-item").on("change",function () {
         if($(this).val() != 'handlingOrder'){
             tableInit();
             getPages(1,visiblePages,1);
+            scrollTopDiv();
         }
     });
     //修改备注
@@ -32,10 +35,12 @@ $(function () {
     //处理完成
     $(".infoPanel").on("click",".finishOrderAction",function () {
        finishOrder(operatorID);
+        scrollTopDiv();
     });
     //退出视图
     $(".infoPanel").on("click",".quitDisplayOrderAction",function () {
         tableShow();
+        scrollTopDiv();
     });
     //上班打卡
     $(".homePanel").on("click",".checkInAction",function () {
@@ -82,14 +87,17 @@ $(function () {
     //请假
     $(".homePanel").on("click",".myLeaveList",function () {
         setMyLeaveList();
+        scrollTopDiv();
     });
     //请假
     $(".homePanel").on("click",".askForLeaveAction",function () {
         setLeaveList();
+        scrollTopDiv();
     });
     //空闲时间安排
     $(".homePanel").on("click",".freeTimeManagementAction",function () {
         setFreeTimeTable();
+        scrollTopDiv();
     });
     //选择空闲时间
     $(".helpPanel").on("click","td:not(.first-col)",function () {
@@ -105,12 +113,14 @@ $(function () {
     $(".helpPanel").on("click",".submitLeave",function () {
         if(isSubmit()){
             submitLeave();
+            scrollTopDiv();
         }
     });
     //提交空闲时间
     $(".helpPanel").on("click",".submitFreeTimeList",function () {
         if(isSubmit()){
             submitFreeTimeList();
+            scrollTopDiv();
         }
     });
 });

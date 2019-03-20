@@ -338,9 +338,7 @@ function getAddUserFormBodyHTML() {
 }
 //运维数据面板
 function getAddOperatorFormBodyHTML() {
-    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
-        '<div class="info"><span class="name">姓名</span><input type="text" class="content name"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
-        '<div class="info"><span class="name">联系方式</span><input type="text" class="content phone"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
+    var operatorFormBodyHTML =  '<div class="info"><span class="name">报修人（工号）</span><input type="text" class="content user"><div class="tip user"></div><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>';
     return operatorFormBodyHTML;
 }
 //订单数据面板

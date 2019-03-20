@@ -88,4 +88,9 @@ public class UserServiceImpl implements IUserService {
     public Long getIdByUserID(String userId) {
         return userMapper.getIdByUserID(userId);
     }
+
+    @Override
+    public User getUserByOpenID(Long openID) {
+        return userMapper.getUserByopenID(openID);
+    }
 }

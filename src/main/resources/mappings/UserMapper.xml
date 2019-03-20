@@ -27,4 +27,7 @@
     <select id="getIdByUserID" resultType="java.lang.Long">
         SELECT id FROM user WHERE open_id = #{userId}
     </select>
+    <select id="getUserByopenID" resultType="com.merrill.dao.entity.User">
+        SELECT * FROM user WHERE open_id = #{openID}
+    </select>
 </mapper>

@@ -7,3 +7,5 @@ var visiblePages = 5;
 var currentPage = 1;
 var list = [];
 var editItem = [];
+var userData;
+var onSubmit = true;

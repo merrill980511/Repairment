@@ -668,12 +668,9 @@ function updateOrderFinished() {
 //添加运维
 function addOperator() {
     var operator = new Object();
-    var id = $(".form .body input.id").val();
-    var name = $(".form .body input.name").val();
-    var phone = $(".form .body input.phone").val();
-    operator.id = id;
-    operator.name = name;
-    operator.phone = phone;
+    operator.openID = userData.openID;
+    operator.name = userData.name;
+    operator.phone = userData.phone;
     $.ajax({
         "url": "/repair/admin/addOperator",
         "method": "post",

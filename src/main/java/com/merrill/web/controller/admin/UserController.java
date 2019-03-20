@@ -3,7 +3,9 @@ package com.merrill.web.controller.admin;
 import com.merrill.dao.entity.User;
 import com.merrill.query.UserQueryObject;
 import com.merrill.service.IUserService;
+import com.merrill.utils.WeixinUtil;
 import com.merrill.web.vo.Status;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,7 +78,14 @@ public class UserController {
     @ResponseBody
     public Object getUser(@RequestBody Map<String, String> map) {
         String id = map.get("id");
-        return userService.getUserByID(Long.valueOf(id));
+        User user = userService.getUserByOpenID(Long.valueOf(id));
+        if (user == null) {
+            user = WeixinUtil.getUser(id);
+            if (StringUtils.isNotBlank(user.getOpenID())){
+                userService.addUser(user);
+            }
+        }
+        return user;
     }
 
     @RequestMapping("/getUserList")

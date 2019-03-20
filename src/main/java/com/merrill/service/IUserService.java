@@ -25,4 +25,6 @@ public interface IUserService {
     boolean deleteUserAndOrder(Long id);
 
     Long getIdByUserID(String userId);
+
+    User getUserByOpenID(Long id);
 }
