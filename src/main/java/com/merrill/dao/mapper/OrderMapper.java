@@ -1,6 +1,7 @@
 package com.merrill.dao.mapper;
 
 import com.merrill.dao.entity.Order;
+import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -96,6 +97,15 @@ public interface OrderMapper {
      */
     List<Order> getOrderList(OrderQueryObject qo);
 
+
+    /**
+     * 根据查询对象查询未完成订单列表
+     *
+     * @param qo 封装的查询对象
+     * @return 该运维人员所有订单结果集
+     */
+    List<Order> getAllOrderListByOperatorID(OperatorQueryObject qo);
+
     /**
      * 根据查询对象查询已完成订单列表
      *
@@ -151,4 +161,5 @@ public interface OrderMapper {
     int updateDescription(@Param("operatorID") Long operatorID, @Param("description") String description, @Param("status") int status);
 
     int updateOrderDescription(@Param("orderID") Long orderID, @Param("description") String description);
+
 }

@@ -5,7 +5,6 @@ import com.merrill.dao.entity.Order;
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.web.vo.OrderRate;
-import com.merrill.web.vo.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -43,7 +42,7 @@ public interface IOrderService {
 
     Order getOrderInHandle(Long operatorID);
 
-    Page getOrderListByOperatorID(OperatorQueryObject qo);
+    PageInfo getOrderListByOperatorID(OperatorQueryObject qo);
 
     boolean deleteOrderByID(Long orderID);
 

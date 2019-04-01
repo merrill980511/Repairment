@@ -60,6 +60,26 @@
         </association>
     </resultMap>
 
+    <resultMap id="SimpleOrder" type="Order">
+        <id column="id" property="id"/>
+        <result column="location" property="location"/>
+        <result column="phone" property="phone"/>
+        <result column="description" property="description"/>
+        <result column="user_description" property="userDescription"/>
+        <result column="repairment" property="repairment"/>
+        <result column="status" property="status"/>
+        <association property="user" javaType="User">
+            <id column="u_id" property="id"/>
+            <result column="u_name" property="name"/>
+            <result column="u_phone" property="phone"/>
+        </association>
+        <association property="operator" javaType="Operator">
+            <id column="op_id" property="id"/>
+            <result column="op_name" property="name"/>
+            <result column="op_phone" property="phone"/>
+        </association>
+    </resultMap>
+
     <sql id="orderSelectBase">
         SELECT o.id,
                o.location,
@@ -107,6 +127,58 @@
         FROM `order_finish` o
                  LEFT JOIN user u ON o.user_id = u.id
                  LEFT JOIN operator op on o.operator_id = op.id
+    </sql>
+
+    <sql id="allOrderSelectBase">
+        SELECT id,
+               location,
+               phone,
+               description,
+               user_description,
+               repairment,
+               status,
+               u_id,
+               u_name,
+               u_phone,
+               op_id,
+               op_name,
+               op_phone
+        FROM (
+                 SELECT o1.id,
+                        o1.location,
+                        o1.phone,
+                        o1.description,
+                        o1.user_description,
+                        o1.repairment,
+                        o1.status,
+                        u1.id       AS u_id,
+                        u1.name     AS u_name,
+                        u1.phone    AS u_phone,
+                        op1.id      AS op_id,
+                        op1.name    AS op_name,
+                        op1.phone   AS op_phone
+                 FROM `order` AS o1
+                          LEFT JOIN user u1 ON o1.user_id = u1.id
+                          LEFT JOIN operator op1 on o1.operator_id = op1.id
+                 UNION
+                 SELECT o2.id,
+                        o2.location,
+                        o2.phone,
+                        o2.description,
+                        o2.user_description,
+                        o2.repairment,
+                        o2.status,
+                        u2.id       AS u_id,
+                        u2.name     AS u_name,
+                        u2.phone    AS u_phone,
+                        op2.id      AS op_id,
+                        op2.name    AS op_name,
+                        op2.phone   AS op_phone
+                 FROM order_finish AS o2
+                          LEFT JOIN user u2 ON o2.user_id = u2.id
+                          LEFT JOIN operator op2 on o2.operator_id = op2.id
+             )
+        AS o
     </sql>
 
     <insert id="saveOrder">
@@ -268,6 +340,20 @@
         SELECT COUNT(*)
         FROM `order_finish`
         WHERE operator_id = #{id}
+    </select>
+    <select id="getAllOrderListByOperatorID" resultMap="SimpleOrder">
+        <include refid="allOrderSelectBase"/>
+        <where>
+            <if test="keyWord != '' and keyWord != null">
+                o.location LIKE concat('%', #{keyWord}, '%') OR
+                o.description LIKE concat('%', #{keyWord}, '%') OR
+                o.user_description LIKE concat('%', #{keyWord}, '%') OR
+                u.name LIKE concat('%', #{keyWord}, '%') OR
+                op.name LIKE concat('%', #{keyWord}, '%')
+            </if>
+        </where>
+        WHERE op_id = #{operatorID}
+        ORDER BY status ASC
     </select>
 
 </mapper>

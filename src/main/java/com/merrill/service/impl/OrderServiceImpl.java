@@ -11,7 +11,6 @@ import com.merrill.query.OrderQueryObject;
 import com.merrill.service.IOrderService;
 import com.merrill.utils.DateUtil;
 import com.merrill.web.vo.OrderRate;
-import com.merrill.web.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -195,41 +194,14 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page getOrderListByOperatorID(OperatorQueryObject qo) {
-        int currentPage = qo.getCurrentPage();
-        int pageSize = qo.getPageSize();
-        int start = pageSize * (currentPage - 1);
-        Long id = qo.getOperatorID();
-        int orderNum = orderMapper.getOrderNumberByOperatorID(id);
-        int orderFinishedNum = orderMapper.getOrderFinishedNumberByOperatorID(id);
-        int total = orderNum + orderFinishedNum;
-        String keyWord = qo.getKeyWord();
-        List<Order> list = orderMapper.getOrderListByOperatorID(start,
-                pageSize, id, keyWord);
-        int remain = pageSize;
-        if (list.size() != 0) {
-            start = 0;
-            remain = start + pageSize - orderNum;
-        } else {
-            start = start - orderNum;
+    public PageInfo getOrderListByOperatorID(OperatorQueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Order> list = orderMapper.getAllOrderListByOperatorID(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
         }
-        //防止非第一次查询的缓存
-        if (list.size() < pageSize) {
-            if (remain > 0) {
-                list.addAll(orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord));
-            }
-        }
-        if (list.size() > pageSize) {
-            remain = total - pageSize * (currentPage - 1);
-            start = pageSize * (currentPage - 1) - orderNum;
-            list = orderMapper.getOrderFinishedListByOperatorID(start, remain, id, keyWord);
-        }
-        Page page = new Page();
-        page.setPageNum(currentPage);
-        page.setPages(total % pageSize == 0 ? total / pageSize : total / pageSize + 1);
-        page.setList(list);
-        page.setPageSize(pageSize);
-        return page;
+        return pageInfo;
     }
 
     @Override
