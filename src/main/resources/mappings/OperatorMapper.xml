@@ -3,7 +3,7 @@
 <mapper namespace="com.merrill.dao.mapper.OperatorMapper">
     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <insert id="add">
-        INSERT INTO operator(id, password, name, phone) VALUES (#{id}, #{password}, #{name}, #{phone})
+        INSERT INTO operator(open_id, password, name, phone) VALUES (#{openID}, #{password}, #{name}, #{phone})
     </insert>
     <update id="update">
         UPDATE operator SET name = #{name}, phone = #{phone}

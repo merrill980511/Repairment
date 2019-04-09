@@ -57,7 +57,6 @@ $(function () {
             $(this).nextAll(".tip").css("left",paddingLeft);
             $(this).nextAll(".tip").css("width","calc(100% - "+paddingLeft+"px - 10px)");
             $(this).nextAll(".tip").text(dataLoad(userData.name));
-            $(this).parents(".form").find("input.phone").val(userData.phone);
             $(this).nextAll(".tip").show();
             $(this).nextAll(".errorMessage").hide();
             checkUser =  true;

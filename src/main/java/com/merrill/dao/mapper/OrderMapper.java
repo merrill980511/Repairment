@@ -162,4 +162,6 @@ public interface OrderMapper {
 
     int updateOrderDescription(@Param("orderID") Long orderID, @Param("description") String description);
 
+    int updateFinishedOrder(@Param("id") Long id, @Param("location") String location, @Param("description") String description,
+                            @Param("userDescription") String userDescription, @Param("repairment") String repairment);
 }

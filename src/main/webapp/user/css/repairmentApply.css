@@ -8,6 +8,12 @@ body,html{
     padding: 0px;
     margin: 0px;
 }
+button{
+    -webkit-appearance:none;
+}
+input[type="button"]{
+    -webkit-appearance:none;
+}
 body *{
     overflow: hidden;
 }
@@ -26,11 +32,9 @@ body *{
     right: 0;
     background-color: #ffffff;
     display: none;
+    overflow: scroll;
 }
 .helpPanel_top{
-    position: fixed;
-    top: 0;
-    left: 0;
     width: calc(100% - 30px);
     padding: 5px 15px;
     line-height: 44px;
@@ -49,18 +53,17 @@ body *{
     height: 26px;
     float: left;
 }
+#frame{
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+    width:100%;
+    min-height: calc(100% - 55px - 45px);
+}
 #helpFrame{
-    position: fixed;
-    top: 55px;
-    left: 0;
     width: 100%;
-    height: calc(100% - 55px);
-    border: none;
+    border:none;
 }
 .helpPanel_bottom{
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     line-height: 44px;
     height: 44px;
@@ -93,6 +96,7 @@ body *{
     width: calc(100% - 44px - 95px);
     float: left;
     color: #777;
+    background-color: transparent;
 }
 .select-view>label.red{
     padding: 0 5px;
@@ -106,7 +110,7 @@ body *{
     font-style: inherit;
     font-weight: inherit;
     color: inherit;
-
+    background-color: transparent;
 }
 .link>img{
     width: 26px;

@@ -66,6 +66,16 @@ function isNotNull(value) {
         return false;
     }
 };
+//检测是否为合法MAC
+function isMac(mac) {
+    var reg1 = /[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/;
+    var reg2 = /[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}/;
+    if(reg1.test(mac)||reg2.test(mac)){
+        return true;
+    }else {
+        return false;
+    }
+}
 function getUserInfo(userID) {
     var user = null;
     $.ajax({

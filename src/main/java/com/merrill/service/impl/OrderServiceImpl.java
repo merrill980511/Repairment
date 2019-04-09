@@ -166,6 +166,9 @@ public class OrderServiceImpl implements IOrderService {
         if (orderMapper.updateOrder(id, location, description, userDescription, repairment) > 0) {
             return true;
         } else {
+            if (orderMapper.updateFinishedOrder(id, location, description, userDescription, repairment) > 0){
+                return true;
+            }
             return false;
         }
     }

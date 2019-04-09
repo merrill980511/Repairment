@@ -41,9 +41,9 @@ public class OperatorServiceImpl implements IOperatorService {
     @Override
     public boolean add(Operator operator) {
         if (operator.getPassword() == null){
-            operator.setPassword(operator.getId() + "");
+            operator.setPassword(operator.getOpenID() + "");
         }
-        if (operatorMapper.add(operator.getId(), operator.getName(),
+        if (operatorMapper.add(operator.getOpenID(), operator.getName(),
                 operator.getPassword(), operator.getPhone()) > 0) {
             return true;
         } else {

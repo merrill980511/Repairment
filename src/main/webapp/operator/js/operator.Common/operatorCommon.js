@@ -66,8 +66,8 @@ $(function () {
     });
     //关闭helpPanel
     $(".helpPanel").on("click",".closeAction",function () {
-        homePanelShow();
         helpPanelInit();
+        $(".checkIn").click();
     });
     //helpPanel取消操作
     $(".helpPanel").on("click",".cancelAction",function () {

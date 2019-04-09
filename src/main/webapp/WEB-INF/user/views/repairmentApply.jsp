@@ -25,7 +25,7 @@
             <label class="helpPanel_title">帮助菜单</label>
             <a href="javascript:;"><img src="/repair/user/images/close.png" title="关闭" class="closeAction"/></a>
         </div>
-        <iframe src="" id="helpFrame"></iframe>
+        <div id="frame"><iframe src="" id="helpFrame"  name="iFrame1" width="100%" onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0"></iframe></div>
         <div class="helpPanel_bottom"><input type="button" value="未解决我的网络问题" class="solveFailed"/></div>
     </div>
     <script type="text/javascript" src="/repair/user/js/jquery-3.3.1.min.js"></script>

@@ -14,6 +14,21 @@ a{
 body *{
     overflow: hidden;
 }
+button{
+    -webkit-appearance:none;
+}
+input[type="button"]{
+    -webkit-appearance:none;
+}
+table{
+    table-layout: fixed;
+}
+table,tr,td,th{
+    -webkit-appearance:none;
+}
+tr{
+    width: 100%;
+}
 .bottom-index,.bottom-index *{
     overflow: visible;
 }
@@ -344,7 +359,6 @@ button{
 }
 /*panel-default默认*/
 .panel-default .table{
-    width: 100%;
     text-align: left;
     border-collapse: separate !important;
 }

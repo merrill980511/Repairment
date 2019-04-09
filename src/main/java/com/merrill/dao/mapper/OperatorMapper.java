@@ -27,13 +27,13 @@ public interface OperatorMapper {
     /**
      * 添加运维人员
      *
-     * @param id       运维人员的id
+     * @param openID       运维人员的openID
      * @param name     运维人员姓名
      * @param password 运维人员的密码
      * @param phone    运维人员的联系方式
      * @return 返回受影响行数
      */
-    int add(@Param("id") Long id, @Param("name") String name,
+    int add(@Param("openID") String openID, @Param("name") String name,
             @Param("password") String password, @Param("phone") String phone);
 
     /**

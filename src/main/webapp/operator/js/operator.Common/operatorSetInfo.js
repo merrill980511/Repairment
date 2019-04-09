@@ -141,6 +141,9 @@ function setFreeTimeTable() {
         '        </div>\n' +
         '    </div>');
     helpPanelShow();
+    $(".panel-default .table").each(function (){
+        $(this).width($(this).parents(".panel-default").width()- 30);
+    });
 }
 //考勤表数据置入
 function setScheduleTableInfo() {
@@ -170,6 +173,9 @@ function setScheduleRowInfo(i,scheduleList) {
                 $(this).html(operatorNames);
             }
         }
+    });
+    $(".panel-default .table").each(function (){
+        $(this).width($(this).parents(".panel-default").width()- 30);
     });
 };
 //主页信息置入

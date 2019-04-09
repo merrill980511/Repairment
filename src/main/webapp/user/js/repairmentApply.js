@@ -16,9 +16,9 @@ $(function () {
         $("#helpFrame").attr("src",helpHref);
         $(".helpPanel_title").text(title);
         if($(this).parents(".step").hasClass("final")){
-            $("#helpFrame").css("height","calc(100% - 55px - 45px)");
             $(".helpPanel").append('<div class="helpPanel_bottom"><input type="button" value="未解决我的网络问题" class="solveFailed"/></div>');
         }
+        $("#frame").height($("#helpFrame").height());
         $(".helpPanel").show();
     });
     //点击关闭
@@ -103,8 +103,7 @@ function helpPanelInit(){
         '            <label class="helpPanel_title">帮助菜单</label>\n' +
         '            <a href="javascript:;"><img src="/repair/user/images/close.png" title="关闭" class="closeAction"/></a>\n' +
         '        </div>\n' +
-        '        <iframe src="" id="helpFrame"></iframe>');
-    $("#helpFrame").css('height',"calc(100% - 55px)");
+        '       <div id="frame"><iframe src="" id="helpFrame"  name="iFrame1" width="100%" onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0" ></iframe></div>');
 }
 //获取信息面板详细信息
 function getOrder(userID) {
@@ -142,8 +141,8 @@ function setOrderInfo(order) {
         $(".info>.handleTime").text(dateLoad(order.handleTime));
         $(".info>.status").text(getOrderStatus(order.status));
         $(".info>.operator").text(order.operator == null ? "" : order.operator.name);
-        $(".info>.repairment").text(order.repairment);
-        $(".info>.userDescription").text(order.userDescription);
+        $(".info>.repairment").text(order.repairment.replace("|","\n"));
+        $(".info>.userDescription").text(order.userDescription.replace("|","\n"));
         $(".form").hide();
         $(".infoPanel").show();
     }
@@ -163,7 +162,7 @@ function getNextStep(selectedOptionID) {
             "dataType": "json",
             "success": function (data) {
                 if(data.id != null){
-                    if(data.options != null && data.options.length != 0){
+                    if(data.content == "MAC" || (data.options != null && data.options.length != 0)){
                         $(".form").append(getStepHtml(data));
                     }else{
                         $(".form").append(getFinalStepHtml(data));
@@ -185,7 +184,7 @@ function submitOrder() {
     var phone = $("input.phone").val();
     var reservationTime = $("input.reservationTime").val();
     var location = $("input.location").val();
-    var userDescription = $("textarea.userDescription").val();
+    var userDescription = $("textarea.userDescription").val().replace(/\n|\r|\r\n/g,"。");
     var submitOrder = false;
     if(!isNotNull(phone)){
         $(".errorMessage>label").text("手机号不能为空！");
@@ -201,6 +200,10 @@ function submitOrder() {
         return false;
     }else if(!isNotNull(location)){
         $(".errorMessage>label").text("报修地点不能为空！");
+        $(".errorMessage").show();
+        return false;
+    }else if($("input.MAC").length>0&&!isMac($("input.MAC").val())) {
+        $(".errorMessage>label").text("MAC地址格式不正确！");
         $(".errorMessage").show();
         return false;
     }else{
@@ -234,31 +237,43 @@ function submitOrder() {
 }
 //格式化选项步骤代码
 function getStepHtml(step) {
-    var optionsHtml = '';
-    for(var i in step.options){
-        optionsHtml += '<option class="option" value="'+step.options[i].id+'">'+step.options[i].content+'</option>\n';
-    }
+    var stepHtml = "";
     var linkHtml = '<a class="link"></a>';
     if(step.link != null &&step.link.name != null&&step.link.name != ''){
-        linkHtml += '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'"><img src="/repair/user/images/questionMark.png">'+step.link.name+'</a>\n';
+        linkHtml += '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'">提示</a>\n';
     }
-    var stepHtml = ' <div class="step">\n' +
-        '            <label class="name">'+step.content+'</label>\n' +
-        '            <div class="select-view">\n' +
-        '                <select class="select">\n' +
-        '                    <option class="option default" value="-2">请选择</option>\n' +
-        optionsHtml+
-        '                </select>\n' +
-        '            </div>\n' +
-        linkHtml+
-        '        </div>';
+    if(step.content == "MAC"){
+        stepHtml = ' <div class="step">\n' +
+            '            <label class="name">'+step.content+'</label>\n' +
+            '            <div class="select-view">\n' +
+            '                <input class="select MAC" placeholder="请输入MAC地址"/>\n' +
+            '            </div>\n' +
+            linkHtml+
+            '        </div>';
+        stepHtml += getSubmitHtml();
+    }else{
+        var optionsHtml = '';
+        for(var i in step.options){
+            optionsHtml += '<option class="option" value="'+step.options[i].id+'">'+step.options[i].content+'</option>\n';
+        }
+        stepHtml = ' <div class="step">\n' +
+            '            <label class="name">'+step.content+'</label>\n' +
+            '            <div class="select-view">\n' +
+            '                <select class="select">\n' +
+            '                    <option class="option default" value="-2">请选择</option>\n' +
+            optionsHtml+
+            '                </select>\n' +
+            '            </div>\n' +
+            linkHtml+
+            '        </div>';
+    }
     return stepHtml;
 };
 //格式化最终选项步骤代码
 function getFinalStepHtml(step) {
     var linkHtml = '<a class="link"></a>';
     if(step.link != null &&step.link.name != null&&step.link.name != ''){
-        linkHtml = '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'"><img src="/repair/user/images/questionMark.png"></a>\n';
+        linkHtml = '<a class="link" helpHref="'+step.link.content+'" title="'+step.link.name+'">提示</a>\n';
     }
     var stepHtml = ' <div class="step final">\n' +
         '            <label class="name">&emsp;</label>\n' +
@@ -277,11 +292,15 @@ function getResult() {
     var phone = $("input.phone").val();
     var location = $("input.location").val();
     var userDescription = $("input.userDescription").text();
-    result += phone+";"+location+";"+userDescription+";";
+    result += "联系方式:"+phone+"|"+"报修地址:"+location+"|"+"用户备注:"+userDescription+"|";
+    if($("input.MAC").length>0){
+        result += "MAC:"+$("input.MAC").val()+"|";
+    }
     $(".step").each(function () {
+        var name = $(this).find("label.name").text();
         var option = $(this).find("option:selected").text();
         if(option != ""&&option != "undefined"){
-            result += option+";";
+            result += name+":"+option+"|";
         }
     });
     return result;

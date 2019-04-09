@@ -227,6 +227,14 @@
         SET description = #{description}
         WHERE id = #{orderID}
     </update>
+    <update id="updateFinishedOrder">
+        UPDATE order_finish
+        SET description      = #{description},
+            user_description = #{userDescription},
+            location         = #{location},
+            repairment       = #{repairment}
+        WHERE id = #{id}
+    </update>
     <delete id="deleteOrderByID">
         DELETE
         FROM `order`
