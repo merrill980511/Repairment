@@ -92,7 +92,7 @@
                             <span class="name">处理中人员</span>
                         </a>
                     </div>
-                    <div class="panel">
+                    <div class="panel adminShiro">
                         <a href="operatorFree">
                             <span class="num"></span>
                             <span class="name">值班室人员</span>
@@ -109,7 +109,7 @@
                         <canvas id="orderChart"></canvas>
                     </div>
                 </div>
-                <div class="panel-default attendenceChart">
+                <div class="panel-default attendenceChart adminShiro">
                     <div class="header">
                         <i class="iconfont icon-areachart"></i>迟到早退率
                     </div>
@@ -138,7 +138,7 @@
                         <a href="table"><button class="btn">0个未处理问题<i class="iconfont icon-right"></i></button></a>
                     </div>
                 </div>
-                <div class="panel-default currentOperator">
+                <div class="panel-default currentOperator adminShiro">
                     <div class="header">
                         <i class="iconfont icon-team"></i>当前人员
                     </div>
@@ -180,10 +180,12 @@
     <script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/entity.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/md5.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/utils.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/formCheck.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/adminHtml.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/adminGetData.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/admin.Common/adminDataControll.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/adminInit.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/adminSetInfo.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Unity/adminIndex.js"></script>

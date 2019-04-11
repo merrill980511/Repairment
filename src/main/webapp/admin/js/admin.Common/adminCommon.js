@@ -4,8 +4,11 @@ $(function () {
         $("body").append("<style>" +
             ".adminShiro{" +
             "display: none;" +
+            "pointer-events:none;" +
             "}" +
             "</style>");
+    }else{
+        isAdmin = true;
     }
     //标准下拉框
     $(".dropdown-toggle").on("click",function () {

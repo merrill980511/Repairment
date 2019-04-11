@@ -61,11 +61,6 @@ public class AdminController {
 //        return returnMap;
     }
 
-    @RequestMapping("/editPassword")
-    public Object editPassword() {
-        return "/";
-    }
-
     @RequestMapping("/editPasswordCommit")
     @ResponseBody
     public Object editPasswordCommit(@RequestBody Map<String, String> map) {
@@ -87,5 +82,25 @@ public class AdminController {
     @RequestMapping("/table")
     public Object table() {
         return "/admin/views/adminTable";
+    }
+
+    @RequestMapping("/todayOrder")
+    public Object todayOrder() {
+        return "/admin/views/adminTodayOrder";
+    }
+
+    @RequestMapping("/todayOrderFinished")
+    public Object todayOrderFinished() {
+        return "/admin/views/adminTodayOrderFinished";
+    }
+
+    @RequestMapping("/operatorBusy")
+    public Object operatorBusy() {
+        return "/admin/views/adminOperatorBusy";
+    }
+
+    @RequestMapping("/operatorFree")
+    public Object operatorFree() {
+        return "/admin/views/adminOperatorFree";
     }
 }

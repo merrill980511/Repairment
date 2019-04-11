@@ -2,6 +2,7 @@ package com.merrill.service.impl;
 
 import com.merrill.dao.mapper.AdminMapper;
 import com.merrill.service.IAdminService;
+import com.merrill.utils.ShiroUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -38,7 +39,7 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public boolean editPassword(Long id, String password) {
-        if (adminMapper.editPassword(id, password) > 0){
+        if (adminMapper.editPassword(id, ShiroUtil.SysMd5(id+"", password)) > 0){
             return true;
         } else {
             return false;

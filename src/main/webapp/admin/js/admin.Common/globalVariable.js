@@ -9,3 +9,4 @@ var list = [];
 var editItem = [];
 var userData;
 var onSubmit = true;
+var isAdmin = false;

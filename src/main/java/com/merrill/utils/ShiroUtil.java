@@ -24,7 +24,7 @@ public class ShiroUtil {
      * @param id 管理员账号
      * @return 返回加密之后的密码
      */
-    public static String SysMd5(Long id, String password) {
+    public static String SysMd5(String id, String password) {
         String hashAlgorithmName = "MD5";//加密方式
         ByteSource salt = ByteSource.Util.bytes(id);//以账号作为盐值
         int hashIterations = 3;//加密3次
@@ -69,6 +69,7 @@ public class ShiroUtil {
 
         SimpleHash hash = new SimpleHash(hashAlgorithmName, credential, salt, hashIterations);
 //        SimpleHash hash = new SimpleHash(hashAlgorithmName, credential, null, 1);
+//        SysMd5(123L, "123");
         System.out.println(hash.toString());
 
     }

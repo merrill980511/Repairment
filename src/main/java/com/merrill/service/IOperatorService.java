@@ -29,4 +29,6 @@ public interface IOperatorService {
     boolean isWork(Long operatorID);
 
     Long getIdByUserID(String userId);
+
+    boolean editPassword(String id, String password);
 }

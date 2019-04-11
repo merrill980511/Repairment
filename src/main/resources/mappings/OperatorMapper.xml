@@ -12,6 +12,9 @@
         </if>
         WHERE id = #{id}
     </update>
+    <update id="editPassword">
+        UPDATE operator SET password = #{password} WHERE open_id = #{id}
+    </update>
     <delete id="delete">
         DELETE FROM operator WHERE id = #{id}
     </delete>

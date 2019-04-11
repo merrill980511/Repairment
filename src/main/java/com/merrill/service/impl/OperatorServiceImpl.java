@@ -37,7 +37,7 @@ public class OperatorServiceImpl implements IOperatorService {
     @Override
     public boolean add(Operator operator) {
         if (operator.getPassword() == null){
-            operator.setPassword(ShiroUtil.SysMd5(Long.valueOf(operator.getOpenID()), operator.getOpenID()));
+            operator.setPassword(ShiroUtil.SysMd5(operator.getOpenID(), operator.getOpenID()));
         }
         if (operatorMapper.add(operator.getOpenID(), operator.getName(),
                 operator.getPassword(), operator.getPhone()) > 0) {
@@ -101,6 +101,14 @@ public class OperatorServiceImpl implements IOperatorService {
     @Override
     public Long getIdByUserID(String userId){
         return operatorMapper.getIdByUserID(userId);
+    }
+
+    @Override
+    public boolean editPassword(String id, String password) {
+        if (operatorMapper.editPassword(id, ShiroUtil.SysMd5(id, password)) <= 0){
+            return false;
+        }
+        return true;
     }
 
 }

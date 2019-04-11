@@ -24,7 +24,7 @@ $(function(){
             "dataType":"json",
             "success":function(data){
                 if(data.location != null && data.location != ""){
-                    $.session.set('id', id);
+                    $.session.set('id', id.val());
                     $.session.set("isAdmin",data.isAdmin);
                     location.href = data.location;
                     return true;

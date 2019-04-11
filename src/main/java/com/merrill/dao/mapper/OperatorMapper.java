@@ -87,4 +87,5 @@ public interface OperatorMapper {
      */
     Operator getOperatorByOpenID(String id);
 
+    int editPassword(@Param("id") String id, @Param("password") String password);
 }

@@ -182,14 +182,17 @@
 </div>
 <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/repair/admin/js/tools/jquery.session.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/Chart.js"></script>
 <script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/entity.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/md5.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/utils.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/formCheck.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminHtml.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminGetData.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminDataControll.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminInit.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminSetInfo.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Unity/adminSchedule.js"></script>

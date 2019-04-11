@@ -77,7 +77,7 @@
                             <li><a href="javascript:;" panel-item="order"><i class="iconfont icon icon-order"></i>未处理问题</a></li>
                             <li><a href="javascript:;" panel-item="order-finished"><i class="iconfont icon icon-order"></i>已处理问题</a></li>
                             <li class="adminShiro"><a href="javascript:;" panel-item="operator"><i class="iconfont icon icon-team"></i>运维人员&emsp;</a></li>
-                            <li class="adminShiro"><a href="javascript:;" panel-item="user"><i class="iconfont icon icon-team"></i>用户&emsp;&emsp;&emsp;</a></li>
+                            <li><a href="javascript:;" panel-item="user"><i class="iconfont icon icon-team"></i>用户&emsp;&emsp;&emsp;</a></li>
                         </ul>
                     </div>
                 </div>
@@ -110,14 +110,17 @@
 </div>
 <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/repair/admin/js/tools/jquery.session.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/Chart.js"></script>
 <script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/entity.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/md5.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/utils.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/formCheck.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminHtml.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminGetData.js"></script>
+<script type="text/javascript" src="/repair/admin/js/admin.Common/adminDataControll.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminInit.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/adminSetInfo.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Unity/adminTable.js"></script>
