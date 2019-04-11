@@ -1,5 +1,12 @@
 $(function () {
     lidInit();
+    if($.session.get("isAdmin") != "true"){
+        $("body").append("<style>" +
+            ".adminShiro{" +
+            "display: none;" +
+            "}" +
+            "</style>");
+    }
     //标准下拉框
     $(".dropdown-toggle").on("click",function () {
         var others = $(".options").not($(this).nextAll(".options"));
@@ -47,7 +54,7 @@ $(function () {
     });
     //管理员修改个人信息
     $(".editAdmin").on("click",function(){
-        var id = $.cookie("id");
+        var id = $.session.get("id");
         showForm(id,"修改密码","确认修改","取消修改","editAction editAdminAction");
         setAdminFormInfo();
     });
@@ -120,7 +127,10 @@ $(function () {
     });
 });
 $(document).ready(function () {
-    indexHeightInit();
+    setTimeout(function () {
+        indexHeightInit();
+    },10);
+
 });
 //本地获取运维
 function getOperator(id) {

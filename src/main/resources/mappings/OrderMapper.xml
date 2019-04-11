@@ -16,6 +16,7 @@
         <result column="begin_time" property="beginTime"/>
         <result column="reservation_time" property="reservationTime"/>
         <result column="handle_time" property="handleTime"/>
+        <result column="end_time" property="endTime"/>
         <result column="description" property="description"/>
         <result column="user_description" property="userDescription"/>
         <result column="repairment" property="repairment"/>
@@ -29,52 +30,6 @@
         <association property="operator" javaType="com.merrill.dao.entity.Operator">
             <id column="op_id" property="id"/>
             <result column="op_open_id" property="openID"/>
-            <result column="op_name" property="name"/>
-            <result column="op_phone" property="phone"/>
-        </association>
-    </resultMap>
-
-    <resultMap id="OrderFinished" type="Order">
-        <id column="id" property="id"/>
-        <result column="location" property="location"/>
-        <result column="phone" property="phone"/>
-        <result column="begin_time" property="beginTime"/>
-        <result column="reservation_time" property="reservationTime"/>
-        <result column="handle_time" property="handleTime"/>
-        <result column="end_time" property="endTime"/>
-        <result column="description" property="description"/>
-        <result column="user_description" property="userDescription"/>
-        <result column="repairment" property="repairment"/>
-        <result column="status" property="status"/>
-        <association property="user" javaType="User">
-            <id column="u_id" property="id"/>
-            <result column="u_open_id" property="openID"/>
-            <result column="u_name" property="name"/>
-            <result column="u_phone" property="phone"/>
-        </association>
-        <association property="operator" javaType="Operator">
-            <id column="op_id" property="id"/>
-            <result column="op_open_id" property="openID"/>
-            <result column="op_name" property="name"/>
-            <result column="op_phone" property="phone"/>
-        </association>
-    </resultMap>
-
-    <resultMap id="SimpleOrder" type="Order">
-        <id column="id" property="id"/>
-        <result column="location" property="location"/>
-        <result column="phone" property="phone"/>
-        <result column="description" property="description"/>
-        <result column="user_description" property="userDescription"/>
-        <result column="repairment" property="repairment"/>
-        <result column="status" property="status"/>
-        <association property="user" javaType="User">
-            <id column="u_id" property="id"/>
-            <result column="u_name" property="name"/>
-            <result column="u_phone" property="phone"/>
-        </association>
-        <association property="operator" javaType="Operator">
-            <id column="op_id" property="id"/>
             <result column="op_name" property="name"/>
             <result column="op_phone" property="phone"/>
         </association>
@@ -133,6 +88,10 @@
         SELECT id,
                location,
                phone,
+               begin_time,
+               reservation_time,
+               handle_time,
+               end_time,
                description,
                user_description,
                repairment,
@@ -147,16 +106,20 @@
                  SELECT o1.id,
                         o1.location,
                         o1.phone,
+                        o1.begin_time,
+                        o1.reservation_time,
+                        o1.handle_time,
+                        o1.end_time,
                         o1.description,
                         o1.user_description,
                         o1.repairment,
                         o1.status,
-                        u1.id       AS u_id,
-                        u1.name     AS u_name,
-                        u1.phone    AS u_phone,
-                        op1.id      AS op_id,
-                        op1.name    AS op_name,
-                        op1.phone   AS op_phone
+                        u1.id     AS u_id,
+                        u1.name   AS u_name,
+                        u1.phone  AS u_phone,
+                        op1.id    AS op_id,
+                        op1.name  AS op_name,
+                        op1.phone AS op_phone
                  FROM `order` AS o1
                           LEFT JOIN user u1 ON o1.user_id = u1.id
                           LEFT JOIN operator op1 on o1.operator_id = op1.id
@@ -164,21 +127,25 @@
                  SELECT o2.id,
                         o2.location,
                         o2.phone,
+                        o2.begin_time,
+                        o2.reservation_time,
+                        o2.handle_time,
+                        o2.end_time,
                         o2.description,
                         o2.user_description,
                         o2.repairment,
                         o2.status,
-                        u2.id       AS u_id,
-                        u2.name     AS u_name,
-                        u2.phone    AS u_phone,
-                        op2.id      AS op_id,
-                        op2.name    AS op_name,
-                        op2.phone   AS op_phone
+                        u2.id     AS u_id,
+                        u2.name   AS u_name,
+                        u2.phone  AS u_phone,
+                        op2.id    AS op_id,
+                        op2.name  AS op_name,
+                        op2.phone AS op_phone
                  FROM order_finish AS o2
                           LEFT JOIN user u2 ON o2.user_id = u2.id
                           LEFT JOIN operator op2 on o2.operator_id = op2.id
              )
-        AS o
+                 AS o
     </sql>
 
     <insert id="saveOrder">
@@ -271,7 +238,7 @@
         </where>
         ORDER BY o.status ASC
     </select>
-    <select id="getOrderFinishedList" resultMap="OrderFinished">
+    <select id="getOrderFinishedList" resultMap="Order">
         <include refid="orderFinishedSelectBase"/>
         <where>
             <if test="keyWord != '' and keyWord != null">
@@ -303,7 +270,7 @@
         <include refid="orderSelectBase"/>
         ORDER BY begin_time ASC LIMIT #{number}
     </select>
-    <select id="getOrderFinishedByID" resultMap="OrderFinished">
+    <select id="getOrderFinishedByID" resultMap="Order">
         <include refid="orderFinishedSelectBase"/>
         WHERE o.id = #{id}
     </select>
@@ -315,7 +282,7 @@
         <include refid="orderSelectBase"/>
         WHERE op.id = #{id}
         <if test="keyWord != '' and keyWord != null">
-            , AND
+            AND
             o.location LIKE concat('%', #{keyWord}, '%') OR
             o.description LIKE concat('%', #{keyWord}, '%') OR
             o.user_description LIKE concat('%', #{keyWord}, '%') OR
@@ -329,7 +296,7 @@
         <include refid="orderFinishedSelectBase"/>
         WHERE op.id = #{id}
         <if test="keyWord != '' and keyWord != null">
-            , AND
+            AND
             o.location LIKE concat('%', #{keyWord}, '%') OR
             o.description LIKE concat('%', #{keyWord}, '%') OR
             o.user_description LIKE concat('%', #{keyWord}, '%') OR
@@ -349,19 +316,57 @@
         FROM `order_finish`
         WHERE operator_id = #{id}
     </select>
-    <select id="getAllOrderListByOperatorID" resultMap="SimpleOrder">
+    <select id="getAllOrderListByOperatorID" resultMap="Order">
         <include refid="allOrderSelectBase"/>
-        <where>
-            <if test="keyWord != '' and keyWord != null">
-                o.location LIKE concat('%', #{keyWord}, '%') OR
-                o.description LIKE concat('%', #{keyWord}, '%') OR
-                o.user_description LIKE concat('%', #{keyWord}, '%') OR
-                u.name LIKE concat('%', #{keyWord}, '%') OR
-                op.name LIKE concat('%', #{keyWord}, '%')
-            </if>
-        </where>
         WHERE op_id = #{operatorID}
+        <if test="keyWord != '' and keyWord != null">
+            AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
         ORDER BY status ASC
     </select>
-
+    <select id="getTodayOrderList" resultMap="Order">
+        <include refid="allOrderSelectBase"/>
+        WHERE to_days(reservation_time) = to_days(now())
+        <if test="keyWord != '' and keyWord != null">
+            AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
+        ORDER BY status ASC
+    </select>
+    <select id="getTodayOrderFinishedList" resultMap="Order">
+        <include refid="allOrderSelectBase"/>
+        WHERE to_days(handle_time) = to_days(now())
+        OR to_days(end_time) = to_days(now())
+        <if test="keyWord != '' and keyWord != null">
+            AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
+        ORDER BY status ASC
+    </select>
+    <select id="getOrderSolvingList" resultMap="Order">
+        <include refid="allOrderSelectBase"/>
+        WHERE status = 1
+        <if test="keyWord != '' and keyWord != null">
+            AND
+            o.location LIKE concat('%', #{keyWord}, '%') OR
+            o.description LIKE concat('%', #{keyWord}, '%') OR
+            o.user_description LIKE concat('%', #{keyWord}, '%') OR
+            u.name LIKE concat('%', #{keyWord}, '%') OR
+            op.name LIKE concat('%', #{keyWord}, '%')
+        </if>
+        ORDER BY status ASC
+    </select>
 </mapper>

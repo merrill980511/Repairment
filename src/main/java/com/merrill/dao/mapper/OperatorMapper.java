@@ -27,7 +27,7 @@ public interface OperatorMapper {
     /**
      * 添加运维人员
      *
-     * @param openID       运维人员的openID
+     * @param openID   运维人员的openID
      * @param name     运维人员姓名
      * @param password 运维人员的密码
      * @param phone    运维人员的联系方式
@@ -70,10 +70,21 @@ public interface OperatorMapper {
      * @return 返回所有运维人员集合
      */
     List<Operator> getAllOperatorList();
+
     /**
      * 根据运维的学号获取其工号
      *
      * @return 返回所有运维人员集合
      */
     Long getIdByUserID(String userId);
+
+    /**
+     * 根据operator的open_id获取运维人员
+     * open_id就是学号
+     *
+     * @param id open_id
+     * @return 查询出来的operator对象
+     */
+    Operator getOperatorByOpenID(String id);
+
 }

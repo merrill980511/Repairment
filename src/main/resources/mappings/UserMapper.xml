@@ -18,7 +18,7 @@
         SELECT * FROM user
         <where>
             <if test="keyWord != '' and keyWord != null">
-                id LIKE concat('%', #{keyWord}, '%') OR
+                open_id LIKE concat('%', #{keyWord}, '%') OR
                 name LIKE concat('%', #{keyWord}, '%') OR
                 phone LIKE concat('%', #{keyWord}, '%')
             </if>

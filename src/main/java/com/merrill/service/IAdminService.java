@@ -13,4 +13,6 @@ public interface IAdminService {
     boolean login(Long id, String password);
 
     boolean editPassword(Long id, String password);
+
+    boolean isExist(String id);
 }

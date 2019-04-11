@@ -22,7 +22,7 @@
         SELECT * FROM operator
         <where>
             <if test="keyWord != '' and keyWord != null">
-                id LIKE concat('%', #{keyWord}, '%') OR
+                open_id LIKE concat('%', #{keyWord}, '%') OR
                 name LIKE concat('%', #{keyWord}, '%') OR
                 phone LIKE concat('%', #{keyWord}, '%')
             </if>
@@ -34,4 +34,8 @@
     <select id="getIdByUserID" resultType="java.lang.Long">
         SELECT id FROM operator WHERE open_id = #{userId}
     </select>
+    <select id="getOperatorByOpenID" resultType="Operator">
+        SELECT * FROM operator WHERE open_id = #{id}
+    </select>
+
 </mapper>

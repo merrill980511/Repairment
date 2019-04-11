@@ -102,13 +102,13 @@ function setAddFormInfo() {
     var id = $(".form").attr("item-id");
     switch (panelItem) {
         case "order":
-            $(".form .body").html(getAddOrderFormBodyHTML(getItem(id,"getOrder")));
+            $(".form .body").html(getAddOrderFormBodyHTML());
             break;
         case "operator":
-            $(".form .body").html(getAddOperatorFormBodyHTML(getItem(id,"getOperator")));
+            $(".form .body").html(getAddOperatorFormBodyHTML());
             break;
         case "user":
-            $(".form .body").html(getAddUserFormBodyHTML(getItem(id,"getUser")));
+            $(".form .body").html(getAddUserFormBodyHTML());
             break;
         default:
             $(".form .body").html("");

@@ -22,6 +22,18 @@ function getList(pageSize,currentPage) {
         case "haveRead":
             getHaveReadLeavList(pageSize,currentPage,keyWord);
             break;
+        case "todayOrder":
+            getTodayOrderList(pageSize,currentPage,keyWord);
+            break;
+        case "todayOrderFinished":
+            getTodayOrderFinishedList(pageSize,currentPage,keyWord);
+            break;
+        case "operatorBusy":
+            getOperatorBusyList(pageSize,currentPage,keyWord);
+            break;
+        case "operatorFree":
+            getOperatorFreeList(pageSize,currentPage,keyWord);
+            break;
         default:
             break;
     };
@@ -38,7 +50,7 @@ function logout() {
         "dataType": "json",
         "success": function (data) {
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -61,7 +73,7 @@ function updatePassword(id,password) {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -81,7 +93,7 @@ function getItem(id,url) {
         "success": function (data) {
             item = data;
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -106,7 +118,7 @@ function deleteItem(id,url){
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -126,7 +138,7 @@ function getAllOperatorList() {
         "success": function (data) {
             operatorList = data;
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -147,7 +159,7 @@ function getUserInfo(userID) {
         "success": function (data) {
             user =  data;
         },
-        "fail": function () {
+        "error": function () {
 
         },
     });
@@ -169,7 +181,7 @@ function isUser(userId) {
             userData = data;
             isUser = (data != null);
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -194,7 +206,7 @@ function agreeLeaveAction(id) {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -217,7 +229,7 @@ function disagreeLeaveAction(id) {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -235,7 +247,7 @@ function getOrderChart(num){
         "success": function (data) {
             setOrderChart(data,getDateList(num));
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -255,7 +267,7 @@ function getAttendenceChart(num){
         "success": function (data) {
             setAttendenceChart(data,dateList);
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -273,7 +285,7 @@ function getCurrentOperatorList(){
         "success": function (data) {
             setCurrentOperatorList(data);
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -293,7 +305,7 @@ function getOverview() {
                 setOverview(data);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -317,7 +329,7 @@ function getOrderSortByNum(num) {
             }
             $(".orderTable .footer .btn").html(data.length+'个未处理问题<i class="iconfont icon-right"></i>');
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -341,7 +353,7 @@ function getLeaveListByNum(num) {
             }
             $(".leaveTable .footer .btn").html(data.length+'个未处理请求<i class="iconfont icon-right"></i>');
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -362,7 +374,7 @@ function getScheduleList(date) {
         "success": function (data) {
             scheduleList = data;
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -383,7 +395,7 @@ function getOperatorListBySchedule(date,number) {
         "success": function (data) {
             operatorListBySchedule = data;
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -407,7 +419,7 @@ function updateScheduleList(scheduleList) {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -432,7 +444,7 @@ function getNotReadLeavList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -457,7 +469,7 @@ function getHaveReadLeavList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -484,7 +496,7 @@ function getOrderList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -509,7 +521,7 @@ function getOrderFinishedList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -534,7 +546,7 @@ function getOperatorList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -559,11 +571,112 @@ function getUserList(pageSize,currentPage,keyWord){
                 updatePages(data.pages,visiblePages,data.pageNum);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
 };
+//获取今日问题列表
+function getTodayOrderList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getTodayOrderList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".table").removeClass().addClass("table order");
+                $(".table>thead").html(getTodayOrderThHtml());
+                $(".table>tbody").html(getTodayOrderListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "error": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//获取今日已解决问题列表
+function getTodayOrderFinishedList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getTodayOrderFinishedList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".table").removeClass().addClass("table order");
+                $(".table>thead").html(getOrderFinishedThHtml());
+                $(".table>tbody").html(getOrderFinishedListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "error": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//获取处理中人员列表
+function getOperatorBusyList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getOrderSolvingList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".table").removeClass().addClass("table order");
+                $(".table>thead").html(getOperatorBusyThHtml());
+                $(".table>tbody").html(getOperatorBusyListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "error": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+//获取值班室人员列表
+function getOperatorFreeList(pageSize,currentPage,keyWord){
+    $.ajax({
+        "url": "/repair/admin/getOperatorFreeList",
+        "method": "post",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "data": '{\"pageSize\":\"'+pageSize+'\",\"currentPage\":\"'+currentPage+'\",\"keyWord\":\"'+keyWord+'\"}',
+        "dataType": "json",
+        "success": function (data) {
+            if(data != null ){
+                list = data.list;
+                $(".table").removeClass().addClass("table operator");
+                $(".table>thead").html(getOperatorThHtml());
+                $(".table>tbody").html(getOperatorListHtml(list));
+                tableCssInit();
+                updatePages(data.pages,visiblePages,data.pageNum);
+            }
+        },
+        "error": function () {
+            alert("服务器繁忙，请稍后再试");
+        },
+    });
+};
+
 //添加订单
 function addOrder() {
     var order = new Object();
@@ -596,7 +709,7 @@ function addOrder() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -627,7 +740,7 @@ function updateOrder() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -660,7 +773,7 @@ function updateOrderFinished() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -688,7 +801,7 @@ function addOperator() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -716,7 +829,7 @@ function updateOperator() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -747,7 +860,7 @@ function addUser() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });
@@ -775,7 +888,7 @@ function updateUser() {
                 alert(data.message);
             }
         },
-        "fail": function () {
+        "error": function () {
             alert("服务器繁忙，请稍后再试");
         },
     });

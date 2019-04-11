@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="stylesheet" href="/repair/admin/css/login.css" type="text/css">
     <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/jquery.session.js"></script>
     <script type="text/javascript" src="/repair/admin/js/tools/md5.js"></script>
     <script type="text/javascript" src="/repair/admin/js/login.js"></script>
 </head>

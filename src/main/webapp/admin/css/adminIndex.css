@@ -40,13 +40,12 @@
 }
 .left-col{
     width: 70%;
-    float: left;
     display: inline-block;
 }
 .right-col{
     width: calc(30% - 10px);
     margin-left: 10px;
-    float: left;
+    float: right;
     display: inline-block;
 }
 .table{

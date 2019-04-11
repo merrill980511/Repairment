@@ -30,7 +30,7 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/admin/login"/>
-        <property name="unauthorizedUrl" value="/nopermission.jsp"/>
+        <property name="unauthorizedUrl" value="/error.jsp"/>
         <property name="filterChainDefinitions">
             <value>
                 /admin/css/** = anon
@@ -41,6 +41,21 @@
                 /admin/ = anon
                 /user/** = anon
                 /operator/** = anon
+
+                /admin/agreeLeave = roles[admin]
+                /admin/disagreeLeave = roles[admin]
+                /admin/getAttendenceRate = roles[admin]
+                /admin/getCurrentAttendenceList = roles[admin]
+                /admin/getLeaveList = roles[admin]
+                /admin/getScheduleList = roles[admin]
+                /admin/getOperatorListBySchedule = roles[admin]
+                /admin/updateScheduleList = roles[admin]
+                /admin/getUnReviewedLeaveList = roles[admin]
+                /admin/getReviewedLeaveList = roles[admin]
+                /admin/getOperatorList = roles[admin]
+                /admin/getOperatorFreeList = roles[admin]
+                /admin/addOperator = roles[admin]
+                /admin/updateOperator = roles[admin]
 
                 /admin/logout = logout
                 /admin/** = authc

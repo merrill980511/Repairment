@@ -49,4 +49,10 @@ public interface IOrderService {
     boolean updateStatusByOperatorID(Long operatorID, String description);
 
     boolean updateDescription(Long orderID, String description);
+
+    PageInfo getTodayOrderList(OrderQueryObject qo);
+
+    PageInfo getTodayOrderFinishedList(OrderQueryObject qo);
+
+    PageInfo getOrderSolvingList(OrderQueryObject qo);
 }

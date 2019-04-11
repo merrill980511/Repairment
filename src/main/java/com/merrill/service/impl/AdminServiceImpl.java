@@ -1,6 +1,5 @@
 package com.merrill.service.impl;
 
-import com.merrill.dao.entity.Admin;
 import com.merrill.dao.mapper.AdminMapper;
 import com.merrill.service.IAdminService;
 import org.apache.shiro.SecurityUtils;
@@ -25,7 +24,6 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public boolean login(Long id, String password) {
-
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token =
                 new UsernamePasswordToken(id.toString(), password);
@@ -45,5 +43,13 @@ public class AdminServiceImpl implements IAdminService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean isExist(String id) {
+        if (adminMapper.getByID(id) == null){
+            return false;
+        }
+        return true;
     }
 }

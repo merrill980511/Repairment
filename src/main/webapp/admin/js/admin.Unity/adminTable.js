@@ -85,7 +85,7 @@ $(function () {
     //修改订单
     $(".form").on("click",".editOrderAction",function () {
         if(isSubmit()) {
-            updateOrder();
+            updateOrder();0
         }
     });
     //修改已完成订单

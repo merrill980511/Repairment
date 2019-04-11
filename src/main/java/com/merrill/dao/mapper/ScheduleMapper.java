@@ -1,6 +1,5 @@
 package com.merrill.dao.mapper;
 
-import com.merrill.dao.entity.Order;
 import com.merrill.dao.entity.Schedule;
 import com.merrill.query.QueryObject;
 import org.apache.ibatis.annotations.Param;
@@ -14,13 +13,25 @@ import java.util.List;
  * User: 梅峰鑫
  * Date: 2019-03-05
  * Time: 20:06
- * Description:
+ * Description: 运维人员排班信息
  */
 @Repository
 public interface ScheduleMapper {
+    /**
+     * 获取某一天某个运维人员的排班情况
+     * @param date 待查询的日期
+     * @param operatorID 待查询的运维人员id
+     * @return 返回查询出的排班课程列表
+     */
     List<Integer> getNumbersByDateAndOperatorID(@Param("date") Date date,
                                                 @Param("operatorID") Long operatorID);
 
+    /**
+     *
+     * @param date
+     * @param number
+     * @return
+     */
     List<Schedule> getScheduleListByDateAndNumber(@Param("date") Date date,
                                                   @Param("number") int number);
 

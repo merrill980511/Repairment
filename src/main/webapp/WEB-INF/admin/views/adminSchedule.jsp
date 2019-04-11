@@ -50,7 +50,7 @@
                 <i class="iconfont icon-home-solid-2"></i>首页
             </a>
         </li>
-        <li>
+        <li class="adminShiro">
             <a href="schedule">
                 <i class="iconfont icon-calendar-check"></i>考勤
             </a>
@@ -62,7 +62,7 @@
         </li>
     </ul>
 </div>
-<div class="center-index">
+<div class="center-index adminShiro">
     <div class="content">
         <div class="panel-default schedule-management">
             <div class="header">
@@ -181,7 +181,7 @@
     </div>
 </div>
 <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+<script type="text/javascript" src="/repair/admin/js/tools/jquery.session.js"></script>
 <script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
 <script type="text/javascript" src="/repair/admin/js/admin.Common/pageFunction.js"></script>

@@ -142,9 +142,18 @@ function getOrderThHtml() {
     var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>问题选项</th><th>操作</th></tr>';
     return orderThHtml;
 };
+function getTodayOrderThHtml() {
+    var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>状态</th><th>操作</th></tr>';
+    return orderThHtml;
+};
 //orderFinished列名
 function getOrderFinishedThHtml() {
     var orderThHtml = '<tr><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>问题选项</th><th>处理人</th><th>部门备注</th><th>操作</th></tr>';
+    return orderThHtml;
+};
+//operatorBusy列名
+function getOperatorBusyThHtml() {
+    var orderThHtml = '<tr><th>处理人员</th><th>地点</th><th>报修人</th><th>提交时间</th><th>用户备注</th><th>问题选项</th><th>操作</th></tr>';
     return orderThHtml;
 };
 //operator列名
@@ -183,6 +192,33 @@ function getOrderListHtml(orderList) {
     }
     return orderListHTML;
 };
+//今日问题列表
+function getTodayOrderListHtml(orderList) {
+    var orderListHTML = '';
+    for(var i in orderList){
+        var colorClass =  (i % 2)?"even":"odd";
+        var order = orderList[i];
+        var order_user = order.user == null? "":order.user.name;
+        orderListHTML += '<tr class="'+colorClass+'" item-id="'+order.id+'">\n' +
+            '        <td>'+order.location+'</td><td>'+order_user+'</td><td>'+dateLoad(order.beginTime)+'</td><td>'+order.userDescription+'</td><td>'+getStatus(order.status)+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
+            '    </tr>';
+    }
+    return orderListHTML;
+};
+//处理中人员列表
+function getOperatorBusyListHtml(orderList) {
+    var orderListHTML = '';
+    for(var i in orderList){
+        var colorClass =  (i % 2)?"even":"odd";
+        var order = orderList[i];
+        var order_user = order.user == null? "":order.user.name;
+        var order_operator = order.operator == null? "":order.operator.name;
+        orderListHTML += '<tr class="'+colorClass+'" item-id="'+order.id+'">\n' +
+            '        <td>'+order_operator+'</td><td>'+order.location+'</td><td>'+order_user+'</td><td>'+dateLoad(order.beginTime)+'</td><td>'+order.userDescription+'</td><td>'+order.repairment+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
+            '    </tr>';
+    }
+    return orderListHTML;
+};
 //完成问题列表
 function getOrderFinishedListHtml(orderFinishedList) {
     var orderFinishedListHTML = '';
@@ -204,7 +240,7 @@ function getOperatorListHtml(operatorList) {
         var colorClass =  (i % 2)?"even":"odd";
         var operator = operatorList[i];
         operatorListHTML += '<tr class="'+colorClass+'" item-id="'+operator.id+'">\n' +
-            '        <td>'+operator.id+'</td><td>'+operator.name+'</td><td>'+operator.phone+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
+            '        <td>'+operator.openID+'</td><td>'+operator.name+'</td><td>'+operator.phone+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
             '    </tr>';
     }
     return operatorListHTML;
@@ -215,8 +251,8 @@ function getUserListHtml(userList) {
     for(var i in userList){
         var colorClass =  (i % 2)?"even":"odd";
         var user = userList[i];
-        userListHTML += '<tr class="'+colorClass+'" item-id="'+user.id+'">\n' +
-            '        <td>'+user.id+'</td><td>'+user.name+'</td><td>'+user.phone+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
+        userListHTML += '<tr class="'+colorClass+'" item-id="'+user.openID+'">\n' +
+            '        <td>'+user.openID+'</td><td>'+user.name+'</td><td>'+user.phone+'</td><td class="action"><i class="view iconfont icon-info-circle action" title="详情"></i>&ensp;<i class="edit iconfont icon-edit-solid action" title="修改"></i>&ensp;<i class="delete iconfont icon-delete-solid action" title="删除"></i></td>\n' +
             '    </tr>';
     }
     return userListHTML;
@@ -233,14 +269,14 @@ function getViewLeaveFormBodyHTML(leave) {
 }
 //用户数据面板
 function getViewUserFormBodyHTML(user) {
-    var userFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(user.id)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+    var userFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(user.openID)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
         '<div class="info"><span class="name">姓名</span><input type="text" class="content name" value="'+dataLoad(user.name)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
         '<div class="info"><span class="name">联系方式</span><input type="text" class="content phone" value="'+dataLoad(user.phone)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
     return userFormBodyHTML;
 }
 //运维数据面板
 function getViewOperatorFormBodyHTML(operator) {
-    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(operator.id)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(operator.openID)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
         '<div class="info"><span class="name">姓名</span><input type="text" class="content name" value="'+dataLoad(operator.name)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
         '<div class="info"><span class="name">联系方式</span><input type="text" class="content phone" value="'+dataLoad(operator.phone)+'" readonly><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
     return operatorFormBodyHTML;
@@ -282,14 +318,14 @@ function getViewOrderFinishedFormBodyHTML(order) {
 //修改面板
 //用户数据面板
 function getEditUserFormBodyHTML(user) {
-    var userFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(user.id)+'" disabled><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+    var userFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(user.openID)+'" disabled><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
         '<div class="info"><span class="name">姓名</span><input type="text" class="content name" value="'+dataLoad(user.name)+'"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
         '<div class="info"><span class="name">联系方式</span><input type="text" class="content phone" value="'+dataLoad(user.phone)+'"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
     return userFormBodyHTML;
 }
 //运维数据面板
 function getEditOperatorFormBodyHTML(operator) {
-    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(operator.id)+'" disabled><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
+    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content id" value="'+dataLoad(operator.openID)+'" disabled><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n' +
         '<div class="info"><span class="name">姓名</span><input type="text" class="content name" value="'+dataLoad(operator.name)+'"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n'+
         '<div class="info"><span class="name">联系方式</span><input type="text" class="content phone" value="'+dataLoad(operator.phone)+'"><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>\n';
     return operatorFormBodyHTML;
@@ -338,7 +374,7 @@ function getAddUserFormBodyHTML() {
 }
 //运维数据面板
 function getAddOperatorFormBodyHTML() {
-    var operatorFormBodyHTML =  '<div class="info"><span class="name">报修人（工号）</span><input type="text" class="content user"><div class="tip user"></div><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>';
+    var operatorFormBodyHTML =  '<div class="info"><span class="name">工号</span><input type="text" class="content user"><div class="tip user"></div><div class="errorMessage"><img src="/repair/admin/images/error.png"><label></label></div></div>';
     return operatorFormBodyHTML;
 }
 //订单数据面板

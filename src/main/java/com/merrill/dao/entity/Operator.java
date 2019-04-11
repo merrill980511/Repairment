@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 @Data
-public class    Operator implements Serializable {
+public class Operator implements Serializable {
 
     private static final long serialVersionUID = -4875382522281734664L;
 

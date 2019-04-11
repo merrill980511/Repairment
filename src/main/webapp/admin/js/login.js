@@ -24,7 +24,8 @@ $(function(){
             "dataType":"json",
             "success":function(data){
                 if(data.location != null && data.location != ""){
-                    $.cookie('id', id, { expires: 1 ,path: '/' });
+                    $.session.set('id', id);
+                    $.session.set("isAdmin",data.isAdmin);
                     location.href = data.location;
                     return true;
                 }else{

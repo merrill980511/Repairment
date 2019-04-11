@@ -1,6 +1,5 @@
 package com.merrill.web.controller.admin;
 
-import com.merrill.dao.entity.Order;
 import com.merrill.query.OrderQueryObject;
 import com.merrill.service.IOrderService;
 import com.merrill.web.vo.Status;
@@ -67,24 +66,23 @@ public class OrderController {
     @ResponseBody
     public Object addOrder(@RequestBody Map<String, String> map) {
         Long userID = Long.valueOf(map.get("userID"));
-//        return orderService.getOrderByID(Long.valueOf(id));
         String location = map.get("location");
         String userDescription = map.get("userDescription");
         String description = map.get("phone");
         String phone = map.get("description");
         String repairment = map.get("map");
         if (orderService.addOrder(userID, location, phone,
-                userDescription, description, repairment)){
+                userDescription, description, repairment)) {
             status.setMessage("true");
         } else {
             status.setMessage("添加失败，请稍后重试");
         }
-        return "";
+        return status;
     }
 
     @RequestMapping("/deleteOrder")
     @ResponseBody
-    public Object deleteOrder(@RequestBody Map<String, String> map){
+    public Object deleteOrder(@RequestBody Map<String, String> map) {
         Long orderID = Long.valueOf(map.get("orderID"));
         if (orderService.deleteOrderByID(orderID)) {
             status.setMessage("true");
@@ -121,5 +119,23 @@ public class OrderController {
             status.setMessage("完结失败，请稍后再提交");
         }
         return status;
+    }
+
+    @RequestMapping("/getTodayOrderList")
+    @ResponseBody
+    public Object getTodayOrderList(@RequestBody OrderQueryObject qo){
+        return orderService.getTodayOrderList(qo);
+    }
+
+    @RequestMapping("/getTodayOrderFinishedList")
+    @ResponseBody
+    public Object getTodayOrderFinishedList(@RequestBody OrderQueryObject qo){
+        return orderService.getTodayOrderFinishedList(qo);
+    }
+
+    @RequestMapping("/getOrderSolvingList")
+    @ResponseBody
+    public Object getOrderSolvingList(@RequestBody OrderQueryObject qo){
+        return orderService.getOrderSolvingList(qo);
     }
 }

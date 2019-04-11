@@ -236,4 +236,37 @@ public class OrderServiceImpl implements IOrderService {
         }
         return true;
     }
+
+    @Override
+    public PageInfo getTodayOrderList(OrderQueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Order> list = orderMapper.getTodayOrderList(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
+        }
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo getTodayOrderFinishedList(OrderQueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Order> list = orderMapper.getTodayOrderFinishedList(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
+        }
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo getOrderSolvingList(OrderQueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Order> list = orderMapper.getOrderSolvingList(qo);
+        PageInfo pageInfo = new PageInfo(list);
+        if (pageInfo.getPages() <= 0) {
+            pageInfo.setPages(1);
+        }
+        return pageInfo;
+    }
 }

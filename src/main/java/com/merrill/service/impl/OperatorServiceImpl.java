@@ -6,14 +6,13 @@ import com.merrill.dao.entity.Attendence;
 import com.merrill.dao.entity.Operator;
 import com.merrill.dao.mapper.AttendenceMapper;
 import com.merrill.dao.mapper.OperatorMapper;
-import com.merrill.dao.mapper.ScheduleMapper;
 import com.merrill.query.OperatorQueryObject;
 import com.merrill.service.IOperatorService;
+import com.merrill.utils.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,14 +33,11 @@ public class OperatorServiceImpl implements IOperatorService {
     @Autowired
     private AttendenceMapper attendenceMapper;
 
-    @Autowired
-    private ScheduleMapper scheduleMapper;
-
 
     @Override
     public boolean add(Operator operator) {
         if (operator.getPassword() == null){
-            operator.setPassword(operator.getOpenID() + "");
+            operator.setPassword(ShiroUtil.SysMd5(Long.valueOf(operator.getOpenID()), operator.getOpenID()));
         }
         if (operatorMapper.add(operator.getOpenID(), operator.getName(),
                 operator.getPassword(), operator.getPhone()) > 0) {
@@ -106,4 +102,5 @@ public class OperatorServiceImpl implements IOperatorService {
     public Long getIdByUserID(String userId){
         return operatorMapper.getIdByUserID(userId);
     }
+
 }

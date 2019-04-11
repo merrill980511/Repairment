@@ -115,6 +115,25 @@ function getDateList(num) {
     }
     return dateList;
 };
+//获取订单状态
+function getStatus(status) {
+    switch (status) {
+        case 0:
+            return "未处理";
+            break;
+        case 1:
+            return "处理中";
+            break;
+        case 2:
+            return "处理完，未确认";
+            break;
+        case 3:
+            return "已完成";
+            break;
+        default:
+            return "异常";
+    }
+}
 //获取当前星期几
 function getWeekDay() {
     var curWeek = new Date().getDay();

@@ -49,7 +49,7 @@
                     <i class="iconfont icon-home-solid-2"></i>首页
                 </a>
             </li>
-            <li>
+            <li class="adminShiro">
                 <a href="schedule">
                     <i class="iconfont icon-calendar-check"></i>考勤
                 </a>
@@ -69,31 +69,31 @@
                 </div>
                 <div class="body">
                     <div class="panel">
-                        <a href="table?table-item=order&table-item-name=未处理订单">
+                        <a href="table">
                             <span class="num"></span>
                             <span class="name">未处理</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="table?table-item=order&table-item-name=未处理订单">
+                        <a href="todayOrder">
                             <span class="num"></span>
                             <span class="name">今日问题</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="table?table-item=order-finished&table-item-name=已处理订单">
+                        <a href="todayOrderFinished">
                             <span class="num"></span>
                             <span class="name">今日已处理</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="table?table-item=operator&table-item-name=运维人员&emsp;">
+                        <a href="operatorBusy">
                             <span class="num"></span>
                             <span class="name">处理中人员</span>
                         </a>
                     </div>
                     <div class="panel">
-                        <a href="table?table-item=operator&table-item-name=运维人员&emsp;">
+                        <a href="operatorFree">
                             <span class="num"></span>
                             <span class="name">值班室人员</span>
                         </a>
@@ -145,7 +145,7 @@
                     <div class="body">
                     </div>
                 </div>
-                <div class="panel-default leaveTable">
+                <div class="panel-default leaveTable adminShiro">
                     <div class="header">
                         <i class="iconfont icon-order"></i>请假请求
                     </div>
@@ -174,7 +174,7 @@
         </div>
     </div>
     <script type="text/javascript" src="/repair/admin/js/tools/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/repair/admin/js/tools/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/repair/admin/js/tools/jquery.session.js"></script>
     <script type="text/javascript" src="/repair/admin/js/tools/Chart.js"></script>
     <script type="text/javascript" src="/repair/admin/js/tools/jqPaginator.js"></script>
     <script type="text/javascript" src="/repair/admin/js/admin.Common/globalVariable.js"></script>
